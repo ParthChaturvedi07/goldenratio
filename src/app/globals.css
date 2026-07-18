@@ -267,3 +267,232 @@ body {
   transform-origin: right;
 }
 
+/* ─── Service Cards (OurServices) ────────────────────────── */
+
+/* Glass layer — default */
+.service-card-glass {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.service-card:hover .service-card-glass {
+  opacity: 0;
+}
+
+/* Image layer — hidden by default, revealed on hover */
+.service-card-image {
+  opacity: 0;
+  transform: scale(1.06);
+  transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.service-card:hover .service-card-image {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Glass shimmer — visible default, hidden on hover */
+.service-card-shimmer {
+  background: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    transparent 40%,
+    rgba(255, 255, 255, 0.03) 100%
+  );
+  transition: opacity 0.5s ease;
+}
+
+.service-card:hover .service-card-shimmer {
+  opacity: 0;
+}
+
+/* Card number */
+.service-card-number {
+  color: rgba(255, 255, 255, 0.35);
+  transition: color 0.5s ease;
+}
+
+.service-card:hover .service-card-number {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Card title */
+.service-card-title {
+  font-style: italic;
+  font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    text-shadow 0.5s ease;
+  text-shadow: none;
+}
+
+.service-card:hover .service-card-title {
+  transform: translateY(-6px);
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Card description */
+.service-card-desc {
+  color: rgba(255, 255, 255, 0.45);
+  transform: translateY(6px);
+  transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.service-card:hover .service-card-desc {
+  color: rgba(255, 255, 255, 0.85);
+  transform: translateY(0);
+}
+
+/* Bottom accent line */
+.service-card-accent {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  opacity: 0;
+  transform: scaleX(0);
+  transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.service-card:hover .service-card-accent {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+/* ─── Client Logo Ticker ─────────────────────────────────── */
+@keyframes tickerScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.client-ticker-wrap {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.client-ticker-track {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  width: max-content;
+  animation: tickerScroll 40s linear infinite;
+  will-change: transform;
+}
+
+.client-ticker-wrap:hover .client-ticker-track {
+  animation-play-state: paused;
+}
+
+.client-ticker-item {
+  flex-shrink: 0;
+  width: 140px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(0, 0, 0, 0.6);
+  transition: color 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.client-ticker-item:hover {
+  color: rgba(0, 0, 0, 1);
+  transform: scale(1.08);
+}
+
+.client-logo-svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Edge fade masks */
+.client-ticker-mask-left,
+.client-ticker-mask-right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.client-ticker-mask-left {
+  left: 0;
+  background: linear-gradient(to right, #f5f2ec, transparent);
+}
+
+.client-ticker-mask-right {
+  right: 0;
+  background: linear-gradient(to left, #f5f2ec, transparent);
+}
+
+@media (min-width: 768px) {
+  .client-ticker-item {
+    width: 170px;
+    height: 48px;
+  }
+
+  .client-ticker-track {
+    gap: 4rem;
+  }
+
+  .client-ticker-mask-left,
+  .client-ticker-mask-right {
+    width: 160px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .client-ticker-item {
+    width: 190px;
+    height: 52px;
+  }
+
+  .client-ticker-track {
+    gap: 5rem;
+  }
+
+  .client-ticker-mask-left,
+  .client-ticker-mask-right {
+    width: 220px;
+  }
+}
+
+/* ─── Why Us Section ─────────────────────────────────────── */
+.why-us-heading {
+  position: relative;
+  transition: color 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.why-us-heading:hover {
+  transform: scale(1.04);
+}
+
+/* Subtle underline that reveals on hover */
+.why-us-heading::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: #1a1a1a;
+  transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    left 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.why-us-heading:hover::after {
+  width: 60%;
+  left: 20%;
+}

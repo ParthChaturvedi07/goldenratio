@@ -41,6 +41,13 @@ export default function SmoothScrollProvider({
   useEffect(() => {
     if (!scrollRef.current) return;
 
+    // ── Prevent browser from restoring scroll position on reload ──
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+    // Force native scroll to top immediately
+    window.scrollTo(0, 0);
+
     let locoScroll: LocomotiveScrollInstance | null = null;
 
     const initScroll = async () => {
@@ -55,6 +62,9 @@ export default function SmoothScrollProvider({
         smartphone: { smooth: true },
         tablet: { smooth: true },
       });
+
+      // ── Scroll Locomotive to the very top on init ──
+      locoScroll.scrollTo(0, { duration: 0, disableLerp: true });
 
       // ── Wire Locomotive into GSAP ScrollTrigger ──
       ScrollTrigger.scrollerProxy(scrollRef.current!, {

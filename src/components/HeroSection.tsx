@@ -97,11 +97,11 @@ export default function HeroSection() {
             ref={headlineRef}
             className="text-white font-bold uppercase leading-[0.92] tracking-[-0.02em]"
             style={{
-              fontSize: "clamp(2rem, 4vw, 5.5rem)",
+              fontSize: "clamp(2rem, 3.7vw, 5rem)",
               maxWidth: "75%",
             }}
           >
-            WHERE DESIGN MEET DATA WHERE IDEAS BECOME BUILT REALITIES
+            WHERE PROPORTION MEETS CLARITY FROM MINIATURE TO REALITY
           </h1>
 
           {/* Subtitle */}
@@ -109,9 +109,9 @@ export default function HeroSection() {
             ref={subtitleRef}
             className="text-white/90 text-xs md:text-sm uppercase tracking-[0.04em] leading-relaxed max-w-[300px] shrink-0 lg:text-right lg:self-end lg:pb-1"
           >
-            At AbvTek, we blend innovation and
-            <br className="hidden lg:block" /> intelligence to design the spaces
-            of tomorrow
+            At Golden Ratio we blend Creativity, Engineering and
+            <br className="hidden lg:block" /> Detailing to design the spaces
+            of tomorrow.
           </p>
         </div>
       </div>

@@ -125,18 +125,18 @@ export default function AboutSection() {
                 className="text-[10px] md:text-[11px] tracking-[0.2em] uppercase text-black/50 mb-5 md:mb-6 font-medium"
                 style={{ opacity: 0 }}
               >
-                Design as Memory — Crafted, Intelligent, Alive
+                FROM CONCEPT TO EXECUTION — FUNCTIONAL, AESTHETIC, DECISION-READY
               </p>
               <h2
                 ref={headingRef}
                 className="text-black text-[2rem] md:text-[2.8rem] lg:text-[3.2rem] xl:text-[3.6rem] font-bold uppercase leading-[1.05] tracking-[-0.02em]"
                 style={{ opacity: 0, maxWidth: "520px" }}
               >
-                We Design
+                We Help Clients Visualize Their
                 <br />
-                <span className="inline-block ml-4 md:ml-6">Architecture</span>
+                <span className="inline-block ml-4 md:ml-6">DREAM SPACES</span>
                 <br />
-                <span className="inline-block ml-1">That Tells Stories.</span>
+                <span className="inline-block ml-1">Before Building Them.</span>
               </h2>
             </div>
 
@@ -151,10 +151,7 @@ export default function AboutSection() {
                   About
                 </p>
                 <p className="text-[11px] md:text-[12px] lg:text-[13px] leading-[1.8] text-black/70 uppercase tracking-[0.04em] max-w-[440px] font-light">
-                  Founded at the crossroads of design and technology, AbvTek
-                  redefines architectural excellence in the UAE. Our journey is
-                  driven by curiosity, innovation, and a commitment to creating
-                  sustainable and intelligent spaces.
+                  Golden Ratio Creation is a Bhopal-based design studio specializing in Interior Design and Miniature Model Making. We support Architects, Developers, and Businesses by delivering world-class designs and exact scale models.
                 </p>
               </div>
 
@@ -164,7 +161,7 @@ export default function AboutSection() {
                 className="about-cta-link group inline-flex items-center gap-2 text-[11px] md:text-[12px] tracking-[0.15em] uppercase text-black font-medium relative"
                 style={{ opacity: 0 }}
               >
-                <span className="about-cta-text">Technology & Innovation</span>
+                <span className="about-cta-text">View Our Models</span>
                 <svg
                   className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-0.5"
                   viewBox="0 0 16 16"
