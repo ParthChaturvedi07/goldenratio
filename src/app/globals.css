@@ -496,3 +496,332 @@ body {
   width: 60%;
   left: 20%;
 }
+
+/* ─── Process Section ────────────────────────────────────── */
+
+/* Carousel container */
+.process-carousel-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.process-carousel-list {
+  position: relative;
+  width: 100%;
+  height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Individual card (neomorphic base) ── */
+.process-card {
+  position: absolute;
+  width: 440px;
+  min-height: 270px;
+  padding: 38px 40px;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 36px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  overflow: hidden;
+
+  /* Neomorphic surface */
+  background: #ede9e1;
+  border: none;
+  box-shadow:
+    6px 6px 14px rgba(0, 0, 0, 0.08),
+    -6px -6px 14px rgba(255, 255, 255, 0.7);
+}
+
+/* Decorative corner accent */
+.process-card-corner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.35) 0%,
+    transparent 55%
+  );
+  pointer-events: none;
+  border-radius: 0 24px 0 0;
+}
+
+/* ── Card positions (carousel state machine) ── */
+
+/* Active card — front & center, raised 3D */
+.process-card.act {
+  z-index: 5;
+  transform: translateX(0) scale(1) translateY(-4px);
+  opacity: 1;
+  background: #f2efe8;
+  box-shadow:
+    10px 10px 24px rgba(0, 0, 0, 0.1),
+    -10px -10px 24px rgba(255, 255, 255, 0.8),
+    0 8px 32px rgba(0, 0, 0, 0.06);
+}
+
+/* Next card — right & behind */
+.process-card.next {
+  z-index: 4;
+  transform: translateX(80%) scale(0.86);
+  opacity: 0.5;
+  filter: blur(1.5px);
+}
+
+/* New-next card — far right (staging) */
+.process-card.new-next {
+  z-index: 1;
+  transform: translateX(160%) scale(0.72);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Previous card — left & behind */
+.process-card.prev {
+  z-index: 4;
+  transform: translateX(-80%) scale(0.86);
+  opacity: 0.5;
+  filter: blur(1.5px);
+}
+
+/* Hidden card — far left (staging) */
+.process-card.hide {
+  z-index: 1;
+  transform: translateX(-160%) scale(0.72);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ── Card hover — lift further ── */
+.process-card.act:hover {
+  transform: translateX(0) scale(1.02) translateY(-8px);
+  box-shadow:
+    12px 12px 30px rgba(0, 0, 0, 0.12),
+    -12px -12px 30px rgba(255, 255, 255, 0.85),
+    0 14px 44px rgba(0, 0, 0, 0.08);
+}
+
+/* ── Card inner elements ── */
+.process-card-top {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.process-card-number {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: rgba(0, 0, 0, 0.3);
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.process-card.act .process-card-number {
+  color: rgba(0, 0, 0, 0.55);
+}
+
+/* Progress bar — inset neomorphic groove */
+.process-progress-bar {
+  flex: 1;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.04);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow:
+    inset 2px 2px 4px rgba(0, 0, 0, 0.06),
+    inset -1px -1px 3px rgba(255, 255, 255, 0.5);
+}
+
+.process-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.25),
+    rgba(0, 0, 0, 0.55)
+  );
+  border-radius: 4px;
+}
+
+/* Card content */
+.process-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.process-card-title {
+  font-size: clamp(1.4rem, 2.8vw, 2rem);
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.3);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  transition: color 0.5s ease;
+}
+
+.process-card.act .process-card-title {
+  color: #1a1a1a;
+}
+
+.process-card-desc {
+  font-size: 13px;
+  line-height: 1.75;
+  color: rgba(0, 0, 0, 0.25);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-weight: 300;
+  max-width: 360px;
+  transition: color 0.5s ease;
+}
+
+.process-card.act .process-card-desc {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+/* ── Footer ── */
+.process-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.process-footer-text {
+  font-size: 13px;
+  line-height: 1.8;
+  color: rgba(0, 0, 0, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 300;
+  max-width: 500px;
+}
+
+.process-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 15px 32px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 40px;
+  color: #1a1a1a;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: pointer;
+  background: transparent;
+}
+
+.process-cta-btn:hover {
+  background: #1a1a1a;
+  color: #f5f2ec;
+  border-color: #1a1a1a;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .process-carousel-list {
+    height: 340px;
+  }
+
+  .process-card {
+    width: 310px;
+    min-height: 220px;
+    padding: 28px 28px;
+    gap: 28px;
+    border-radius: 20px;
+  }
+
+  .process-card.next {
+    transform: translateX(55%) scale(0.82);
+    opacity: 0.35;
+  }
+
+  .process-card.prev {
+    transform: translateX(-55%) scale(0.82);
+    opacity: 0.35;
+  }
+
+  .process-card.new-next {
+    transform: translateX(110%) scale(0.68);
+  }
+
+  .process-card.hide {
+    transform: translateX(-110%) scale(0.68);
+  }
+
+  .process-footer {
+    align-items: center;
+    text-align: center;
+  }
+
+  .process-footer-text {
+    text-align: center;
+  }
+}
+
+@media (min-width: 768px) {
+  .process-carousel-list {
+    height: 440px;
+  }
+
+  .process-card {
+    width: 480px;
+    min-height: 290px;
+    padding: 42px 46px;
+  }
+
+  .process-card-desc {
+    font-size: 14px;
+  }
+
+  .process-footer {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+@media (min-width: 1280px) {
+  .process-carousel-list {
+    height: 480px;
+  }
+
+  .process-card {
+    width: 540px;
+    min-height: 320px;
+    padding: 48px 52px;
+    gap: 40px;
+    border-radius: 28px;
+  }
+
+  .process-card-number {
+    font-size: 17px;
+  }
+
+  .process-card.next {
+    transform: translateX(85%) scale(0.86);
+  }
+
+  .process-card.prev {
+    transform: translateX(-85%) scale(0.86);
+  }
+}

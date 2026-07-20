@@ -7,6 +7,7 @@ import ClientLogoTicker from "@/components/ClientLogoTicker";
 import SmoothScrollProvider from "@/components/SmoothScrollProvider";
 import OurServices from "@/components/OurServices";
 import WhyUsSection from "@/components/WhyUsSection";
+import ProcessSection from "@/components/ProcessSection";
 
 export default function Home() {
   return (
@@ -28,6 +29,10 @@ export default function Home() {
 
       <div data-scroll-section>
         <WhyUsSection />
+      </div>
+
+      <div data-scroll-section>
+        <ProcessSection />
       </div>
     </SmoothScrollProvider>
   );

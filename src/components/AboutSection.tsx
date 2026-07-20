@@ -31,9 +31,9 @@ export default function AboutSection() {
       if (imageRef.current && sectionRef.current) {
         gsap.fromTo(
           imageRef.current,
-          { yPercent: -15 },
+          { yPercent: -20 },
           {
-            yPercent: 15,
+            yPercent: 20,
             ease: "none",
             scrollTrigger: {
               trigger: sectionRef.current,
@@ -186,7 +186,7 @@ export default function AboutSection() {
               className="absolute w-full h-full"
             >
               <Image
-                src="/images/about-img.png"
+                src="/images/1bef8902-e0b0-409a-9571-d90359822153.png"
                 alt="Modern architectural interior with dramatic lighting and premium finishes"
                 fill
                 className="object-cover"
