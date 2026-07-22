@@ -57,64 +57,66 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section
-      ref={heroRef}
-      className="relative w-full h-dvh min-h-[600px] overflow-hidden"
-      id="hero-section"
-    >
-      {/* Background Video — slides from top */}
-      <div ref={mediaRef} className="absolute inset-0">
-        <video
-          src="/video/hero-video.mp4"
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="object-cover w-full h-full"
-        />
-      </div>
-
-      {/* Gradient overlay for text readability */}
-      <div className="hero-gradient absolute inset-0 z-[2]" />
-
-      {/* White blurry fade at top — strong like abvtek.com */}
-      <div
-        ref={whiteWashRef}
-        className="absolute top-0 left-0 right-0 z-[3] pointer-events-none hero-top-fade"
-      />
-
-      {/* Mouse trail effect (desktop only) */}
-      <MouseTrail containerRef={heroRef} />
-
-      {/* Content — slides from bottom */}
-      <div
-        ref={contentRef}
-        className="absolute inset-0 z-20 flex flex-col justify-end px-6 md:px-10 lg:px-12 pb-6 md:pb-10 lg:pb-12"
+    <div className="bg-[#f5f2ec] h-full px-6 pt-16 pb-14">
+      <section
+        ref={heroRef}
+        className="relative rounded-xl w-full h-[90vh] min-h-[600px] overflow-hidden"
+        id="hero-section"
       >
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 lg:gap-8">
-          {/* Headline */}
-          <h1
-            ref={headlineRef}
-            className="text-white font-bold uppercase leading-[0.92] tracking-[-0.02em]"
-            style={{
-              fontSize: "clamp(2rem, 3.7vw, 5rem)",
-              maxWidth: "75%",
-            }}
-          >
-            WHERE PROPORTION MEETS CLARITY FROM MINIATURE TO REALITY
-          </h1>
-
-          {/* Subtitle */}
-          <p
-            ref={subtitleRef}
-            className="text-white/90 text-xs md:text-sm uppercase tracking-[0.04em] leading-relaxed max-w-[300px] shrink-0 lg:text-right lg:self-end lg:pb-1"
-          >
-            At Golden Ratio we blend Creativity, Engineering and
-            <br className="hidden lg:block" /> Detailing to design the spaces
-            of tomorrow.
-          </p>
+        {/* Background Video — slides from top */}
+        <div ref={mediaRef} className="absolute inset-0">
+          <video
+            src="/video/hero-video.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="object-cover w-full h-full"
+          />
         </div>
-      </div>
-    </section>
+
+        {/* Gradient overlay for text readability */}
+        <div className="hero-gradient absolute inset-0 z-[2]" />
+
+        {/* White blurry fade at top — strong like abvtek.com */}
+        {/* <div
+          ref={whiteWashRef}
+          className="absolute top-0 left-0 right-0 z-[3] pointer-events-none hero-top-fade"
+        /> */}
+
+        {/* Mouse trail effect (desktop only) */}
+        <MouseTrail containerRef={heroRef} />
+
+        {/* Content — slides from bottom */}
+        <div
+          ref={contentRef}
+          className="absolute inset-0 z-20 flex flex-col justify-end px-6 md:px-10 lg:px-12 pb-6 md:pb-10 lg:pb-12"
+        >
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 lg:gap-8">
+            {/* Headline */}
+            <h1
+              ref={headlineRef}
+              className="text-white font-bold uppercase leading-[0.92] tracking-[-0.02em]"
+              style={{
+                fontSize: "clamp(2rem, 3.7vw, 5rem)",
+                maxWidth: "75%",
+              }}
+            >
+              WHERE PROPORTION MEETS CLARITY FROM MINIATURE TO REALITY
+            </h1>
+
+            {/* Subtitle */}
+            <p
+              ref={subtitleRef}
+              className="text-white/90 text-xs md:text-sm uppercase tracking-[0.04em] leading-relaxed max-w-[300px] shrink-0 lg:text-right lg:self-end lg:pb-1"
+            >
+              At Golden Ratio we blend Creativity, Engineering and
+              <br className="hidden lg:block" /> Detailing to design the spaces
+              of tomorrow.
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }

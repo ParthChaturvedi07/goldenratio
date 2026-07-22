@@ -178,7 +178,7 @@ export default function AboutSection() {
           {/* ── RIGHT COLUMN: Parallax Image ── */}
           <div
             ref={imageWrapperRef}
-            className="relative w-full h-[400px] md:h-[500px] lg:h-[600px] xl:h-[680px] overflow-hidden rounded-sm"
+            className="relative w-full h-[400px] md:h-[500px] lg:h-[600px] xl:h-[680px] rounded-sm"
             style={{ opacity: 0 }}
           >
             <div
@@ -189,7 +189,7 @@ export default function AboutSection() {
                 src="/images/1bef8902-e0b0-409a-9571-d90359822153.png"
                 alt="Modern architectural interior with dramatic lighting and premium finishes"
                 fill
-                className="object-cover"
+                className="object-cover rounded-[25px]"
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 quality={90}
               />

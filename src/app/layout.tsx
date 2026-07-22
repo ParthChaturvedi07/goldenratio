@@ -10,12 +10,12 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "AbvTek | Design & Build Company in Dubai | Architecture, Interior & Technology",
+  title: "GoldenRatio | Design & Build Company in Bhopal | Architecture, Interior & Technology",
   description:
-    "At AbvTek, we blend innovation and intelligence to design the spaces of tomorrow. Where design meets data, where ideas become built realities.",
-  keywords: ["design", "build", "architecture", "interior", "technology", "Dubai", "innovation"],
+    "At GoldenRatio, we blend innovation and intelligence to design the spaces of tomorrow. Where design meets data, where ideas become built realities.",
+  keywords: ["design", "build", "architecture", "interior", "technology", "Bhopal", "innovation"],
   openGraph: {
-    title: "AbvTek | Design & Build Company in Dubai",
+    title: "GoldenRatio | Design & Build Company in Bhopal",
     description: "Where design meets data. Where ideas become built realities.",
     type: "website",
   },

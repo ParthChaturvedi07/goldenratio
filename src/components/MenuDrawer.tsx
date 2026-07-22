@@ -25,6 +25,7 @@ const menuLinks: MenuLink[] = [
     ],
   },
   { label: "PROJECTS", href: "/our-projects" },
+  { label: "CONTACT US", href: "/contact" },
 ];
 
 interface MenuDrawerProps {

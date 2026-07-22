@@ -7,6 +7,23 @@
   --color-beige-dark: #e8e3d9;
   --color-teal: #2a7a6e;
   --font-outfit: var(--font-outfit);
+
+  /* ── shadcn/ui semantic tokens (dark palette) ── */
+  --color-card: #141414;
+  --color-card-foreground: #ffffff;
+  --color-muted: #1a1a1a;
+  --color-muted-foreground: #a1a1aa;
+  --color-border: #262626;
+  --color-input: #262626;
+  --color-ring: #2a7a6e;
+  --color-primary: #ffffff;
+  --color-primary-foreground: #0a0a0a;
+  --color-secondary: #1a1a1a;
+  --color-secondary-foreground: #ffffff;
+  --color-accent: #1a1a1a;
+  --color-accent-foreground: #ffffff;
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #ffffff;
 }
 
 /* ─── Base ───────────────────────────────────────────────── */

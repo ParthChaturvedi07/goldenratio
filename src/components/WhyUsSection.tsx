@@ -278,7 +278,7 @@ export default function WhyUsSection() {
             ref={whyRef}
             className="font-bold uppercase text-black will-change-transform"
             style={{
-              fontSize: "clamp(6rem, 14vw, 19rem)",
+              fontSize: "clamp(5rem, 14vw, 19rem)",
               letterSpacing: "-0.05em",
               lineHeight: 1,
             }}
@@ -289,7 +289,7 @@ export default function WhyUsSection() {
             ref={usTextRef}
             className="font-bold uppercase text-black will-change-transform"
             style={{
-              fontSize: "clamp(6rem, 14vw, 19rem)",
+              fontSize: "clamp(5rem, 14vw, 19rem)",
               letterSpacing: "-0.05em",
               lineHeight: 1,
               marginLeft: "0.12em",
@@ -317,9 +317,9 @@ export default function WhyUsSection() {
                 style={{
                   top: pos.top,
                   left: pos.left,
-                  width: "clamp(200px, 20vw, 320px)",
+                  width: "clamp(140px, 20vw, 320px)",
                   aspectRatio: imageRatios[i] || "16 / 9",
-                  borderRadius: "2px",
+                  borderRadius: "20px",
                   overflow: "hidden",
                   opacity: 0,
                   boxShadow: "0 8px 30px rgba(0,0,0,0.12)",
