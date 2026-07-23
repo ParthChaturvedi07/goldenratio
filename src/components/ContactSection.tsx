@@ -153,7 +153,7 @@ export default function ContactSection() {
             </p>
           </div>
           <h1 className="text-black text-[2.4rem] sm:text-[3.2rem] md:text-[4rem] lg:text-[4.6rem] font-bold uppercase leading-[1.02] tracking-[-0.02em] max-w-[1000px] mb-6">
-            Let's Build Something <br />
+            Let&apos;s Build Something <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1a1a1a] via-[#2a7a6e] to-[#1a1a1a]">
               Extraordinary Together
             </span>

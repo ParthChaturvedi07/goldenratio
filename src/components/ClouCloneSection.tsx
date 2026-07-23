@@ -148,7 +148,7 @@ export default function ClouCloneSection() {
           
           <div className="order-3 lg:order-none">
             <p className="text-xl md:text-2xl lg:text-3xl font-normal leading-[1.3] text-black max-w-[500px]">
-              Combining smart creativity with commercial savvy, we take our clients' challenges and transform them into exceptionally innovative design.
+              Combining smart creativity with commercial savvy, we take our clients&apos; challenges and transform them into exceptionally innovative design.
             </p>
           </div>
         </div>

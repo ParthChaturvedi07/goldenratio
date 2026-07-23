@@ -12,6 +12,7 @@ import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import ClouCloneSection from "@/components/ClouCloneSection";
 import ServicesSection from "@/components/ServicesSection";
+import ProjectsSection from "@/components/ProjectsSection";
 
 export default function Home() {
   return (
@@ -37,6 +38,10 @@ export default function Home() {
 
       <div data-scroll-section>
         <ServicesSection />
+      </div>
+
+      <div data-scroll-section>
+        <ProjectsSection />
       </div>
 
       <div data-scroll-section>

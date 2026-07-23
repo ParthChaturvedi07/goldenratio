@@ -263,6 +263,26 @@ export default function WhyUsSection() {
     setIsHovering(false);
   }, []);
 
+  const handlePointerEnter = useCallback((e: React.PointerEvent, i: number) => {
+    if (e.pointerType === "mouse") {
+      handleEnter(i);
+    }
+  }, [handleEnter]);
+
+  const handlePointerLeave = useCallback((e: React.PointerEvent) => {
+    if (e.pointerType === "mouse") {
+      handleLeave();
+    }
+  }, [handleLeave]);
+
+  const handleClick = useCallback((i: number) => {
+    if (activeIndex === i) {
+      handleLeave();
+    } else {
+      handleEnter(i);
+    }
+  }, [activeIndex, handleEnter, handleLeave]);
+
   return (
     <section
       ref={sectionRef}
@@ -345,8 +365,11 @@ export default function WhyUsSection() {
         {/* ── Center headings (absolute-centered so nothing pushes them) ── */}
         <div
           ref={headingsWrapRef}
-          className="absolute inset-0 z-10 flex items-center justify-center"
+          className="absolute inset-0 z-10 flex flex-col items-center justify-center"
         >
+          <p className="md:hidden text-black/40 text-[10px] font-mono tracking-[0.2em] uppercase mb-8 opacity-70">
+            [ Tap headings to reveal ]
+          </p>
           <div className="flex flex-col items-center gap-2 md:gap-3 lg:gap-4">
             {WHY_US_ITEMS.map((item, i) => (
               <div
@@ -355,7 +378,7 @@ export default function WhyUsSection() {
                 style={{ opacity: 0 }}
               >
                 <h3
-                  className="why-us-heading font-bold uppercase text-center cursor-pointer"
+                  className="why-us-heading font-bold uppercase text-center cursor-pointer select-none"
                   style={{
                     fontSize: "clamp(1.8rem, 3.4vw, 2.6rem)",
                     letterSpacing: "-0.06em",
@@ -365,8 +388,9 @@ export default function WhyUsSection() {
                         ? "#1a1a1a"
                         : "rgba(26, 26, 26, 0.15)",
                   }}
-                  onMouseEnter={() => handleEnter(i)}
-                  onMouseLeave={handleLeave}
+                  onPointerEnter={(e) => handlePointerEnter(e, i)}
+                  onPointerLeave={handlePointerLeave}
+                  onClick={() => handleClick(i)}
                 >
                   {item.heading}
                 </h3>

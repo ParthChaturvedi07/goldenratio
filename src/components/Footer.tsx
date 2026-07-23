@@ -42,7 +42,7 @@ export default function Footer() {
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-tight text-white max-w-[700px] leading-[1.08]">
               Have a Vision in Mind? <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/80 to-[#2a7a6e]">
-                Let's Build It Together.
+                Let&apos;s Build It Together.
               </span>
             </h2>
           </div>
