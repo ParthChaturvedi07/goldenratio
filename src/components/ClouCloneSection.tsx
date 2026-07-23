@@ -51,7 +51,7 @@ function CylinderGallery() {
   const thetaLength = segmentAngle * 0.92;
   
   // Make the images square: arc length = radius * thetaLength
-  const height = radius * thetaLength;
+  const height = radius * thetaLength * 0.78;
 
   // Base rotation for the slight "top view"
   const baseRotateX = 0.10; // roughly 8.5 degrees
@@ -133,20 +133,20 @@ export default function ClouCloneSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative z-10 bg-[#f5f2ec] text-black min-h-screen py-16 overflow-hidden flex items-center"
+      className="relative z-10 bg-[#f5f2ec] text-black min-h-screen py-4 overflow-hidden flex items-center"
       id="vision-section"
     >
-      <div className="w-full mx-auto pl-6 md:pl-10 lg:pl-16 xl:pl-20 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div className="w-full mx-auto pl-6 md:pl-10 lg:pl-16 xl:pl-20 flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-12 lg:items-center">
         
         {/* LEFT COLUMN: Text Content */}
-        <div className="flex flex-col gap-20 lg:pr-10 z-20 pointer-events-auto">
-          <div>
+        <div className="contents lg:flex lg:flex-col lg:gap-20 lg:pr-10 z-20 pointer-events-auto">
+          <div className="order-1 lg:order-none">
             <h2 className="text-[3rem] md:text-[4rem] lg:text-[4.5rem] font-medium leading-[1.05] tracking-tight text-black mb-8">
               mission: to design the best social spaces in the world.
             </h2>
           </div>
           
-          <div>
+          <div className="order-3 lg:order-none">
             <p className="text-xl md:text-2xl lg:text-3xl font-normal leading-[1.3] text-black max-w-[500px]">
               Combining smart creativity with commercial savvy, we take our clients' challenges and transform them into exceptionally innovative design.
             </p>
@@ -154,7 +154,7 @@ export default function ClouCloneSection() {
         </div>
 
         {/* RIGHT COLUMN: 3D Rotating Cylinder (Three.js Canvas) */}
-        <div className="relative h-[600px] lg:h-[800px] w-full hidden md:flex items-center justify-center">
+        <div className="relative h-[350px] lg:h-[800px] w-full flex items-center justify-center order-2 lg:order-none">
           <Canvas
             camera={{ position: [0, 0, 10], fov: 45 }}
             style={{ width: "100%", height: "100%" }}

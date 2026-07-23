@@ -11,6 +11,7 @@ import Testimonials from "@/components/Testimonials";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import ClouCloneSection from "@/components/ClouCloneSection";
+import ServicesSection from "@/components/ServicesSection";
 
 export default function Home() {
   return (
@@ -30,9 +31,12 @@ export default function Home() {
         <WhyUsSection />
       </div>
 
-
       <div data-scroll-section>
         <ProcessSection />
+      </div>
+
+      <div data-scroll-section>
+        <ServicesSection />
       </div>
 
       <div data-scroll-section>
