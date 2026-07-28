@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect } from "react";
+import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight } from "lucide-react";
@@ -101,7 +102,7 @@ export default function ProjectsSection() {
   }, [isReady]);
 
   return (
-    <section ref={sectionRef} className="py-12 bg-[#f5f2ec] relative text-black rounded-xl">
+    <section ref={sectionRef} id="projects-section" className="py-12 bg-[#f5f2ec] relative text-black rounded-xl">
       <div className="w-full px-4 md:px-8 lg:px-12 xl:px-20 2xl:px-32">
         {/* Header */}
         <div className="flex flex-col lg:flex-row justify-between items-end mb-20 gap-8">
@@ -130,7 +131,7 @@ export default function ProjectsSection() {
               className="flex flex-col gap-6"
             >
               {/* Image Card */}
-              <div className="group relative w-full aspect-[4/3] lg:aspect-[16/10] rounded-xl overflow-hidden shadow-lg cursor-pointer">
+              <div className="group relative w-full aspect-[4/3] lg:aspect-[16/10] rounded-[30px] overflow-hidden shadow-lg cursor-pointer">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={project.image}
@@ -164,10 +165,10 @@ export default function ProjectsSection() {
 
         {/* View More Button */}
         <div className="mt-20 flex justify-center">
-            <button className="flex items-center gap-2 group border border-black/20 rounded-full px-10 py-5 hover:bg-black hover:text-white transition-colors duration-300 cursor-pointer shadow-sm hover:shadow-xl">
+            <Link href="/projects" className="flex items-center gap-2 group border border-black/20 rounded-full px-10 py-5 hover:bg-black hover:text-white transition-colors duration-300 cursor-pointer shadow-sm hover:shadow-xl">
                 <span className="font-medium tracking-wide text-sm md:text-base">VIEW ALL PROJECTS</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </button>
+            </Link>
         </div>
       </div>
     </section>

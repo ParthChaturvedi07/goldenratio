@@ -48,13 +48,20 @@ export default function Footer() {
           </div>
 
           <div className="shrink-0">
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white text-black text-xs font-bold uppercase tracking-[0.18em] hover:bg-[#2a7a6e] hover:text-white transition-all duration-500 shadow-xl group"
+            <button
+              onClick={() => {
+                const target = document.querySelector("#contact-section");
+                if (target && scroll) {
+                  scroll.scrollTo(target, { offset: 0, duration: 1200 });
+                } else if (target) {
+                  target.scrollIntoView({ behavior: "smooth" });
+                }
+              }}
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white text-black text-xs font-bold uppercase tracking-[0.18em] hover:bg-[#2a7a6e] hover:text-white transition-all duration-500 shadow-xl group cursor-pointer"
             >
               <span>Start Conversation</span>
               <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-0.5" />
-            </Link>
+            </button>
           </div>
         </div>
 
@@ -90,44 +97,71 @@ export default function Footer() {
             </h3>
             <ul className="flex flex-col gap-3 text-xs md:text-sm uppercase tracking-wider font-light text-white/70">
               <li>
-                <Link
-                  href="/"
-                  className="hover:text-white transition-colors duration-300"
+                <button
+                  onClick={() => {
+                    if (scroll) {
+                      scroll.scrollTo(0, { duration: 1200 });
+                    } else {
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    }
+                  }}
+                  className="hover:text-white transition-colors duration-300 bg-transparent border-none cursor-pointer text-white/70 text-xs md:text-sm uppercase tracking-wider font-light"
                 >
                   Home
-                </Link>
+                </button>
               </li>
               <li>
-                <Link
-                  href="/about-us"
-                  className="hover:text-white transition-colors duration-300"
+                <button
+                  onClick={() => {
+                    const target = document.querySelector("#about-section");
+                    if (target && scroll) {
+                      scroll.scrollTo(target, { offset: 0, duration: 1200 });
+                    } else if (target) {
+                      target.scrollIntoView({ behavior: "smooth" });
+                    }
+                  }}
+                  className="hover:text-white transition-colors duration-300 bg-transparent border-none cursor-pointer text-white/70 text-xs md:text-sm uppercase tracking-wider font-light"
                 >
-                  Our Journey
-                </Link>
+                  About Us
+                </button>
               </li>
               <li>
-                <Link
-                  href="/technology-and-innovation"
-                  className="hover:text-white transition-colors duration-300"
+                <button
+                  onClick={() => {
+                    const target = document.querySelector("#services-section");
+                    if (target && scroll) {
+                      scroll.scrollTo(target, { offset: 0, duration: 1200 });
+                    } else if (target) {
+                      target.scrollIntoView({ behavior: "smooth" });
+                    }
+                  }}
+                  className="hover:text-white transition-colors duration-300 bg-transparent border-none cursor-pointer text-white/70 text-xs md:text-sm uppercase tracking-wider font-light"
                 >
-                  Tech & Innovation
-                </Link>
+                  Services
+                </button>
               </li>
               <li>
                 <Link
-                  href="/our-projects"
+                  href="/projects"
                   className="hover:text-white transition-colors duration-300"
                 >
                   Projects
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/contact"
-                  className="hover:text-white transition-colors duration-300 text-white font-medium"
+                <button
+                  onClick={() => {
+                    const target = document.querySelector("#contact-section");
+                    if (target && scroll) {
+                      scroll.scrollTo(target, { offset: 0, duration: 1200 });
+                    } else if (target) {
+                      target.scrollIntoView({ behavior: "smooth" });
+                    }
+                  }}
+                  className="hover:text-white transition-colors duration-300 bg-transparent border-none cursor-pointer text-white/70 text-xs md:text-sm uppercase tracking-wider font-light text-white font-medium"
                 >
                   Contact Us
-                </Link>
+                </button>
               </li>
             </ul>
           </div>

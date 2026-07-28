@@ -2,38 +2,43 @@
 
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import gsap from "gsap";
+import { useSmoothScroll } from "./SmoothScrollProvider";
 
 interface MenuLink {
   label: string;
-  href: string;
-  subLinks?: { label: string; href: string }[];
+  sectionId?: string; // scroll to section on same page
+  href?: string;      // navigate to a separate page
+  subLinks?: { label: string; sectionId?: string; href?: string }[];
 }
 
 const menuLinks: MenuLink[] = [
-  { label: "OUR JOURNEY", href: "/about-us" },
-  { label: "TECHNOLOGY & INNOVATION", href: "/technology-and-innovation" },
+  { label: "ABOUT US", sectionId: "about-section" },
   {
-    label: "DESIGN & BUILD",
-    href: "/design-and-build",
+    label: "SERVICES",
+    sectionId: "services-section",
     subLinks: [
-      { label: "ARCHITECTURE", href: "/design-and-build/architecture" },
-      { label: "INTERIOR DESIGN", href: "/design-and-build/interior-design" },
-      { label: "MEP ENGINEERING", href: "/design-and-build/mep-engineering" },
-      { label: "PROJECT MANAGEMENT", href: "/design-and-build/project-management" },
-      { label: "CONSTRUCTION", href: "/design-and-build/construction" },
+      { label: "MINIATURE MODEL MAKING", sectionId: "services-section" },
+      { label: "ALLIED SERVICES", sectionId: "services-section" },
     ],
   },
-  { label: "PROJECTS", href: "/our-projects" },
-  { label: "CONTACT US", href: "/contact" },
+  { label: "WHY US", sectionId: "why-us-section" },
+  { label: "OUR PROCESS", sectionId: "process-section" },
+  { label: "PROJECTS", href: "/projects" },
+  { label: "TESTIMONIALS", sectionId: "clients-testimonials-section" },
+  { label: "CONTACT US", sectionId: "contact-section" },
 ];
 
 interface MenuDrawerProps {
   isOpen: boolean;
+  onClose?: () => void;
 }
 
-export default function MenuDrawer({ isOpen }: MenuDrawerProps) {
+export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
   const [expandedItem, setExpandedItem] = useState<string | null>(null);
+  const { scroll } = useSmoothScroll();
+  const router = useRouter();
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const backdropRef = useRef<HTMLDivElement | null>(null);
@@ -45,6 +50,31 @@ export default function MenuDrawer({ isOpen }: MenuDrawerProps) {
   const toggleExpand = (label: string) => {
     setExpandedItem(expandedItem === label ? null : label);
   };
+
+  const handleNavClick = useCallback(
+    (link: { sectionId?: string; href?: string }) => {
+      if (link.href) {
+        // Navigate to a separate page
+        onClose?.();
+        router.push(link.href);
+      } else if (link.sectionId) {
+        // Scroll to section
+        onClose?.();
+        // Small delay to allow menu close animation to start
+        setTimeout(() => {
+          const target = document.querySelector(`#${link.sectionId}`);
+          if (!target) return;
+
+          if (scroll) {
+            scroll.scrollTo(target, { offset: 0, duration: 1200 });
+          } else {
+            target.scrollIntoView({ behavior: "smooth" });
+          }
+        }, 400);
+      }
+    },
+    [scroll, onClose, router]
+  );
 
   // Build the GSAP timeline once, then play / reverse based on isOpen
   const buildTimeline = useCallback(() => {
@@ -185,12 +215,12 @@ export default function MenuDrawer({ isOpen }: MenuDrawerProps) {
             {menuLinks.map((link) => (
               <div key={link.label}>
                 <div className="flex items-center justify-between">
-                  <a
-                    href={link.href}
-                    className="menu-link text-black text-sm md:text-base font-semibold uppercase tracking-[0.12em] py-4 block"
+                  <button
+                    onClick={() => handleNavClick(link)}
+                    className="menu-link text-black text-sm md:text-base font-semibold uppercase tracking-[0.12em] py-4 block bg-transparent border-none cursor-pointer text-left"
                   >
                     {link.label}
-                  </a>
+                  </button>
                   {link.subLinks && (
                     <button
                       onClick={() => toggleExpand(link.label)}
@@ -222,13 +252,13 @@ export default function MenuDrawer({ isOpen }: MenuDrawerProps) {
                   >
                     <div className="pl-4 pb-4 flex flex-col gap-1">
                       {link.subLinks.map((subLink) => (
-                        <a
+                        <button
                           key={subLink.label}
-                          href={subLink.href}
-                          className="menu-link text-black/70 text-xs md:text-sm uppercase tracking-[0.1em] py-2 block"
+                          onClick={() => handleNavClick(subLink)}
+                          className="menu-link text-black/70 text-xs md:text-sm uppercase tracking-[0.1em] py-2 block bg-transparent border-none cursor-pointer text-left"
                         >
                           {subLink.label}
-                        </a>
+                        </button>
                       ))}
                     </div>
                   </div>

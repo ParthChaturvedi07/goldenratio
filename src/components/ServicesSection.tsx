@@ -140,7 +140,7 @@ export default function ServicesSection() {
     }, [isReady]);
 
     return (
-        <div ref={wrapperRef} id="services-wrapper" className="relative h-[300vh]">
+        <div ref={wrapperRef} id="services-section" className="relative h-[300vh]">
             {/* Dummy triggers for scroll steps */}
             <div id="dummy-1" className="absolute top-[100vh] h-[100vh] w-full pointer-events-none" />
             <div id="dummy-2" className="absolute top-[200vh] h-[100vh] w-full pointer-events-none" />
@@ -149,7 +149,7 @@ export default function ServicesSection() {
                 ref={sectionRef}
                 data-scroll
                 data-scroll-sticky
-                data-scroll-target="#services-wrapper"
+                data-scroll-target="#services-section"
                 className="relative z-10 bg-[#f5f2ec] text-black h-screen flex flex-col lg:flex-row overflow-hidden"
             >
 
