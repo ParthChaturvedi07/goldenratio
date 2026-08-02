@@ -69,15 +69,37 @@ export default function ContactSection() {
     );
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate luxury submission experience
-    setTimeout(() => {
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fullName: formData.fullName,
+          email: formData.email,
+          phone: formData.phone,
+          services: selectedServices,
+          budget: selectedBudget,
+          message: formData.message,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        setIsSubmitted(true);
+      } else {
+        alert(data.errors?.join(', ') || data.message || 'Something went wrong.');
+      }
+    } catch (err) {
+      console.error('Contact form error:', err);
+      alert('Failed to submit. Please try again later.');
+    } finally {
       setIsSubmitting(false);
-      setIsSubmitted(true);
-    }, 1200);
+    }
   };
 
   useEffect(() => {

@@ -293,7 +293,7 @@ export default function Footer() {
         <div className="py-12 md:py-16 overflow-hidden flex flex-col items-center justify-center relative select-none">
           <div className="w-full flex items-center justify-between gap-4 md:gap-8 opacity-90 transition-opacity duration-700 hover:opacity-100">
             {/* Left Logo Icon */}
-            <div className="shrink-0 hidden sm:block">
+            {/* <div className="shrink-0 hidden sm:block">
               <Image
                 src="/images/GoldenRatio_Creation.png"
                 alt="Golden Ratio Emblem"
@@ -301,10 +301,10 @@ export default function Footer() {
                 height={120}
                 className="w-16 sm:w-24 md:w-32 lg:w-40 h-auto object-contain brightness-0 invert opacity-40"
               />
-            </div>
+            </div> */}
 
             {/* Giant Architectural Typographic Watermark */}
-            <h1 className="text-[12vw] sm:text-[13vw] md:text-[13.5vw] font-black uppercase tracking-tighter text-white/15 leading-none text-center whitespace-nowrap w-full">
+            <h1 className="text-[12vw] sm:text-[12vw] md:text-[12.8vw] font-black uppercase tracking-tighter text-white/15 leading-none text-center whitespace-nowrap w-full">
               GOLDENRATIO
             </h1>
 

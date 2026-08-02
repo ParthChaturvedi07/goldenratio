@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-light-bg text-text-primary font-outfit antialiased selection:bg-brand selection:text-white;
+  }
+}
+
+@layer components {
+  /* Forms */
+  .input-field {
+    @apply w-full bg-[#f5f2ec] border border-light-border rounded-xl px-4 py-3.5 text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-brand transition-colors;
+  }
+
+  /* Buttons */
+  .btn-primary {
+    @apply px-4 py-2 rounded-full bg-[#1a1a1a] text-white text-xs font-semibold uppercase tracking-widest hover:bg-brand transition-all duration-300 shadow-lg shadow-black/10 disabled:opacity-50;
+  }
+  
+  .btn-secondary {
+    @apply px-4 py-2 rounded-full bg-light-card text-text-primary border border-light-border text-xs font-semibold uppercase tracking-widest hover:bg-light-hover transition-all duration-300 disabled:opacity-50;
+  }
+  
+  .btn-danger {
+    @apply px-4 py-2 rounded-full bg-red-50 text-red-500 border border-red-100 text-xs font-semibold uppercase tracking-widest hover:bg-red-500 hover:text-white transition-all duration-300 disabled:opacity-50;
+  }
+
+  /* Cards & Neomorphism */
+  .card-glass {
+    @apply bg-[#ede9e1] rounded-3xl border border-light-border shadow-[6px_6px_20px_rgba(0,0,0,0.05),-6px_-6px_20px_rgba(255,255,255,0.8)] backdrop-blur-md;
+  }
+
+  /* Badges */
+  .badge {
+    @apply px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider;
+  }
+  .badge-new { @apply bg-brand-dim text-brand; }
+  .badge-contacted { @apply bg-blue-50 text-blue-500; }
+  .badge-closed { @apply bg-gray-100 text-gray-500; }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f5f2ec; 
+}
+::-webkit-scrollbar-thumb {
+  background: #dcd6ca; 
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #c5bba8; 
+}
