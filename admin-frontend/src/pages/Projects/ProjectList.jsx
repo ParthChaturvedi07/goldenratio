@@ -40,7 +40,7 @@ const ProjectList = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 page-enter">
       <div className="flex justify-between items-center">
         <h2 className="text-sm font-bold uppercase tracking-widest text-text-primary">Manage Projects</h2>
         <Link to="/projects/new" className="btn-primary flex items-center gap-2">

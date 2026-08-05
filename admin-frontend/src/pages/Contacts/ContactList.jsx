@@ -65,7 +65,7 @@ const ContactList = () => {
   }
 
   return (
-    <div className="card-glass overflow-hidden">
+    <div className="card-glass overflow-hidden page-enter">
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>

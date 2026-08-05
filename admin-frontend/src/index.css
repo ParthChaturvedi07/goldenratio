@@ -10,6 +10,36 @@
   }
 }
 
+/* ─── Animations ─────────────────────────────────────────── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
 @layer components {
   /* Forms */
   .input-field {
@@ -31,7 +61,11 @@
 
   /* Cards & Neomorphism */
   .card-glass {
-    @apply bg-[#ede9e1] rounded-3xl border border-light-border shadow-[6px_6px_20px_rgba(0,0,0,0.05),-6px_-6px_20px_rgba(255,255,255,0.8)] backdrop-blur-md;
+    @apply bg-[#ede9e1] rounded-3xl border border-light-border shadow-[6px_6px_20px_rgba(0,0,0,0.05),-6px_-6px_20px_rgba(255,255,255,0.8)] transition-all duration-500;
+  }
+  
+  .card-glass:hover {
+    @apply shadow-[10px_10px_30px_rgba(0,0,0,0.08),-10px_-10px_30px_rgba(255,255,255,0.9)];
   }
 
   /* Badges */
@@ -41,6 +75,22 @@
   .badge-new { @apply bg-brand-dim text-brand; }
   .badge-contacted { @apply bg-blue-50 text-blue-500; }
   .badge-closed { @apply bg-gray-100 text-gray-500; }
+
+  /* Utility Animations */
+  .page-enter {
+    animation: fadeInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .skeleton {
+    @apply bg-[#dcd6ca] rounded animate-pulse;
+    background: linear-gradient(to right, #e8e3d9 8%, #f5f2ec 18%, #e8e3d9 33%);
+    background-size: 2000px 100%;
+    animation: shimmer 2s linear infinite;
+  }
 }
 
 /* Custom Scrollbar */

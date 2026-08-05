@@ -61,7 +61,7 @@ const Settings = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto space-y-8">
+    <div className="max-w-2xl mx-auto space-y-8 page-enter">
 
       {/* Current Role Info */}
       <div className="card-glass p-6 flex items-center gap-5">

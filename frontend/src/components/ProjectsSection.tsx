@@ -1,66 +1,48 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight } from "lucide-react";
 import { useSmoothScroll } from "./SmoothScrollProvider";
+import { fetchProjects, type Project, getMediaUrl } from "@/lib/api";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const projects = [
-  {
-    id: 1,
-    title: "Urban Architecture Model",
-    category: "Industrial Models",
-    description: "A comprehensive industrial layout with complex machinery flows, meticulously crafted for precise detailing and functional planning. Highlights spatial efficiency and structural integrity.",
-    image: "/images/IMG20250529191734.jpg",
-  },
-  {
-    id: 2,
-    title: "Eco Township Layout",
-    category: "Architectural Models",
-    description: "Expansive residential township miniature focusing on green spaces, sustainable design, and modern living. Features intricate terrain mapping and lifestyle amenities.",
-    image: "/images/IMG20250608163444.jpg",
-  },
-  {
-    id: 3,
-    title: "Corporate Headquarters",
-    category: "Commercial Models",
-    description: "High-rise commercial complex highlighting glass facades, modern structural design, and an integrated transport hub for large-scale enterprise environments.",
-    image: "/images/IMG20250830225703.jpg",
-  },
-  {
-    id: 4,
-    title: "Luxury Interior Concept",
-    category: "Interior Models",
-    description: "Detailed interior layout for a premium showroom, showcasing tailored material finishes, modular furniture, and specialized lighting setups for a realistic feel.",
-    image: "/images/IMG_0615.jpg",
-  },
-  {
-    id: 5,
-    title: "Smart City Development",
-    category: "Architectural Models",
-    description: "Master plan model incorporating IT parks, institutional buildings, and smart infrastructure. Displays zoning, road networks, and energy-efficient building placements.",
-    image: "/images/IMG_20240313_115136.jpg",
-  },
-  {
-    id: 6,
-    title: "Industrial Plant Layout",
-    category: "Industrial Models",
-    description: "Detailed manufacturing plant setup showing production line sequences, loading bays, and safety zones. A vital tool for logistical planning and investor presentations.",
-    image: "/images/IMG_20221110_172236.jpg",
-  }
-];
-
 export default function ProjectsSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const cardsRef = useRef<(HTMLAnchorElement | null)[]>([]);
   const { isReady } = useSmoothScroll();
 
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  /* ── Fetch projects from server ────────────────────────── */
   useEffect(() => {
-    if (!isReady || !sectionRef.current) return;
+    let cancelled = false;
+    fetchProjects()
+      .then((data) => {
+        if (!cancelled) {
+          // Show only the first 6 for the landing page grid
+          setProjects(data.slice(0, 6));
+        }
+      })
+      .catch((err) => {
+        console.error("Failed to load projects:", err);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  /* ── GSAP scroll animations ────────────────────────────── */
+  useEffect(() => {
+    if (!isReady || !sectionRef.current || loading) return;
 
     const scrollContainer = document.querySelector("#smooth-scroll-container") as HTMLElement;
 
@@ -99,7 +81,7 @@ export default function ProjectsSection() {
     }, 200);
 
     return () => ctx.revert();
-  }, [isReady]);
+  }, [isReady, loading, projects]);
 
   return (
     <section ref={sectionRef} id="projects-section" className="py-12 bg-[#f5f2ec] relative text-black rounded-xl">
@@ -122,46 +104,75 @@ export default function ProjectsSection() {
           </div>
         </div>
 
-        {/* 2x3 Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-14">
-          {projects.map((project, index) => (
-            <div
-              key={project.id}
-              ref={(el) => { cardsRef.current[index] = el; }}
-              className="flex flex-col gap-6"
-            >
-              {/* Image Card */}
-              <div className="group relative w-full aspect-[4/3] lg:aspect-[16/10] rounded-[30px] overflow-hidden shadow-lg cursor-pointer">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                
-                {/* Hover Overlay with Button */}
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-                  <div className="bg-white text-black px-8 py-3 flex items-center gap-2 rounded-full font-medium tracking-wide translate-y-4 group-hover:translate-y-0 transition-all duration-500 hover:scale-105">
-                    <span>VIEW PROJECT</span>
-                  </div>
+        {/* Loading Skeleton */}
+        {loading && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-14">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="flex flex-col gap-6 animate-pulse">
+                <div className="w-full aspect-[4/3] lg:aspect-[16/10] rounded-[30px] bg-black/10" />
+                <div className="flex flex-col gap-2 px-1">
+                  <div className="h-3 w-32 rounded bg-black/10" />
+                  <div className="h-7 w-64 rounded bg-black/10" />
+                  <div className="h-4 w-full rounded bg-black/10" />
+                  <div className="h-4 w-3/4 rounded bg-black/10" />
                 </div>
               </div>
+            ))}
+          </div>
+        )}
 
-              {/* Project Content */}
-              <div className="flex flex-col gap-2 px-1">
-                <p className="text-black/50 text-xs md:text-sm font-mono tracking-wider uppercase">
-                  /{project.category}
-                </p>
-                <h3 className="text-2xl md:text-3xl font-medium text-black">
-                  {project.title}
-                </h3>
-                <p className="text-black/70 text-sm md:text-base line-clamp-3">
-                  {project.description}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
+        {/* 2x3 Grid */}
+        {!loading && projects.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-14">
+            {projects.map((project, index) => (
+              <Link
+                href={`/projects/${project.slug}`}
+                key={project._id}
+                ref={(el) => { cardsRef.current[index] = el; }}
+                className="group flex flex-col gap-6"
+              >
+                {/* Image Card */}
+                <div className="relative w-full aspect-[4/3] lg:aspect-[16/10] rounded-[30px] overflow-hidden shadow-lg">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={getMediaUrl(project.image)}
+                    alt={project.title}
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  
+                  {/* Hover Overlay with Button */}
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+                    <div className="bg-white text-black px-8 py-3 flex items-center gap-2 rounded-full font-medium tracking-wide translate-y-4 group-hover:translate-y-0 transition-all duration-500 hover:scale-105">
+                      <span>VIEW PROJECT</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Project Content */}
+                <div className="flex flex-col gap-2 px-1">
+                  <p className="text-black/50 text-xs md:text-sm font-mono tracking-wider uppercase">
+                    /{project.category}
+                  </p>
+                  <h3 className="text-2xl md:text-3xl font-medium text-black">
+                    {project.title}
+                  </h3>
+                  <p className="text-black/70 text-sm md:text-base line-clamp-3">
+                    {project.description}
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
+
+        {/* Empty state */}
+        {!loading && projects.length === 0 && (
+          <div className="flex flex-col items-center justify-center py-32 text-center">
+            <p className="text-black/40 text-lg uppercase tracking-widest">
+              No projects available yet
+            </p>
+          </div>
+        )}
 
         {/* View More Button */}
         <div className="mt-20 flex justify-center">

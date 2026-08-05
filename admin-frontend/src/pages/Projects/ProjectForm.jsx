@@ -138,7 +138,7 @@ const ProjectForm = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className="max-w-4xl mx-auto space-y-6 page-enter">
       <div className="flex items-center gap-4">
         <button onClick={() => navigate('/projects')} className="p-2 bg-light-card border border-light-border rounded-xl text-text-secondary hover:text-text-primary transition-colors">
           <ArrowLeft size={20} />

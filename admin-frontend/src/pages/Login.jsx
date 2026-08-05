@@ -43,8 +43,11 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-light-bg flex items-center justify-center p-4">
-      <div className="card-glass w-full max-w-md p-10 relative overflow-hidden">
+    <div className="min-h-screen bg-light-bg flex flex-col items-center justify-center p-4 relative overflow-hidden">
+      {/* Background Subtle Dot Grid / Texture */}
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#1a1a1a 1px, transparent 1px)', backgroundSize: '32px 32px' }}></div>
+      
+      <div className="card-glass w-full max-w-md p-10 relative overflow-hidden animate-fade-in-up z-10 shadow-[0_20px_50px_rgba(0,0,0,0.1)]">
         {/* Glow effect */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-brand/10 blur-[80px] rounded-full pointer-events-none"></div>
 
@@ -89,6 +92,13 @@ const Login = () => {
             </button>
           </form>
         </div>
+      </div>
+      
+      {/* Footer Text */}
+      <div className="mt-8 text-center animate-fade-in z-10" style={{ animationDelay: '0.4s' }}>
+        <p className="text-[10px] text-text-muted uppercase tracking-widest font-bold">
+          &copy; {new Date().getFullYear()} Golden Ratio Design & Build
+        </p>
       </div>
     </div>
   );
