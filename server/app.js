@@ -15,11 +15,21 @@ app.use(helmet({
 app.use(morgan('dev'));
 
 // ── CORS ──
+const allowedOrigins = [
+  process.env.FRONTEND_URL     || 'http://localhost:3000',  // public frontend
+  process.env.ADMIN_URL        || 'http://localhost:5173',  // admin frontend
+  'http://localhost:5174',
+  'https://goldenratio-dun.vercel.app',       // public frontend (Vercel)
+  'https://goldenratio-8hnm.vercel.app',      // admin frontend (Vercel)
+].filter(Boolean);
+
 app.use(cors({
-  origin: [
-    process.env.FRONTEND_URL || 'http://localhost:3000',
-    'https://goldenratio-8hnm.vercel.app',
-  ],
+  origin: (origin, callback) => {
+    // Allow requests with no origin (mobile apps, curl, Postman)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+    callback(new Error(`CORS: Origin ${origin} not allowed`));
+  },
   credentials: true,
 }));
 
