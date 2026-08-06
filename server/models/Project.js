@@ -38,20 +38,27 @@ const projectSchema = new mongoose.Schema({
     trim: true,
     default: '',
   },
-  // Main thumbnail image
+  // Main thumbnail image — Cloudinary secure URL
   image: {
     type: String,
     required: [true, 'Main image is required'],
   },
+  // Cloudinary public_id for the main image (used for deletion)
+  imagePublicId: {
+    type: String,
+    default: '',
+  },
   // Gallery images
   gallery: [{
-    src: { type: String, required: true },
-    caption: { type: String, default: '' },
+    src:       { type: String, required: true },
+    publicId:  { type: String, default: '' },
+    caption:   { type: String, default: '' },
   }],
   // Project videos
   videos: [{
-    src: { type: String, required: true },
-    caption: { type: String, default: '' },
+    src:       { type: String, required: true },
+    publicId:  { type: String, default: '' },
+    caption:   { type: String, default: '' },
   }],
   order: {
     type: Number,

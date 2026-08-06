@@ -3,7 +3,6 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const morgan = require('morgan');
-const path = require('path');
 
 const app = express();
 
@@ -33,10 +32,7 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
 // ── Static Files ──
-// Serve uploaded images/videos from the backend
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-// Also serve the original frontend images so both frontends can load them from the backend
-app.use('/images', express.static(path.join(__dirname, '..', 'frontend', 'public', 'images')));
+// Media is now served from Cloudinary CDN — no local static routes needed.
 
 // ──────────────────────────────────────────────────────────
 //  PUBLIC API ROUTES

@@ -9,10 +9,10 @@ const nextConfig: NextConfig = {
         pathname: "/**",
       },
       {
-        protocol: "http",
-        hostname: "localhost",
-        port: "5000",
-        pathname: "/uploads/**",
+        // Cloudinary CDN
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        pathname: "/**",
       },
     ],
   },
@@ -22,10 +22,7 @@ const nextConfig: NextConfig = {
         source: '/api/:path*',
         destination: 'http://localhost:5000/api/:path*',
       },
-      {
-        source: '/uploads/:path*',
-        destination: 'http://localhost:5000/uploads/:path*',
-      },
+      // /uploads rewrite removed — media is now served directly from Cloudinary CDN
     ];
   },
 };

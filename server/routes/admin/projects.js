@@ -1,11 +1,35 @@
 const router = require('express').Router();
 const { authenticateToken } = require('../../middleware/auth');
 const { uploadFields } = require('../../middleware/upload');
+const { cloudinary } = require('../../config/cloudinary');
 const Project = require('../../models/Project');
 const slugify = require('slugify');
 
 // All admin project routes require authentication
 router.use(authenticateToken);
+
+// ── Helper: delete one Cloudinary asset ──────────────────────────────────────
+async function destroyAsset(publicId, resourceType = 'image') {
+  if (!publicId) return;
+  try {
+    await cloudinary.uploader.destroy(publicId, { resource_type: resourceType });
+  } catch (err) {
+    console.warn(`Cloudinary destroy failed for ${publicId}:`, err.message);
+  }
+}
+
+// ── Helper: destroy all media tied to a project ───────────────────────────────
+async function destroyProjectMedia(project) {
+  const tasks = [];
+  if (project.imagePublicId) tasks.push(destroyAsset(project.imagePublicId, 'image'));
+  for (const img of project.gallery || []) {
+    if (img.publicId) tasks.push(destroyAsset(img.publicId, 'image'));
+  }
+  for (const vid of project.videos || []) {
+    if (vid.publicId) tasks.push(destroyAsset(vid.publicId, 'video'));
+  }
+  await Promise.all(tasks);
+}
 
 // GET /api/admin/projects — List all projects (including inactive)
 router.get('/', async (req, res) => {
@@ -39,9 +63,9 @@ router.get('/:id', async (req, res) => {
 // File fields: projectImage (1), galleryImages (up to 10), projectVideos (up to 5)
 router.post('/',
   uploadFields([
-    { name: 'projectImage', maxCount: 1 },
+    { name: 'projectImage',  maxCount: 1  },
     { name: 'galleryImages', maxCount: 10 },
-    { name: 'projectVideos', maxCount: 5 },
+    { name: 'projectVideos', maxCount: 5  },
   ]),
   async (req, res) => {
     try {
@@ -66,10 +90,13 @@ router.post('/',
         });
       }
 
-      // Main image
+      // ── Main image ──
       let image = '';
-      if (req.files && req.files.projectImage && req.files.projectImage[0]) {
-        image = '/uploads/projects/' + req.files.projectImage[0].filename;
+      let imagePublicId = '';
+      if (req.files?.projectImage?.[0]) {
+        const f = req.files.projectImage[0];
+        image         = f.path;      // Cloudinary secure_url
+        imagePublicId = f.filename;  // Cloudinary public_id
       }
 
       if (!image) {
@@ -79,21 +106,23 @@ router.post('/',
         });
       }
 
-      // Gallery images
+      // ── Gallery images ──
       let gallery = [];
-      if (req.files && req.files.galleryImages) {
+      if (req.files?.galleryImages) {
         gallery = req.files.galleryImages.map((file, i) => ({
-          src: '/uploads/projects/' + file.filename,
-          caption: req.body[`galleryCaption_${i}`] || '',
+          src:      file.path,
+          publicId: file.filename,
+          caption:  req.body[`galleryCaption_${i}`] || '',
         }));
       }
 
-      // Videos
+      // ── Videos ──
       let videos = [];
-      if (req.files && req.files.projectVideos) {
+      if (req.files?.projectVideos) {
         videos = req.files.projectVideos.map((file, i) => ({
-          src: '/uploads/videos/' + file.filename,
-          caption: req.body[`videoCaption_${i}`] || '',
+          src:      file.path,
+          publicId: file.filename,
+          caption:  req.body[`videoCaption_${i}`] || '',
         }));
       }
 
@@ -102,13 +131,14 @@ router.post('/',
         slug,
         category,
         description,
-        concept: concept || '',
-        role: role || '',
+        concept:  concept  || '',
+        role:     role     || '',
         industry: industry || '',
         image,
+        imagePublicId,
         gallery,
         videos,
-        order: parseInt(order) || 0,
+        order:    parseInt(order) || 0,
         isActive: isActive !== 'false',
       });
 
@@ -127,9 +157,9 @@ router.post('/',
 // PUT /api/admin/projects/:id — Update project
 router.put('/:id',
   uploadFields([
-    { name: 'projectImage', maxCount: 1 },
+    { name: 'projectImage',  maxCount: 1  },
     { name: 'galleryImages', maxCount: 10 },
-    { name: 'projectVideos', maxCount: 5 },
+    { name: 'projectVideos', maxCount: 5  },
   ]),
   async (req, res) => {
     try {
@@ -142,37 +172,43 @@ router.put('/:id',
 
       if (title) {
         project.title = title;
-        project.slug = slugify(title, { lower: true, strict: true });
+        project.slug  = slugify(title, { lower: true, strict: true });
       }
-      if (category) project.category = category;
-      if (description) project.description = description;
-      if (concept !== undefined) project.concept = concept;
-      if (role !== undefined) project.role = role;
+      if (category)            project.category    = category;
+      if (description)         project.description = description;
+      if (concept !== undefined)  project.concept  = concept;
+      if (role    !== undefined)  project.role     = role;
       if (industry !== undefined) project.industry = industry;
-      if (order !== undefined) project.order = parseInt(order) || 0;
+      if (order   !== undefined)  project.order    = parseInt(order) || 0;
       if (isActive !== undefined) project.isActive = isActive !== 'false';
 
-      // Update main image if new one uploaded
-      if (req.files && req.files.projectImage && req.files.projectImage[0]) {
-        project.image = '/uploads/projects/' + req.files.projectImage[0].filename;
+      // ── Replace main image ──
+      if (req.files?.projectImage?.[0]) {
+        // Delete old asset from Cloudinary
+        await destroyAsset(project.imagePublicId, 'image');
+        const f = req.files.projectImage[0];
+        project.image         = f.path;
+        project.imagePublicId = f.filename;
       }
 
-      // Append new gallery images
-      if (req.files && req.files.galleryImages) {
-        const newGalleryItems = req.files.galleryImages.map((file, i) => ({
-          src: '/uploads/projects/' + file.filename,
-          caption: req.body[`galleryCaption_${i}`] || '',
+      // ── Append new gallery images ──
+      if (req.files?.galleryImages) {
+        const newItems = req.files.galleryImages.map((file, i) => ({
+          src:      file.path,
+          publicId: file.filename,
+          caption:  req.body[`galleryCaption_${i}`] || '',
         }));
-        project.gallery = [...project.gallery, ...newGalleryItems];
+        project.gallery = [...project.gallery, ...newItems];
       }
 
-      // Append new videos
-      if (req.files && req.files.projectVideos) {
-        const newVideoItems = req.files.projectVideos.map((file, i) => ({
-          src: '/uploads/videos/' + file.filename,
-          caption: req.body[`videoCaption_${i}`] || '',
+      // ── Append new videos ──
+      if (req.files?.projectVideos) {
+        const newItems = req.files.projectVideos.map((file, i) => ({
+          src:      file.path,
+          publicId: file.filename,
+          caption:  req.body[`videoCaption_${i}`] || '',
         }));
-        project.videos = [...project.videos, ...newVideoItems];
+        project.videos = [...project.videos, ...newItems];
       }
 
       await project.save();
@@ -189,13 +225,16 @@ router.put('/:id',
   }
 );
 
-// DELETE /api/admin/projects/:id — Delete project
+// DELETE /api/admin/projects/:id — Delete project + all Cloudinary assets
 router.delete('/:id', async (req, res) => {
   try {
-    const project = await Project.findByIdAndDelete(req.params.id);
+    const project = await Project.findById(req.params.id);
     if (!project) {
       return res.status(404).json({ success: false, error: 'Project not found' });
     }
+
+    await destroyProjectMedia(project);
+    await project.deleteOne();
 
     res.json({
       success: true,
@@ -220,7 +259,8 @@ router.delete('/:id/gallery/:index', async (req, res) => {
       return res.status(400).json({ success: false, error: 'Invalid gallery index' });
     }
 
-    project.gallery.splice(index, 1);
+    const [removed] = project.gallery.splice(index, 1);
+    await destroyAsset(removed.publicId, 'image');
     await project.save();
 
     res.json({ success: true, message: 'Gallery image removed', data: project });
@@ -242,7 +282,8 @@ router.delete('/:id/videos/:index', async (req, res) => {
       return res.status(400).json({ success: false, error: 'Invalid video index' });
     }
 
-    project.videos.splice(index, 1);
+    const [removed] = project.videos.splice(index, 1);
+    await destroyAsset(removed.publicId, 'video');
     await project.save();
 
     res.json({ success: true, message: 'Video removed', data: project });
