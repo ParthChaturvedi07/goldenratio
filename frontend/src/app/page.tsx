@@ -5,7 +5,6 @@ import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
 import ClientLogoTicker from "@/components/ClientLogoTicker";
-import SmoothScrollProvider from "@/components/SmoothScrollProvider";
 import WhyUsSection from "@/components/WhyUsSection";
 import ProcessSection from "@/components/ProcessSection";
 import Testimonials from "@/components/Testimonials";
@@ -43,50 +42,48 @@ export default function Home() {
       {/* ── Preloader Overlay ─────────────────────────────── */}
       {/* {!preloaderDone && <Preloader onComplete={() => setPreloaderDone(true)} />} */}
 
-      <SmoothScrollProvider>
-        <Navbar />
+      <Navbar />
 
-        <div data-scroll-section className="sticky top-0 z-0">
-          <HeroSection />
-        </div>
+      <div className="relative z-0">
+        <HeroSection />
+      </div>
 
-        <div data-scroll-section>
-          <AboutSection />
-          <ClientLogoTicker />
-        </div>
+      <div>
+        <AboutSection />
+        <ClientLogoTicker />
+      </div>
 
-        <div data-scroll-section>
-          <WhyUsSection />
-        </div>
+      <div>
+        <WhyUsSection />
+      </div>
 
-        <div data-scroll-section>
-          <ProcessSection />
-        </div>
+      <div>
+        <ProcessSection />
+      </div>
 
-        <div data-scroll-section>
-          <ServicesSection />
-        </div>
+      <div>
+        <ServicesSection />
+      </div>
 
-        <div data-scroll-section>
-          <ProjectsSection />
-        </div>
+      <div>
+        <ProjectsSection />
+      </div>
 
-        <div data-scroll-section>
-          <ClouCloneSection />
-        </div>
+      <div>
+        <ClouCloneSection />
+      </div>
 
-        <div data-scroll-section>
-          <Testimonials />
-        </div>
+      <div>
+        <Testimonials />
+      </div>
 
-        <div data-scroll-section>
-          <ContactSection />
-        </div>
+      <div>
+        <ContactSection />
+      </div>
 
-        <div data-scroll-section>
-          <Footer />
-        </div>
-      </SmoothScrollProvider>
+      <div>
+        <Footer />
+      </div>
     </>
   );
 }

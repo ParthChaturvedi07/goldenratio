@@ -4,7 +4,6 @@ import React, { useState, useCallback, useEffect, useRef } from "react";
 import Logo from "./Logo";
 import HamburgerButton from "./HamburgerButton";
 import MenuDrawer from "./MenuDrawer";
-import { useSmoothScroll } from "./SmoothScrollProvider";
 
 // Threshold in px — after this distance from top, the navbar gets a solid bg
 const SCROLL_BG_THRESHOLD = 100;
@@ -13,7 +12,6 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [hasBg, setHasBg] = useState(false);
-  const { scroll } = useSmoothScroll();
 
   const lastScrollY = useRef(0);
 
@@ -21,12 +19,10 @@ export default function Navbar() {
     setIsMenuOpen((prev) => !prev);
   }, []);
 
-  /* ── Listen to Locomotive Scroll events ────────────────── */
+  /* ── Listen to Window Scroll events ────────────────── */
   useEffect(() => {
-    if (!scroll) return;
-
-    const onScroll = (args: { scroll: { y: number } }) => {
-      const currentY = args.scroll.y;
+    const onScroll = () => {
+      const currentY = window.scrollY;
       const delta = currentY - lastScrollY.current;
 
       if (delta > 5) {
@@ -39,9 +35,9 @@ export default function Navbar() {
       lastScrollY.current = currentY;
     };
 
-    scroll.on("scroll", onScroll);
-    return () => scroll.off("scroll", onScroll);
-  }, [scroll]);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <>

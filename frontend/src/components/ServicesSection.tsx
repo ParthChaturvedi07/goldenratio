@@ -3,9 +3,6 @@
 import React, { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useSmoothScroll } from "./SmoothScrollProvider";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const services = [
     {
@@ -48,12 +45,9 @@ export default function ServicesSection() {
     const progressBarRef = useRef<HTMLDivElement>(null);
     const imagesRef = useRef<(HTMLImageElement | null)[]>([]);
     const textsRef = useRef<(HTMLDivElement | null)[]>([]);
-    const { isReady } = useSmoothScroll();
 
     useEffect(() => {
-        if (!isReady || !wrapperRef.current || !sectionRef.current) return;
-
-        const scrollContainer = document.querySelector("#smooth-scroll-container") as HTMLElement;
+        if (!wrapperRef.current || !sectionRef.current) return;
 
         const ctx = gsap.context(() => {
             let currentIndex = 0;
@@ -106,7 +100,6 @@ export default function ServicesSection() {
             // Progress bar timeline (scrubbed)
             ScrollTrigger.create({
                 trigger: wrapperRef.current,
-                scroller: scrollContainer,
                 start: "top top",
                 end: "bottom bottom",
                 scrub: 1,
@@ -122,7 +115,6 @@ export default function ServicesSection() {
                 if (i === 0) return;
                 ScrollTrigger.create({
                     trigger: `#dummy-${i}`,
-                    scroller: scrollContainer,
                     start: "top 50%", // Trigger when dummy hits middle of screen
                     onEnter: () => goToStep(i),
                     onLeaveBack: () => goToStep(i - 1),
@@ -137,7 +129,7 @@ export default function ServicesSection() {
         }, 200);
 
         return () => ctx.revert();
-    }, [isReady]);
+    }, []);
 
     return (
         <div ref={wrapperRef} id="services-section" className="relative h-[300vh]">
@@ -147,10 +139,7 @@ export default function ServicesSection() {
 
             <section
                 ref={sectionRef}
-                data-scroll
-                data-scroll-sticky
-                data-scroll-target="#services-section"
-                className="relative z-10 bg-[#f5f2ec] text-black h-screen flex flex-col lg:flex-row overflow-hidden"
+                className="sticky top-0 z-10 bg-[#f5f2ec] text-black h-screen flex flex-col lg:flex-row overflow-hidden"
             >
 
                 {/* LEFT HALF: Image & Progress */}

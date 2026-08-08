@@ -4,7 +4,6 @@ import React, { useRef, useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useSmoothScroll } from "./SmoothScrollProvider";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -106,7 +105,6 @@ const LAYOUTS = [
 ];
 
 export default function WhyUsSection() {
-  const { isReady } = useSmoothScroll();
   const sectionRef = useRef<HTMLElement | null>(null);
   const whyRef = useRef<HTMLSpanElement | null>(null);
   const usTextRef = useRef<HTMLSpanElement | null>(null);
@@ -121,21 +119,13 @@ export default function WhyUsSection() {
 
   /* ── GSAP scroll-driven animation ── */
   useEffect(() => {
-    if (!isReady) return;
-
-    const scrollContainer = document.querySelector(
-      "#smooth-scroll-container"
-    ) as HTMLElement;
-
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
-          scroller: scrollContainer,
           start: "top top",
           end: "+=200%",
           pin: true,
-          pinType: "transform",
           scrub: 1,
           anticipatePin: 1,
         },
@@ -184,7 +174,7 @@ export default function WhyUsSection() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, [isReady]);
+  }, []);
 
   /* ── Animate images in/out ── */
   useEffect(() => {

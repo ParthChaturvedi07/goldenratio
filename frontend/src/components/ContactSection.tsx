@@ -3,7 +3,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useSmoothScroll } from "./SmoothScrollProvider";
 import {
   MapPin,
   Phone,
@@ -40,7 +39,6 @@ const budgetRanges = [
 ];
 
 export default function ContactSection() {
-  const { isReady } = useSmoothScroll();
   const sectionRef = useRef<HTMLElement | null>(null);
   const heroTextRef = useRef<HTMLDivElement | null>(null);
   const formCardRef = useRef<HTMLDivElement | null>(null);
@@ -103,17 +101,10 @@ export default function ContactSection() {
   };
 
   useEffect(() => {
-    if (!isReady) return;
-
-    const scrollContainer = document.querySelector(
-      "#smooth-scroll-container"
-    ) as HTMLElement;
-
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
-          scroller: scrollContainer,
           start: "top 80%",
           toggleActions: "play none none none",
         },
@@ -157,7 +148,7 @@ export default function ContactSection() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, [isReady]);
+  }, []);
 
   return (
     <section

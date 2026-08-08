@@ -29,20 +29,7 @@
 
 /* ─── Base ───────────────────────────────────────────────── */
 html {
-  /* scroll-behavior removed — Locomotive Scroll handles smooth scrolling */
-}
-
-html.has-scroll-smooth {
-  overflow: hidden;
-}
-
-html.has-scroll-smooth body {
-  overflow: hidden;
-}
-
-/* Locomotive scroll container must take full viewport */
-[data-scroll-container] {
-  min-height: 100vh;
+  scroll-behavior: smooth;
 }
 
 body {

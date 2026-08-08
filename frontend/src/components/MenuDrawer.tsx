@@ -4,7 +4,6 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import gsap from "gsap";
-import { useSmoothScroll } from "./SmoothScrollProvider";
 
 interface MenuLink {
   label: string;
@@ -37,7 +36,6 @@ interface MenuDrawerProps {
 
 export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
   const [expandedItem, setExpandedItem] = useState<string | null>(null);
-  const { scroll } = useSmoothScroll();
   const router = useRouter();
 
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -64,16 +62,11 @@ export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
         setTimeout(() => {
           const target = document.querySelector(`#${link.sectionId}`);
           if (!target) return;
-
-          if (scroll) {
-            scroll.scrollTo(target, { offset: 0, duration: 1200 });
-          } else {
-            target.scrollIntoView({ behavior: "smooth" });
-          }
+          target.scrollIntoView({ behavior: "smooth" });
         }, 400);
       }
     },
-    [scroll, onClose, router]
+    [onClose, router]
   );
 
   // Build the GSAP timeline once, then play / reverse based on isOpen

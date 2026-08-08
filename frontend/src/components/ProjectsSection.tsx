@@ -5,7 +5,6 @@ import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight } from "lucide-react";
-import { useSmoothScroll } from "./SmoothScrollProvider";
 import { fetchProjects, type Project, getMediaUrl } from "@/lib/api";
 import AnimatedLink from "./ui/AnimatedLink";
 
@@ -14,7 +13,6 @@ gsap.registerPlugin(ScrollTrigger);
 export default function ProjectsSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const cardsRef = useRef<(HTMLAnchorElement | null)[]>([]);
-  const { isReady } = useSmoothScroll();
 
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
@@ -43,9 +41,7 @@ export default function ProjectsSection() {
 
   /* ── GSAP scroll animations ────────────────────────────── */
   useEffect(() => {
-    if (!isReady || !sectionRef.current || loading) return;
-
-    const scrollContainer = document.querySelector("#smooth-scroll-container") as HTMLElement;
+    if (!sectionRef.current || loading) return;
 
     const ctx = gsap.context(() => {
       cardsRef.current.forEach((card, i) => {
@@ -68,7 +64,6 @@ export default function ProjectsSection() {
             ease: "power3.out",
             scrollTrigger: {
               trigger: card,
-              scroller: scrollContainer,
               start: "top 85%",
               toggleActions: "play none none reverse"
             }
@@ -82,7 +77,7 @@ export default function ProjectsSection() {
     }, 200);
 
     return () => ctx.revert();
-  }, [isReady, loading, projects]);
+  }, [loading, projects]);
 
   return (
     <section ref={sectionRef} id="projects-section" className="py-12 bg-[#f5f2ec] relative text-black rounded-xl">

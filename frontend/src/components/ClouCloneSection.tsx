@@ -6,7 +6,6 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useSmoothScroll } from "./SmoothScrollProvider";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -105,20 +104,14 @@ function CylinderGallery() {
 }
 
 export default function ClouCloneSection() {
-  const { isReady } = useSmoothScroll();
   const sectionRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    if (!isReady || !sectionRef.current) return;
-
-    const scrollContainer = document.querySelector(
-      "#smooth-scroll-container"
-    ) as HTMLElement;
+    if (!sectionRef.current) return;
 
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
         trigger: sectionRef.current,
-        scroller: scrollContainer,
         start: "top bottom",
         end: "bottom top",
         onUpdate: (self) => {
@@ -128,7 +121,7 @@ export default function ClouCloneSection() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, [isReady]);
+  }, []);
 
   return (
     <section

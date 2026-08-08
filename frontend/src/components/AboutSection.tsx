@@ -4,12 +4,10 @@ import React, { useRef, useEffect } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useSmoothScroll } from "./SmoothScrollProvider";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function AboutSection() {
-  const { isReady } = useSmoothScroll();
   const sectionRef = useRef<HTMLElement | null>(null);
   const imageWrapperRef = useRef<HTMLDivElement | null>(null);
   const imageRef = useRef<HTMLDivElement | null>(null);
@@ -19,13 +17,6 @@ export default function AboutSection() {
   const ctaRef = useRef<HTMLAnchorElement | null>(null);
 
   useEffect(() => {
-    // Wait until Locomotive Scroll is ready so scrollerProxy is wired
-    if (!isReady) return;
-
-    const scrollContainer = document.querySelector(
-      "#smooth-scroll-container"
-    ) as HTMLElement;
-
     const ctx = gsap.context(() => {
       // ── Parallax: image moves DOWN as section scrolls UP ──
       if (imageRef.current && sectionRef.current) {
@@ -37,7 +28,6 @@ export default function AboutSection() {
             ease: "none",
             scrollTrigger: {
               trigger: sectionRef.current,
-              scroller: scrollContainer,
               start: "top bottom",
               end: "bottom top",
               scrub: true,
@@ -50,7 +40,6 @@ export default function AboutSection() {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
-          scroller: scrollContainer,
           start: "top 75%",
           end: "top 25%",
           toggleActions: "play none none none",
@@ -105,7 +94,7 @@ export default function AboutSection() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, [isReady]);
+  }, []);
 
   return (
     <section

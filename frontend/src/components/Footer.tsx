@@ -11,17 +11,10 @@ import {
   Mail,
   MessageCircle,
 } from "lucide-react";
-import { useSmoothScroll } from "./SmoothScrollProvider";
 
 export default function Footer() {
-  const { scroll } = useSmoothScroll();
-
   const scrollToTop = () => {
-    if (scroll) {
-      scroll.scrollTo(0);
-    } else {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -51,9 +44,7 @@ export default function Footer() {
             <button
               onClick={() => {
                 const target = document.querySelector("#contact-section");
-                if (target && scroll) {
-                  scroll.scrollTo(target, { offset: 0, duration: 1200 });
-                } else if (target) {
+                if (target) {
                   target.scrollIntoView({ behavior: "smooth" });
                 }
               }}
@@ -99,11 +90,7 @@ export default function Footer() {
               <li>
                 <button
                   onClick={() => {
-                    if (scroll) {
-                      scroll.scrollTo(0, { duration: 1200 });
-                    } else {
-                      window.scrollTo({ top: 0, behavior: "smooth" });
-                    }
+                    window.scrollTo({ top: 0, behavior: "smooth" });
                   }}
                   className="hover:text-white transition-colors duration-300 bg-transparent border-none cursor-pointer text-white/70 text-xs md:text-sm uppercase tracking-wider font-light"
                 >
@@ -114,9 +101,7 @@ export default function Footer() {
                 <button
                   onClick={() => {
                     const target = document.querySelector("#about-section");
-                    if (target && scroll) {
-                      scroll.scrollTo(target, { offset: 0, duration: 1200 });
-                    } else if (target) {
+                    if (target) {
                       target.scrollIntoView({ behavior: "smooth" });
                     }
                   }}
@@ -129,9 +114,7 @@ export default function Footer() {
                 <button
                   onClick={() => {
                     const target = document.querySelector("#services-section");
-                    if (target && scroll) {
-                      scroll.scrollTo(target, { offset: 0, duration: 1200 });
-                    } else if (target) {
+                    if (target) {
                       target.scrollIntoView({ behavior: "smooth" });
                     }
                   }}
@@ -152,9 +135,7 @@ export default function Footer() {
                 <button
                   onClick={() => {
                     const target = document.querySelector("#contact-section");
-                    if (target && scroll) {
-                      scroll.scrollTo(target, { offset: 0, duration: 1200 });
-                    } else if (target) {
+                    if (target) {
                       target.scrollIntoView({ behavior: "smooth" });
                     }
                   }}

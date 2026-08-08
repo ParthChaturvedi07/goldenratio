@@ -7,7 +7,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Star } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { useSmoothScroll } from "./SmoothScrollProvider";
 import AnimatedLink from "./ui/AnimatedLink";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -47,17 +46,12 @@ export const ClientsSection = ({
   secondaryActionLabel,
   className,
 }: ClientsSectionProps) => {
-  const { isReady } = useSmoothScroll();
   const sectionRef = useRef<HTMLElement | null>(null);
   const leftColRef = useRef<HTMLDivElement | null>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    if (!isReady || !sectionRef.current) return;
-
-    const scrollContainer = document.querySelector(
-      "#smooth-scroll-container"
-    ) as HTMLElement;
+    if (!sectionRef.current) return;
 
     const ctx = gsap.context(() => {
       // ── Main Pinned Scroll Timeline ──
@@ -67,11 +61,9 @@ export const ClientsSection = ({
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
-          scroller: scrollContainer,
           start: "top top",
           end: endScroll,
           pin: true,
-          pinType: "transform",
           scrub: 0.8,
           anticipatePin: 1,
         },
@@ -124,7 +116,7 @@ export const ClientsSection = ({
     }, sectionRef);
 
     return () => ctx.revert();
-  }, [isReady, testimonials]);
+  }, [testimonials]);
 
   return (
     <section

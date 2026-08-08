@@ -3,7 +3,6 @@
 import React, { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useSmoothScroll } from "./SmoothScrollProvider";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -101,18 +100,11 @@ const CLIENT_LOGOS: { name: string; svg: React.ReactNode }[] = [
 ];
 
 export default function ClientLogoTicker() {
-  const { isReady } = useSmoothScroll();
   const sectionRef = useRef<HTMLElement | null>(null);
   const labelRef = useRef<HTMLParagraphElement | null>(null);
   const tickerWrapRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (!isReady) return;
-
-    const scrollContainer = document.querySelector(
-      "#smooth-scroll-container"
-    ) as HTMLElement;
-
     const ctx = gsap.context(() => {
       /* ── Label fade-in ── */
       if (labelRef.current) {
@@ -126,7 +118,6 @@ export default function ClientLogoTicker() {
             ease: "power3.out",
             scrollTrigger: {
               trigger: sectionRef.current,
-              scroller: scrollContainer,
               start: "top 85%",
               toggleActions: "play none none none",
             },
@@ -145,7 +136,6 @@ export default function ClientLogoTicker() {
             ease: "power2.out",
             scrollTrigger: {
               trigger: sectionRef.current,
-              scroller: scrollContainer,
               start: "top 80%",
               toggleActions: "play none none none",
             },
@@ -155,7 +145,7 @@ export default function ClientLogoTicker() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, [isReady]);
+  }, []);
 
   /* We duplicate the list 4× so the CSS animation has enough content to
      scroll infinitely without visible gaps. */

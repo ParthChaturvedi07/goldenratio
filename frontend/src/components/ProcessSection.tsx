@@ -3,7 +3,6 @@
 import React, { useRef, useEffect, useState, useCallback } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useSmoothScroll } from "./SmoothScrollProvider";
 import AnimatedLink from "./ui/AnimatedLink";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -56,7 +55,6 @@ const processData = [
 // "prev"     → left side (outgoing)
 
 export default function ProcessSection() {
-  const { isReady } = useSmoothScroll();
   const sectionRef = useRef<HTMLElement | null>(null);
   const headingRef = useRef<HTMLDivElement | null>(null);
   const carouselRef = useRef<HTMLDivElement | null>(null);
@@ -74,12 +72,6 @@ export default function ProcessSection() {
 
   /* ── GSAP scroll-triggered entrance ── */
   useEffect(() => {
-    if (!isReady) return;
-
-    const scrollContainer = document.querySelector(
-      "#smooth-scroll-container"
-    ) as HTMLElement;
-
     const ctx = gsap.context(() => {
       // Heading entrance
       if (headingRef.current) {
@@ -93,7 +85,6 @@ export default function ProcessSection() {
             ease: "power3.out",
             scrollTrigger: {
               trigger: sectionRef.current,
-              scroller: scrollContainer,
               start: "top 80%",
               toggleActions: "play none none none",
             },
@@ -113,7 +104,6 @@ export default function ProcessSection() {
             ease: "power3.out",
             scrollTrigger: {
               trigger: sectionRef.current,
-              scroller: scrollContainer,
               start: "top 70%",
               toggleActions: "play none none none",
             },
@@ -133,7 +123,6 @@ export default function ProcessSection() {
             ease: "power3.out",
             scrollTrigger: {
               trigger: sectionRef.current,
-              scroller: scrollContainer,
               start: "top 50%",
               toggleActions: "play none none none",
             },
@@ -143,7 +132,7 @@ export default function ProcessSection() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, [isReady]);
+  }, []);
 
   /* ── Carousel rotation ── */
   const next = useCallback(() => {
