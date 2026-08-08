@@ -8,6 +8,7 @@ import { Star } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { useSmoothScroll } from "./SmoothScrollProvider";
+import AnimatedLink from "./ui/AnimatedLink";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -203,12 +204,18 @@ export const ClientsSection = ({
             >
               {primaryActionLabel}
             </a>
-            <a
+            <AnimatedLink
+              href="/projects"
+              className="inline-flex items-center justify-center px-7 py-3.5 rounded-full border border-black/20 text-[#1a1a1a] text-xs tracking-[0.15em] uppercase font-medium transition-all duration-300 hover:bg-black/5 hover:border-black hover:text-[#f5f2ec]"
+            >
+              {secondaryActionLabel}
+            </AnimatedLink>
+            {/* <a
               href="#portfolio-section"
               className="inline-flex items-center justify-center px-7 py-3.5 rounded-full border border-black/20 text-[#1a1a1a] text-xs tracking-[0.15em] uppercase font-medium transition-all duration-300 hover:bg-black/5 hover:border-black"
             >
               {secondaryActionLabel}
-            </a>
+            </a> */}
           </div>
         </div>
 

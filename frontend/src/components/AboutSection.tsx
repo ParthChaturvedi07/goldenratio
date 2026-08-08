@@ -31,9 +31,9 @@ export default function AboutSection() {
       if (imageRef.current && sectionRef.current) {
         gsap.fromTo(
           imageRef.current,
-          { yPercent: -12 },
+          { yPercent: -24 },
           {
-            yPercent: 12,
+            yPercent: 24,
             ease: "none",
             scrollTrigger: {
               trigger: sectionRef.current,
@@ -157,7 +157,7 @@ export default function AboutSection() {
 
               <a
                 ref={ctaRef}
-                href="#"
+                href="/projects"
                 className="about-cta-link group inline-flex items-center gap-2 text-[11px] md:text-[12px] tracking-[0.15em] uppercase text-black font-medium relative"
                 style={{ opacity: 0 }}
               >
@@ -189,9 +189,9 @@ export default function AboutSection() {
                 src="/images/1bef8902-e0b0-409a-9571-d90359822153.png"
                 alt="Modern architectural interior with dramatic lighting and premium finishes"
                 fill
-                className="object-cover"
+                className="object-cover "
                 sizes="(max-width: 1024px) 100vw, 50vw"
-                quality={90}
+                quality={100}
               />
             </div>
           </div>

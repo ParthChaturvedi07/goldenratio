@@ -189,7 +189,7 @@ export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
           style={{ opacity: 0 }}
         >
           <Image
-            src="/images/menu-bg.png"
+            src="/images/IMG_20210915_191342.jpg"
             alt="Architectural background"
             fill
             className="object-cover"

@@ -7,6 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight } from "lucide-react";
 import { useSmoothScroll } from "./SmoothScrollProvider";
 import { fetchProjects, type Project, getMediaUrl } from "@/lib/api";
+import AnimatedLink from "./ui/AnimatedLink";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -49,15 +50,15 @@ export default function ProjectsSection() {
     const ctx = gsap.context(() => {
       cardsRef.current.forEach((card, i) => {
         if (!card) return;
-        
+
         const isLeft = i % 2 === 0;
 
         gsap.fromTo(
           card,
-          { 
-            opacity: 0, 
-            x: isLeft ? -100 : 100, 
-            y: 100 
+          {
+            opacity: 0,
+            x: isLeft ? -100 : 100,
+            y: 100
           },
           {
             opacity: 1,
@@ -95,7 +96,7 @@ export default function ProjectsSection() {
                 Our Works
               </p>
             </div>
-            <h2 className="text-4xl md:text-5xl lg:text-7xl font-medium tracking-tight text-black leading-[1.05] mb-6">
+            <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold tracking-tight text-black leading-[1.05] mb-6">
               FEATURED PROJECTS
             </h2>
             <p className="text-black/70 text-lg md:text-xl font-light leading-relaxed max-w-2xl">
@@ -139,7 +140,7 @@ export default function ProjectsSection() {
                     alt={project.title}
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  
+
                   {/* Hover Overlay with Button */}
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
                     <div className="bg-white text-black px-8 py-3 flex items-center gap-2 rounded-full font-medium tracking-wide translate-y-4 group-hover:translate-y-0 transition-all duration-500 hover:scale-105">
@@ -176,10 +177,30 @@ export default function ProjectsSection() {
 
         {/* View More Button */}
         <div className="mt-20 flex justify-center">
-            <Link href="/projects" className="flex items-center gap-2 group border border-black/20 rounded-full px-10 py-5 hover:bg-black hover:text-white transition-colors duration-300 cursor-pointer shadow-sm hover:shadow-xl">
-                <span className="font-medium tracking-wide text-sm md:text-base">VIEW ALL PROJECTS</span>
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Link>
+          <AnimatedLink
+            href="/projects"
+            className="
+                  group
+                  flex
+                  items-center
+                  gap-2
+                  rounded-full
+                  border
+                  border-black/20
+                  px-10
+                  py-5
+                  shadow-sm
+                  transition-all
+                  duration-300
+                  hover:shadow-xl
+                  text-black
+                  hover:text-white">
+            <span className="font-medium tracking-wide text-sm md:text-base">
+              VIEW ALL PROJECTS
+            </span>
+
+            <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+          </AnimatedLink>
         </div>
       </div>
     </section>

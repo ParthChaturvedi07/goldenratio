@@ -189,7 +189,7 @@ export default function ServicesSection() {
                             <div className="w-10 md:w-12 h-[1px] bg-black/20"></div>
                             <p className="text-black/50 text-[10px] md:text-[11px] tracking-[0.25em] uppercase font-medium">Our Expertise</p>
                         </div>
-                        <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-[4rem] font-medium tracking-tight text-black leading-[1.05]">
+                        <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-[4rem] font-bold tracking-tight text-black leading-[1.05] whitespace-nowrap">
                             WHAT WE OFFER
                         </h2>
                     </div>

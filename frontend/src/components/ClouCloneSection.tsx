@@ -133,7 +133,7 @@ export default function ClouCloneSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative z-10 bg-[#f5f2ec] text-black min-h-screen py-4 overflow-hidden flex items-center"
+      className="relative z-10 bg-[#f5f2ec] text-black min-h-screen overflow-hidden flex items-center"
       id="vision-section"
     >
       <div className="w-full mx-auto pl-6 md:pl-10 lg:pl-16 xl:pl-20 flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-12 lg:items-center">

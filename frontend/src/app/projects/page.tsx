@@ -5,8 +5,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Footer from "@/components/Footer";
 import { fetchProjects, fetchCategories, type Project, getMediaUrl } from "@/lib/api";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function ProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -52,8 +55,8 @@ export default function ProjectsPage() {
     const ctx = gsap.context(() => {
       gsap.fromTo(
         heroRef.current,
-        { opacity: 0, y: 60 },
-        { opacity: 1, y: 0, duration: 1.2, ease: "power3.out", delay: 0.2 }
+        { opacity: 0, y: 100 },
+        { opacity: 1, y: 0, duration: 1.2, ease: "power4.out", delay: 0.1 }
       );
     });
     return () => ctx.revert();
@@ -67,14 +70,18 @@ export default function ProjectsPage() {
 
     gsap.fromTo(
       validCards,
-      { opacity: 0, y: 50, scale: 0.96 },
+      { opacity: 0, y: 80, scale: 0.98 },
       {
         opacity: 1,
         y: 0,
         scale: 1,
-        duration: 0.7,
-        stagger: 0.08,
+        duration: 1,
+        stagger: 0.15,
         ease: "power3.out",
+        scrollTrigger: {
+          trigger: gridRef.current,
+          start: "top 80%",
+        },
       }
     );
   }, [loading, projects]);
@@ -82,10 +89,10 @@ export default function ProjectsPage() {
   return (
     <main className="min-h-screen bg-[#f5f2ec] text-black">
       {/* ── Top Bar ─────────────────────────────────────────── */}
-      <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-10 lg:px-12 py-4 bg-[#f5f2ec]/80 backdrop-blur-xl border-b border-black/5">
+      <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-10 lg:px-16 py-6 bg-[#f5f2ec]/90 backdrop-blur-md border-b border-black/5">
         <Link
           href="/"
-          className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.15em] text-black hover:text-[#2a7a6e] transition-colors duration-300 group"
+          className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.15em] hover:text-[#2a7a6e] transition-colors duration-300 group"
         >
           <ArrowLeft className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1" />
           Back to Home
@@ -101,36 +108,36 @@ export default function ProjectsPage() {
 
       {/* ── Hero Section ───────────────────────────────────── */}
       <div ref={heroRef} className="pt-32 pb-16 px-6 md:px-10 lg:px-16 xl:px-20">
-        <div className="max-w-[1440px] mx-auto">
-          <div className="flex items-center gap-4 mb-6">
+        <div className="max-w-[1600px] mx-auto pt-10">
+          <div className="flex items-center gap-4 mb-6 md:mb-8">
             <div className="w-10 md:w-12 h-[1px] bg-[#2a7a6e]"></div>
             <p className="text-[#2a7a6e] text-[10px] md:text-[11px] tracking-[0.25em] uppercase font-semibold">
               Our Portfolio
             </p>
           </div>
-          <h1 className="text-5xl md:text-6xl lg:text-8xl font-bold uppercase tracking-tight leading-[1.02] mb-6">
+          <h1 className="text-[4rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] font-black uppercase tracking-tighter leading-[0.85] text-black break-words mb-8">
             All{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2a7a6e] to-[#1a5a50]">
               Projects
             </span>
           </h1>
-          <p className="text-black/60 text-lg md:text-xl font-light leading-relaxed max-w-2xl">
+          <p className="text-black/60 text-lg md:text-2xl font-light leading-relaxed max-w-3xl">
             Explore the full breadth of our work — from miniature scale models to expansive architectural masterplans, each project tells a story of precision, innovation, and design excellence.
           </p>
         </div>
       </div>
 
       {/* ── Filter Bar ─────────────────────────────────────── */}
-      <div className="sticky top-[64px] z-40 bg-[#f5f2ec]/90 backdrop-blur-lg border-y border-black/5">
-        <div className="max-w-[1440px] mx-auto py-4">
-          <div className="flex items-center gap-3 overflow-x-auto scrollbar-hide px-6 md:px-10 lg:px-16 xl:px-20 snap-x snap-mandatory">
+      <div className="sticky top-[80px] z-40 bg-[#f5f2ec]/90 backdrop-blur-lg border-y border-black/5">
+        <div className="max-w-[1600px] mx-auto py-4 md:py-5">
+          <div className="flex items-center gap-4 overflow-x-auto scrollbar-hide px-6 md:px-10 lg:px-16 xl:px-20 snap-x snap-mandatory">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`shrink-0 snap-start px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-[0.12em] transition-all duration-400 cursor-pointer border ${activeCategory === cat
-                    ? "bg-black text-white border-black shadow-lg shadow-black/10"
-                    : "bg-transparent text-black/60 border-black/10 hover:bg-black/5 hover:text-black hover:border-black/20"
+                className={`shrink-0 snap-start px-6 py-3 rounded-full text-xs font-semibold uppercase tracking-[0.15em] transition-all duration-500 cursor-pointer border ${activeCategory === cat
+                    ? "bg-black text-white border-black shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
+                    : "bg-transparent text-black/60 border-black/10 hover:bg-black/5 hover:text-black hover:border-black/30"
                   }`}
               >
                 {cat}
@@ -145,11 +152,11 @@ export default function ProjectsPage() {
       {/* ── Project Grid ───────────────────────────────────── */}
       <div
         ref={gridRef}
-        className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16 xl:px-20 py-16"
+        className="max-w-[1600px] mx-auto px-6 md:px-10 lg:px-16 xl:px-20 py-20 md:py-28"
       >
         {/* Loading Skeleton */}
         {loading && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-14">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20">
             {Array.from({ length: 6 }).map((_, i) => (
               <div key={i} className="flex flex-col gap-6 animate-pulse">
                 <div className="w-full aspect-[4/3] lg:aspect-[16/10] rounded-[30px] bg-black/10" />
@@ -166,7 +173,7 @@ export default function ProjectsPage() {
 
         {/* Project Cards */}
         {!loading && projects.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-14">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20">
             {projects.map((project, index) => (
               <Link
                 href={`/projects/${project.slug}`}
@@ -174,34 +181,37 @@ export default function ProjectsPage() {
                 ref={(el) => {
                   cardsRef.current[index] = el;
                 }}
-                className="group flex flex-col gap-6"
+                className="group flex flex-col gap-6 md:gap-8"
               >
                 {/* Image Card */}
-                <div className="relative w-full aspect-[4/3] lg:aspect-[16/10] rounded-[30px] overflow-hidden shadow-lg">
+                <div className="relative w-full aspect-[4/3] lg:aspect-[16/10] rounded-[30px] overflow-hidden bg-black/5">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={getMediaUrl(project.image)}
                     alt={project.title}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-[1.03]"
                   />
                   
                   {/* Hover Overlay with Button */}
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-                    <div className="bg-white text-black px-8 py-3 flex items-center gap-2 rounded-full font-medium tracking-wide translate-y-4 group-hover:translate-y-0 transition-all duration-500 hover:scale-105">
-                      <span>VIEW PROJECT</span>
+                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 flex items-center justify-center backdrop-blur-[2px]">
+                    <div className="bg-white text-black px-8 py-4 flex items-center gap-3 rounded-full font-bold text-xs uppercase tracking-widest translate-y-8 group-hover:translate-y-0 transition-all duration-700 hover:scale-105 shadow-2xl">
+                      <span>Explore</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Content */}
-                <div className="flex flex-col gap-2 px-1">
-                  <p className="text-black/50 text-xs md:text-sm font-mono tracking-wider uppercase">
-                    /{project.category}
-                  </p>
-                  <h3 className="text-2xl md:text-3xl font-medium text-black">
+                <div className="flex flex-col gap-3 px-2">
+                  <div className="flex items-center gap-3">
+                    <span className="w-8 h-[1px] bg-black/20" />
+                    <p className="text-black/50 text-[10px] md:text-[11px] font-semibold tracking-[0.2em] uppercase">
+                      {project.category}
+                    </p>
+                  </div>
+                  <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black uppercase tracking-tight line-clamp-2 leading-none">
                     {project.title}
                   </h3>
-                  <p className="text-black/70 text-sm md:text-base line-clamp-3">
+                  <p className="text-black/60 text-sm md:text-base font-light line-clamp-2 leading-relaxed mt-2 max-w-[90%]">
                     {project.description}
                   </p>
                 </div>

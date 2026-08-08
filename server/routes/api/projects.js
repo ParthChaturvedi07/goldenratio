@@ -1,6 +1,17 @@
 const router = require('express').Router();
 const Project = require('../../models/Project');
 
+// GET /api/projects/categories — Get unique categories
+// ⚠ Must be BEFORE /:slug to avoid being caught as a slug param
+router.get('/categories', async (req, res) => {
+  try {
+    const categories = await Project.distinct('category', { isActive: true });
+    res.json({ success: true, data: ['All', ...categories] });
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Failed to fetch categories' });
+  }
+});
+
 // GET /api/projects — List all active projects (with optional category filter)
 router.get('/', async (req, res) => {
   try {
@@ -17,16 +28,6 @@ router.get('/', async (req, res) => {
   } catch (err) {
     console.error('Fetch projects error:', err);
     res.status(500).json({ success: false, message: 'Failed to fetch projects' });
-  }
-});
-
-// GET /api/projects/categories — Get unique categories
-router.get('/categories', async (req, res) => {
-  try {
-    const categories = await Project.distinct('category', { isActive: true });
-    res.json({ success: true, data: ['All', ...categories] });
-  } catch (err) {
-    res.status(500).json({ success: false, message: 'Failed to fetch categories' });
   }
 });
 

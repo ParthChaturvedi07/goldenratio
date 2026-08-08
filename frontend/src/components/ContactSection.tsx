@@ -162,25 +162,23 @@ export default function ContactSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative z-10 bg-[#f5f2ec] text-black min-h-screen pt-10 pb-8 md:pt-16 md:pb-10 px-6 md:px-10 lg:px-16 xl:px-20"
+      className="relative z-10 bg-[#f5f2ec] text-black min-h-screen pt-10 pb-8 md:pb-10 px-6 md:px-10 lg:px-16 xl:px-20"
       id="contact-section"
     >
       <div className="max-w-[1440px] mx-auto">
         {/* ── HERO HEADER ── */}
         <div ref={heroTextRef} className="mb-16 md:mb-20">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="w-8 h-[1px] bg-[#2a7a6e]" />
-            <p className="text-[11px] md:text-[12px] tracking-[0.2em] uppercase text-[#2a7a6e] font-semibold">
+          <div className="flex items-center gap-4 mb-6 md:mb-8">
+            <span className="w-10 md:w-12 h-[1px] bg-black/40" />
+            <p className="text-[10px] md:text-[11px] tracking-[0.25em] uppercase text-black/60 font-bold">
               BHOPAL STUDIO & GLOBAL INQUIRIES
             </p>
           </div>
-          <h1 className="text-black text-[2.4rem] sm:text-[3.2rem] md:text-[4rem] lg:text-[4.6rem] font-bold uppercase leading-[1.02] tracking-[-0.02em] max-w-[1000px] mb-6">
-            Let&apos;s Build Something <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1a1a1a] via-[#2a7a6e] to-[#1a1a1a]">
-              Extraordinary Together
-            </span>
+          <h1 className="text-[4rem] sm:text-[6rem] md:text-[8rem] lg:text-[9rem] font-black uppercase tracking-tighter leading-[0.85] text-black break-words max-w-[1200px] mb-8">
+            Let&apos;s Build <br />
+            <span className="text-black/40">Together</span>
           </h1>
-          <p className="text-black/70 text-xs md:text-sm lg:text-base tracking-[0.04em] uppercase leading-relaxed max-w-[720px] font-light">
+          <p className="text-black/60 text-lg md:text-2xl font-light leading-relaxed max-w-3xl">
             Whether you are conceptualizing a commercial landmark, luxury residence,
             or miniature scale model — our team of architects, designers, and engineers is ready to turn vision into reality.
           </p>
@@ -202,12 +200,12 @@ export default function ContactSection() {
                   Tell us about your space and requirements
                 </p>
               </div>
-              <MessageSquare className="w-6 h-6 text-[#2a7a6e] opacity-80" />
+              <MessageSquare className="w-6 h-6 text-black/80 opacity-80" />
             </div>
 
             {isSubmitted ? (
               <div className="py-16 text-center flex flex-col items-center justify-center">
-                <div className="w-16 h-16 rounded-full bg-[#2a7a6e]/10 text-[#2a7a6e] flex items-center justify-center mb-6">
+                <div className="w-16 h-16 rounded-full bg-black/10 text-black flex items-center justify-center mb-6">
                   <CheckCircle2 className="w-10 h-10" />
                 </div>
                 <h3 className="text-2xl font-bold uppercase tracking-tight mb-3">
@@ -242,7 +240,7 @@ export default function ContactSection() {
                       onChange={(e) =>
                         setFormData({ ...formData, fullName: e.target.value })
                       }
-                      className="w-full bg-[#f5f2ec] border border-black/15 rounded-xl px-4 py-3.5 text-sm text-black placeholder:text-black/30 focus:outline-none focus:border-[#2a7a6e] transition-colors"
+                      className="w-full bg-[#f5f2ec] border border-black/15 rounded-xl px-4 py-3.5 text-sm text-black placeholder:text-black/30 focus:outline-none focus:border-black/50 transition-colors"
                     />
                   </div>
 
@@ -258,7 +256,7 @@ export default function ContactSection() {
                       onChange={(e) =>
                         setFormData({ ...formData, email: e.target.value })
                       }
-                      className="w-full bg-[#f5f2ec] border border-black/15 rounded-xl px-4 py-3.5 text-sm text-black placeholder:text-black/30 focus:outline-none focus:border-[#2a7a6e] transition-colors"
+                      className="w-full bg-[#f5f2ec] border border-black/15 rounded-xl px-4 py-3.5 text-sm text-black placeholder:text-black/30 focus:outline-none focus:border-black/50 transition-colors"
                     />
                   </div>
                 </div>
@@ -274,7 +272,7 @@ export default function ContactSection() {
                     onChange={(e) =>
                       setFormData({ ...formData, phone: e.target.value })
                     }
-                    className="w-full bg-[#f5f2ec] border border-black/15 rounded-xl px-4 py-3.5 text-sm text-black placeholder:text-black/30 focus:outline-none focus:border-[#2a7a6e] transition-colors"
+                    className="w-full bg-[#f5f2ec] border border-black/15 rounded-xl px-4 py-3.5 text-sm text-black placeholder:text-black/30 focus:outline-none focus:border-black/50 transition-colors"
                   />
                 </div>
 
@@ -296,11 +294,11 @@ export default function ContactSection() {
                           onClick={() => toggleService(service.label)}
                           className={`flex items-center gap-2 px-4 py-2.5 rounded-full text-xs font-medium uppercase tracking-wider transition-all duration-300 cursor-pointer ${
                             isSelected
-                              ? "bg-[#1a1a1a] text-white shadow-md"
-                              : "bg-[#f5f2ec] text-black/80 hover:bg-black/10 border border-black/10"
+                              ? "bg-black text-white shadow-md border-black"
+                              : "bg-[#f5f2ec] text-black/80 hover:bg-black/5 border border-black/10"
                           }`}
                         >
-                          <Icon className={`w-3.5 h-3.5 ${isSelected ? "text-[#2a7a6e]" : "text-black/50"}`} />
+                          <Icon className={`w-3.5 h-3.5 ${isSelected ? "text-white" : "text-black/50"}`} />
                           {service.label}
                         </button>
                       );
@@ -323,8 +321,8 @@ export default function ContactSection() {
                           onClick={() => setSelectedBudget(budget)}
                           className={`py-3 px-3 text-center rounded-xl text-xs font-semibold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
                             isSelected
-                              ? "bg-[#2a7a6e] text-white shadow-md"
-                              : "bg-[#f5f2ec] text-black/70 border border-black/10 hover:bg-black/10"
+                              ? "bg-black text-white shadow-md border-black"
+                              : "bg-[#f5f2ec] text-black/70 border border-black/10 hover:bg-black/5"
                           }`}
                         >
                           {budget}
@@ -347,7 +345,7 @@ export default function ContactSection() {
                     onChange={(e) =>
                       setFormData({ ...formData, message: e.target.value })
                     }
-                    className="w-full bg-[#f5f2ec] border border-black/15 rounded-xl p-4 text-sm text-black placeholder:text-black/30 focus:outline-none focus:border-[#2a7a6e] transition-colors resize-none"
+                    className="w-full bg-[#f5f2ec] border border-black/15 rounded-xl p-4 text-sm text-black placeholder:text-black/30 focus:outline-none focus:border-black/50 transition-colors resize-none"
                   />
                 </div>
 
@@ -355,7 +353,7 @@ export default function ContactSection() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="mt-2 w-full py-4 px-8 rounded-full bg-[#1a1a1a] text-white text-xs font-semibold uppercase tracking-[0.2em] flex items-center justify-center gap-3 hover:bg-[#2a7a6e] transition-all duration-500 shadow-lg cursor-pointer group disabled:opacity-50"
+                  className="mt-2 w-full py-4 px-8 rounded-full bg-black text-white text-xs font-semibold uppercase tracking-[0.2em] flex items-center justify-center gap-3 hover:bg-black/80 transition-all duration-500 shadow-lg cursor-pointer group disabled:opacity-50"
                 >
                   {isSubmitting ? (
                     <span>Submitting Inquiry...</span>
@@ -374,9 +372,9 @@ export default function ContactSection() {
           <div ref={infoCardRef} className="lg:col-span-5 flex flex-col gap-8">
             {/* Studio Headquarters Card */}
             <div className="bg-[#0a0a0a] text-white rounded-3xl p-8 sm:p-10 border border-white/10 shadow-2xl relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-40 h-40 bg-[#2a7a6e]/20 blur-3xl rounded-full pointer-events-none" />
+              <div className="absolute top-0 right-0 w-40 h-40 bg-white/5 blur-3xl rounded-full pointer-events-none" />
 
-              <span className="text-[10px] tracking-[0.2em] uppercase text-[#2a7a6e] font-semibold mb-2 block">
+              <span className="text-[10px] tracking-[0.2em] uppercase text-white/50 font-semibold mb-2 block">
                 HEADQUARTERS
               </span>
               <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-tight mb-8">
@@ -387,7 +385,7 @@ export default function ContactSection() {
                 {/* Location */}
                 <div className="flex items-start gap-4">
                   <div className="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center shrink-0 mt-0.5">
-                    <MapPin className="w-4 h-4 text-[#2a7a6e]" />
+                    <MapPin className="w-4 h-4 text-white/80" />
                   </div>
                   <div>
                     <p className="text-white/50 text-[10px] font-semibold mb-1">
@@ -406,7 +404,7 @@ export default function ContactSection() {
                 {/* Direct Phone */}
                 <div className="flex items-start gap-4">
                   <div className="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
-                    <Phone className="w-4 h-4 text-[#2a7a6e]" />
+                    <Phone className="w-4 h-4 text-white/80" />
                   </div>
                   <div>
                     <p className="text-white/50 text-[10px] font-semibold mb-1">
@@ -414,13 +412,13 @@ export default function ContactSection() {
                     </p>
                     <a
                       href="tel:+917554908822"
-                      className="text-white/90 hover:text-[#2a7a6e] transition-colors block"
+                      className="text-white/90 hover:text-white/60 transition-colors block"
                     >
                       +91 755 490 8822
                     </a>
                     <a
                       href="tel:+919826000000"
-                      className="text-white/70 hover:text-[#2a7a6e] transition-colors block mt-0.5"
+                      className="text-white/70 hover:text-white/60 transition-colors block mt-0.5"
                     >
                       +91 98260 00000
                     </a>
@@ -430,7 +428,7 @@ export default function ContactSection() {
                 {/* Email */}
                 <div className="flex items-start gap-4">
                   <div className="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
-                    <Mail className="w-4 h-4 text-[#2a7a6e]" />
+                    <Mail className="w-4 h-4 text-white/80" />
                   </div>
                   <div>
                     <p className="text-white/50 text-[10px] font-semibold mb-1">
@@ -438,13 +436,13 @@ export default function ContactSection() {
                     </p>
                     <a
                       href="mailto:contact@goldenratio.build"
-                      className="text-white/90 hover:text-[#2a7a6e] transition-colors block lowercase tracking-normal text-sm"
+                      className="text-white/90 hover:text-white/60 transition-colors block lowercase tracking-normal text-sm"
                     >
                       contact@goldenratio.build
                     </a>
                     <a
                       href="mailto:inquiry@goldenratio.build"
-                      className="text-white/70 hover:text-[#2a7a6e] transition-colors block lowercase tracking-normal text-sm mt-0.5"
+                      className="text-white/70 hover:text-white/60 transition-colors block lowercase tracking-normal text-sm mt-0.5"
                     >
                       inquiry@goldenratio.build
                     </a>
@@ -454,7 +452,7 @@ export default function ContactSection() {
                 {/* Hours */}
                 <div className="flex items-start gap-4">
                   <div className="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
-                    <Clock className="w-4 h-4 text-[#2a7a6e]" />
+                    <Clock className="w-4 h-4 text-white/80" />
                   </div>
                   <div>
                     <p className="text-white/50 text-[10px] font-semibold mb-1">
@@ -476,7 +474,7 @@ export default function ContactSection() {
                   href="https://maps.google.com/?q=Arera+Colony+Bhopal"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.15em] text-[#2a7a6e] hover:text-white transition-colors group"
+                  className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.15em] text-white/60 hover:text-white transition-colors group"
                 >
                   <span>Open in Google Maps</span>
                   <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -502,7 +500,7 @@ export default function ContactSection() {
                 href="https://wa.me/919826000000?text=Hi%20Golden%20Ratio%20Team%2C%20I%20would%20like%20to%20discuss%20a%20new%20project."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full py-3.5 px-6 rounded-full bg-[#2a7a6e] text-white text-xs font-semibold uppercase tracking-[0.15em] flex items-center justify-center gap-2 hover:bg-[#1a1a1a] transition-all duration-300 shadow-md cursor-pointer"
+                className="w-full py-3.5 px-6 rounded-full bg-black text-white text-xs font-semibold uppercase tracking-[0.15em] flex items-center justify-center gap-2 hover:bg-black/80 transition-all duration-300 shadow-md cursor-pointer"
               >
                 <span>Chat on WhatsApp</span>
                 <ArrowUpRight className="w-4 h-4" />
@@ -515,7 +513,7 @@ export default function ContactSection() {
         <div ref={nextStepsRef} className="pt-16 border-t border-black/10">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
             <div>
-              <p className="text-[10px] md:text-[11px] tracking-[0.2em] uppercase text-[#2a7a6e] font-semibold mb-3">
+              <p className="text-[10px] md:text-[11px] tracking-[0.2em] uppercase text-black/60 font-bold mb-4">
                 OUR CONSULTATION WORKFLOW
               </p>
               <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold uppercase tracking-tight text-black">
@@ -531,7 +529,7 @@ export default function ContactSection() {
             {/* Step 1 */}
             <div className="bg-[#ede9e1] rounded-2xl p-8 border border-black/10 flex flex-col justify-between gap-6">
               <div>
-                <span className="text-2xl font-bold text-[#2a7a6e] tracking-tight block mb-4">
+                <span className="text-3xl font-black text-black/20 tracking-tighter block mb-4">
                   01
                 </span>
                 <h3 className="text-base font-bold uppercase tracking-wider text-black mb-3">
@@ -541,15 +539,15 @@ export default function ContactSection() {
                   Within 24 hours of receiving your inquiry, our principal architect schedules a detailed call to review site specs, design goals, and budget framing.
                 </p>
               </div>
-              <div className="w-full h-1 bg-black/10 rounded-full overflow-hidden">
-                <div className="w-1/3 h-full bg-[#2a7a6e]" />
+              <div className="w-full h-1 bg-black/5 rounded-full overflow-hidden">
+                <div className="w-1/3 h-full bg-black/60" />
               </div>
             </div>
 
             {/* Step 2 */}
             <div className="bg-[#ede9e1] rounded-2xl p-8 border border-black/10 flex flex-col justify-between gap-6">
               <div>
-                <span className="text-2xl font-bold text-[#2a7a6e] tracking-tight block mb-4">
+                <span className="text-3xl font-black text-black/20 tracking-tighter block mb-4">
                   02
                 </span>
                 <h3 className="text-base font-bold uppercase tracking-wider text-black mb-3">
@@ -559,15 +557,15 @@ export default function ContactSection() {
                   We present miniature 3D scale models, spatial layouts, and material palettes to visualize every millimeter of your dream space before execution.
                 </p>
               </div>
-              <div className="w-full h-1 bg-black/10 rounded-full overflow-hidden">
-                <div className="w-2/3 h-full bg-[#2a7a6e]" />
+              <div className="w-full h-1 bg-black/5 rounded-full overflow-hidden">
+                <div className="w-2/3 h-full bg-black/60" />
               </div>
             </div>
 
             {/* Step 3 */}
             <div className="bg-[#ede9e1] rounded-2xl p-8 border border-black/10 flex flex-col justify-between gap-6">
               <div>
-                <span className="text-2xl font-bold text-[#2a7a6e] tracking-tight block mb-4">
+                <span className="text-3xl font-black text-black/20 tracking-tighter block mb-4">
                   03
                 </span>
                 <h3 className="text-base font-bold uppercase tracking-wider text-black mb-3">
@@ -577,8 +575,8 @@ export default function ContactSection() {
                   Complete transparent breakdown covering procurement, MEP engineering, construction schedules, and project milestone handovers.
                 </p>
               </div>
-              <div className="w-full h-1 bg-black/10 rounded-full overflow-hidden">
-                <div className="w-full h-full bg-[#2a7a6e]" />
+              <div className="w-full h-1 bg-black/5 rounded-full overflow-hidden">
+                <div className="w-full h-full bg-black/60" />
               </div>
             </div>
           </div>

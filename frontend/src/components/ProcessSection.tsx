@@ -4,6 +4,7 @@ import React, { useRef, useEffect, useState, useCallback } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useSmoothScroll } from "./SmoothScrollProvider";
+import AnimatedLink from "./ui/AnimatedLink";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -311,18 +312,32 @@ export default function ProcessSection() {
             From first consultation to final handover — we take care of
             everything so you can focus on what matters.
           </p>
-          <a href="#contact-section" className="process-cta-btn group">
-            <span>Start Your Project</span>
-            <svg
-              className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-0.5"
-              viewBox="0 0 16 16"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-            >
-              <path d="M4 12L12 4M12 4H5M12 4V11" />
-            </svg>
-          </a>
+          <div className="flex justify-center">
+            <AnimatedLink
+              href="#contact-section"
+              className="
+                process-cta-btn
+                group
+                relative
+                overflow-hidden
+                flex
+                items-center
+                justify-center
+                gap-2
+                text-black
+                hover:text-white">
+              <span>Start Your Project</span>
+              <svg
+                className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-0.5"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+              >
+                <path d="M4 12L12 4M12 4H5M12 4V11" />
+              </svg>
+            </AnimatedLink>
+          </div>
         </div>
       </div>
     </section>
