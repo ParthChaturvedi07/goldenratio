@@ -80,7 +80,7 @@ export default function ProjectsSection() {
   }, [loading, projects]);
 
   return (
-    <section ref={sectionRef} id="projects-section" className="py-12 bg-[#f5f2ec] relative text-black rounded-xl">
+    <section ref={sectionRef} id="projects-section" className="overflow-x-hidden py-12 bg-[#f5f2ec] relative text-black rounded-xl">
       <div className="w-full px-4 md:px-8 lg:px-12 xl:px-20 2xl:px-32">
         {/* Header */}
         <div className="flex flex-col lg:flex-row justify-between items-end mb-20 gap-8">

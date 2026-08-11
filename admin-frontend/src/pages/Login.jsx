@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation, Navigate } from 'react-router-dom';
+import { GoogleLogin } from '@react-oauth/google';
 import { useAuth } from '../context/AuthContext';
 import api from '../api/axios';
 import toast from 'react-hot-toast';
@@ -42,13 +43,30 @@ const Login = () => {
     }
   };
 
+  const handleGoogleSuccess = async (credentialResponse) => {
+    setIsSubmitting(true);
+    try {
+      const res = await api.post('/admin/auth/google', {
+        credential: credentialResponse.credential,
+      });
+      if (res.data.success) {
+        toast.success('Welcome back!');
+        login(res.data.admin, res.data.token);
+        navigate(from, { replace: true });
+      }
+    } catch (err) {
+      const msg = err.response?.data?.error || 'Google sign-in failed.';
+      toast.error(msg);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-light-bg flex flex-col items-center justify-center p-4 relative overflow-hidden">
-      {/* Background Subtle Dot Grid / Texture */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#1a1a1a 1px, transparent 1px)', backgroundSize: '32px 32px' }}></div>
-      
+
       <div className="card-glass w-full max-w-md p-10 relative overflow-hidden animate-fade-in-up z-10 shadow-[0_20px_50px_rgba(0,0,0,0.1)]">
-        {/* Glow effect */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-brand/10 blur-[80px] rounded-full pointer-events-none"></div>
 
         <div className="relative z-10">
@@ -91,10 +109,25 @@ const Login = () => {
               {isSubmitting ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Sign In'}
             </button>
           </form>
+
+          <div className="flex items-center gap-3 my-6">
+            <div className="flex-1 h-px bg-black/10" />
+            <span className="text-[10px] uppercase tracking-widest text-text-muted font-bold">or</span>
+            <div className="flex-1 h-px bg-black/10" />
+          </div>
+
+          <div className="flex justify-center">
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={() => toast.error('Google sign-in failed.')}
+              theme="outline"
+              shape="pill"
+              width="320"
+            />
+          </div>
         </div>
       </div>
-      
-      {/* Footer Text */}
+
       <div className="mt-8 text-center animate-fade-in z-10" style={{ animationDelay: '0.4s' }}>
         <p className="text-[10px] text-text-muted uppercase tracking-widest font-bold">
           &copy; {new Date().getFullYear()} Golden Ratio Design & Build

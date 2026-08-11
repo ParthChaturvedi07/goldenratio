@@ -276,7 +276,7 @@ export default function WhyUsSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full"
+      className="relative w-full overflow-hidden"
       id="why-us-section"
       style={{ minHeight: "100vh", backgroundColor: "#f5f2ec" }}
       onMouseMove={handleMouseMove}

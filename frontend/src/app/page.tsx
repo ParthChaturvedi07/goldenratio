@@ -13,39 +13,45 @@ import Footer from "@/components/Footer";
 import ClouCloneSection from "@/components/ClouCloneSection";
 import ServicesSection from "@/components/ServicesSection";
 import ProjectsSection from "@/components/ProjectsSection";
-// import Preloader from "@/components/Preloader";
+import Preloader from "@/components/Preloader";
 
 export default function Home() {
-  // const [preloaderDone, setPreloaderDone] = useState(false);
+  const [preloaderDone, setPreloaderDone] =
+    useState(false);
 
-  // // Check sessionStorage on mount — skip preloader if already seen
-  // useEffect(() => {
-  //   if (typeof window !== "undefined" && sessionStorage.getItem("preloaderDone")) {
-  //     setPreloaderDone(true);
-  //   }
-  // }, []);
+  useEffect(() => {
+    const alreadySeen =
+      sessionStorage.getItem("preloaderDone");
 
-  // // Lock scroll during preloader
-  // useEffect(() => {
-  //   if (!preloaderDone) {
-  //     document.body.style.overflow = "hidden";
-  //   } else {
-  //     document.body.style.overflow = "";
-  //   }
-  //   return () => {
-  //     document.body.style.overflow = "";
-  //   };
-  // }, [preloaderDone]);
+    if (alreadySeen === "true") {
+      setPreloaderDone(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!preloaderDone) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [preloaderDone]);
 
   return (
     <>
-      {/* ── Preloader Overlay ─────────────────────────────── */}
-      {/* {!preloaderDone && <Preloader onComplete={() => setPreloaderDone(true)} />} */}
+      {!preloaderDone && (
+        <Preloader
+          onComplete={() => setPreloaderDone(true)}
+        />
+      )}
 
       <Navbar />
 
       <div className="relative z-0">
-        <HeroSection />
+        <HeroSection isPreloaderDone={preloaderDone} />
       </div>
 
       <div>

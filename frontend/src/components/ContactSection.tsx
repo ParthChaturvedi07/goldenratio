@@ -385,9 +385,9 @@ export default function ContactSection() {
                     <p className="text-white/90 leading-relaxed">
                       Golden Ratio Design & Build Studio,
                       <br />
-                      E-8 Arera Colony, Near Service Road,
+                      26 Ambedkar Nagar Suraj Nagar
                       <br />
-                      Bhopal, Madhya Pradesh 462039, India
+                      Bhopal, Madhya Pradesh 462044, India
                     </p>
                   </div>
                 </div>
@@ -402,16 +402,16 @@ export default function ContactSection() {
                       DIRECT LINE
                     </p>
                     <a
-                      href="tel:+917554908822"
+                      href="tel:+919669547084"
                       className="text-white/90 hover:text-white/60 transition-colors block"
                     >
-                      +91 755 490 8822
+                       +91 966-954-7084
                     </a>
                     <a
-                      href="tel:+919826000000"
+                      href="tel:+917987078460"
                       className="text-white/70 hover:text-white/60 transition-colors block mt-0.5"
                     >
-                      +91 98260 00000
+                      +91 798-707-8460
                     </a>
                   </div>
                 </div>
@@ -426,16 +426,10 @@ export default function ContactSection() {
                       EMAIL INQUIRIES
                     </p>
                     <a
-                      href="mailto:contact@goldenratio.build"
+                      href="mailto:contact@grcreation.in"
                       className="text-white/90 hover:text-white/60 transition-colors block lowercase tracking-normal text-sm"
                     >
-                      contact@goldenratio.build
-                    </a>
-                    <a
-                      href="mailto:inquiry@goldenratio.build"
-                      className="text-white/70 hover:text-white/60 transition-colors block lowercase tracking-normal text-sm mt-0.5"
-                    >
-                      inquiry@goldenratio.build
+                      contact@grcreation.in
                     </a>
                   </div>
                 </div>

@@ -4,7 +4,7 @@ import React, { useRef, useEffect } from "react";
 import gsap from "gsap";
 import MouseTrail from "./MouseTrail";
 
-export default function HeroSection() {
+export default function HeroSection({ isPreloaderDone = true }: { isPreloaderDone?: boolean }) {
   const heroRef = useRef<HTMLElement | null>(null);
   const mediaRef = useRef<HTMLDivElement | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);
@@ -14,11 +14,19 @@ export default function HeroSection() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // Set initial states regardless of whether we are animating right now
+      if (mediaRef.current) gsap.set(mediaRef.current, { yPercent: -8, opacity: 0, scale: 1.08 });
+      if (whiteWashRef.current) gsap.set(whiteWashRef.current, { opacity: 0 });
+      if (headlineRef.current) gsap.set(headlineRef.current, { y: 80, opacity: 0 });
+      if (subtitleRef.current) gsap.set(subtitleRef.current, { y: 50, opacity: 0 });
+
+      // If preloader isn't done yet, wait
+      if (!isPreloaderDone) return;
+
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
       // ── Media (video) slides DOWN from above + fades in ──
       if (mediaRef.current) {
-        gsap.set(mediaRef.current, { yPercent: -8, opacity: 0, scale: 1.08 });
         tl.to(
           mediaRef.current,
           { yPercent: 0, opacity: 1, scale: 1, duration: 1.8 },
@@ -28,13 +36,11 @@ export default function HeroSection() {
 
       // ── White wash fades in after media arrives ──
       if (whiteWashRef.current) {
-        gsap.set(whiteWashRef.current, { opacity: 0 });
         tl.to(whiteWashRef.current, { opacity: 1, duration: 1.2 }, 0.6);
       }
 
       // ── Headline slides UP from below + fades in ──
       if (headlineRef.current) {
-        gsap.set(headlineRef.current, { y: 80, opacity: 0 });
         tl.to(
           headlineRef.current,
           { y: 0, opacity: 1, duration: 1.2 },
@@ -44,7 +50,6 @@ export default function HeroSection() {
 
       // ── Subtitle slides UP from below + fades in (slight delay) ──
       if (subtitleRef.current) {
-        gsap.set(subtitleRef.current, { y: 50, opacity: 0 });
         tl.to(
           subtitleRef.current,
           { y: 0, opacity: 1, duration: 1 },
@@ -54,7 +59,7 @@ export default function HeroSection() {
     }, heroRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [isPreloaderDone]);
 
   return (
     <div className="bg-[#f5f2ec] h-full px-6 pt-16 pb-14">

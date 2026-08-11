@@ -190,12 +190,18 @@ export const ClientsSection = ({
 
           {/* Action Buttons */}
           <div className="flex flex-wrap items-center gap-4 mt-4">
-            <a
-              href="#contact-section"
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                const contactSection = document.getElementById("contact-section");
+                if (contactSection) {
+                  contactSection.scrollIntoView({ behavior: "smooth" });
+                }
+              }}
               className="inline-flex items-center justify-center px-7 py-3.5 rounded-full bg-[#1a1a1a] text-[#f5f2ec] text-xs tracking-[0.15em] uppercase font-medium transition-all duration-300 hover:bg-black hover:scale-[1.02] shadow-md"
             >
               {primaryActionLabel}
-            </a>
+            </button>
             <AnimatedLink
               href="/projects"
               className="inline-flex items-center justify-center px-7 py-3.5 rounded-full border border-black/20 text-[#1a1a1a] text-xs tracking-[0.15em] uppercase font-medium transition-all duration-300 hover:bg-black/5 hover:border-black hover:text-[#f5f2ec]"

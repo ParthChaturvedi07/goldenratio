@@ -18,7 +18,9 @@ const adminSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
+    required: function () {
+      return this.authProvider === 'local';
+    },
     minlength: 6,
   },
   role: {
@@ -26,13 +28,22 @@ const adminSchema = new mongoose.Schema({
     enum: ['superadmin', 'editor'],
     default: 'editor',
   },
+  googleId: {
+    type: String,
+    unique: true,
+    sparse: true,
+  },
+  authProvider: {
+    type: String,
+    enum: ['local', 'google'],
+    default: 'local',
+  },
 }, { timestamps: true });
 
 // Hash password before saving
 adminSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next();
-  const salt = await bcrypt.genSalt(12);
-  this.password = await bcrypt.hash(this.password, salt);
+  if (!this.isModified('password') || !this.password) return next();
+  this.password = await bcrypt.hash(this.password, 10);
   next();
 });
 

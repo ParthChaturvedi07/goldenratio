@@ -2,6 +2,85 @@ const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 const Admin = require('../../models/Admin');
 const { authenticateToken } = require('../../middleware/auth');
+const { OAuth2Client } = require('google-auth-library');
+
+const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+const ALLOWED_GOOGLE_EMAIL = 'yuva.illusions2@gmail.com';
+
+/**
+ * POST /api/admin/auth/google — Authenticate admin via Google ID token
+ */
+router.post('/google', async (req, res) => {
+  try {
+    const { credential } = req.body;
+
+    if (!credential) {
+      return res.status(400).json({ success: false, error: 'Google credential is required.' });
+    }
+
+    // Verify the token with Google
+    const ticket = await googleClient.verifyIdToken({
+      idToken: credential,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+    const payload = ticket.getPayload();
+
+    if (!payload || !payload.email_verified) {
+      return res.status(401).json({ success: false, error: 'Invalid credentials.' });
+    }
+
+    const email = payload.email.toLowerCase();
+
+    // Reject anyone except the allowed email
+    if (email !== ALLOWED_GOOGLE_EMAIL) {
+      return res.status(401).json({ success: false, error: 'Invalid credentials.' });
+    }
+
+    const googleId = payload.sub;
+
+    // Find or link the admin account for the allowed email
+    let admin = await Admin.findOne({ email });
+
+    if (!admin) {
+      return res.status(401).json({ success: false, error: 'Invalid credentials.' });
+    }
+
+    // Link googleId on first successful Google login
+    if (!admin.googleId) {
+      admin.googleId = googleId;
+      await admin.save();
+    }
+
+    // Generate JWT (same as normal login)
+    const token = jwt.sign(
+      { id: admin._id, role: admin.role },
+      process.env.JWT_SECRET,
+      { expiresIn: '24h' }
+    );
+
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 24 * 60 * 60 * 1000,
+      sameSite: 'lax',
+    });
+
+    res.json({
+      success: true,
+      message: 'Login successful',
+      token,
+      admin: {
+        id: admin._id,
+        username: admin.username,
+        email: admin.email,
+        role: admin.role,
+      },
+    });
+  } catch (err) {
+    console.error('Google login error:', err);
+    res.status(401).json({ success: false, error: 'Invalid credentials.' });
+  }
+});
 
 // POST /api/admin/auth/login — Authenticate admin, return JWT
 router.post('/login', async (req, res) => {
