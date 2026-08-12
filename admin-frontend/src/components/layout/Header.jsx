@@ -13,6 +13,7 @@ const Header = ({ toggleSidebar }) => {
     if (path === '/') return 'Dashboard Overview';
     if (path.startsWith('/contacts')) return 'Contact Inquiries';
     if (path.startsWith('/projects')) return 'Portfolio Projects';
+    if (path.startsWith('/products')) return 'Products';
     if (path.startsWith('/settings')) return 'Profile Settings';
     return 'Admin Panel';
   };

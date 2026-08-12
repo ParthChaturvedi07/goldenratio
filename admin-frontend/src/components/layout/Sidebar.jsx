@@ -1,10 +1,10 @@
-
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import {
   LayoutDashboard,
   Users,
   FolderOpen,
+  Package,
   Settings as SettingsIcon,
   ExternalLink,
   X,
@@ -27,6 +27,11 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
       to: '/projects',
       icon: <FolderOpen size={20} />,
       label: 'Projects',
+    },
+    {
+      to: '/products',
+      icon: <Package size={20} />,
+      label: 'Products',
     },
     {
       to: '/settings',

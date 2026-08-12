@@ -48,12 +48,14 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 // ──────────────────────────────────────────────────────────
 app.use('/api/contact', require('./routes/api/contact'));
 app.use('/api/projects', require('./routes/api/projects'));
+app.use('/api/products', require('./routes/api/products'));
 
 // ──────────────────────────────────────────────────────────
 //  ADMIN API ROUTES (JWT Protected)
 // ──────────────────────────────────────────────────────────
 app.use('/api/admin/auth', require('./routes/admin/auth'));
 app.use('/api/admin/projects', require('./routes/admin/projects'));
+app.use('/api/admin/products', require('./routes/admin/products'));
 app.use('/api/admin/contacts', require('./routes/admin/contacts'));
 
 // ── Health Check ──

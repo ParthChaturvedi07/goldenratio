@@ -8,53 +8,47 @@ export default function HeroSection({ isPreloaderDone = true }: { isPreloaderDon
   const heroRef = useRef<HTMLElement | null>(null);
   const mediaRef = useRef<HTMLDivElement | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);
+  const indexRef = useRef<HTMLSpanElement | null>(null);
   const headlineRef = useRef<HTMLHeadingElement | null>(null);
-  const subtitleRef = useRef<HTMLParagraphElement | null>(null);
-  const whiteWashRef = useRef<HTMLDivElement | null>(null);
+  const detailsRef = useRef<HTMLDivElement | null>(null);
+  const descriptionRef = useRef<HTMLParagraphElement | null>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Set initial states regardless of whether we are animating right now
+      // Initial states
       if (mediaRef.current) gsap.set(mediaRef.current, { yPercent: -8, opacity: 0, scale: 1.08 });
-      if (whiteWashRef.current) gsap.set(whiteWashRef.current, { opacity: 0 });
-      if (headlineRef.current) gsap.set(headlineRef.current, { y: 80, opacity: 0 });
-      if (subtitleRef.current) gsap.set(subtitleRef.current, { y: 50, opacity: 0 });
+      if (indexRef.current) gsap.set(indexRef.current, { opacity: 0, y: 12 });
+      if (headlineRef.current) gsap.set(headlineRef.current, { y: 60, opacity: 0 });
+      if (detailsRef.current) gsap.set(detailsRef.current, { y: 20, opacity: 0 });
+      if (descriptionRef.current) gsap.set(descriptionRef.current, { y: 20, opacity: 0 });
 
-      // If preloader isn't done yet, wait
       if (!isPreloaderDone) return;
 
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
       // ── Media (video) slides DOWN from above + fades in ──
       if (mediaRef.current) {
-        tl.to(
-          mediaRef.current,
-          { yPercent: 0, opacity: 1, scale: 1, duration: 1.8 },
-          0.1
-        );
+        tl.to(mediaRef.current, { yPercent: 0, opacity: 1, scale: 1, duration: 1.8 }, 0.1);
       }
 
-      // ── White wash fades in after media arrives ──
-      if (whiteWashRef.current) {
-        tl.to(whiteWashRef.current, { opacity: 1, duration: 1.2 }, 0.6);
+      // ── Index label fades in ──
+      if (indexRef.current) {
+        tl.to(indexRef.current, { y: 0, opacity: 1, duration: 0.6 }, 0.9);
       }
 
       // ── Headline slides UP from below + fades in ──
       if (headlineRef.current) {
-        tl.to(
-          headlineRef.current,
-          { y: 0, opacity: 1, duration: 1.2 },
-          0.5
-        );
+        tl.to(headlineRef.current, { y: 0, opacity: 1, duration: 1.1 }, 1.0);
       }
 
-      // ── Subtitle slides UP from below + fades in (slight delay) ──
-      if (subtitleRef.current) {
-        tl.to(
-          subtitleRef.current,
-          { y: 0, opacity: 1, duration: 1 },
-          0.8
-        );
+      // ── Details table fades in ──
+      if (detailsRef.current) {
+        tl.to(detailsRef.current, { y: 0, opacity: 1, duration: 0.9 }, 1.15);
+      }
+
+      // ── Description slides UP from below + fades in ──
+      if (descriptionRef.current) {
+        tl.to(descriptionRef.current, { y: 0, opacity: 1, duration: 0.9 }, 1.3);
       }
     }, heroRef);
 
@@ -63,12 +57,12 @@ export default function HeroSection({ isPreloaderDone = true }: { isPreloaderDon
 
   return (
     <div className="bg-[#f5f2ec] h-full px-6 pt-16 pb-14">
+      {/* Video — curved hero, no overlaid text */}
       <section
         ref={heroRef}
-        className="relative rounded-xl w-full h-[90vh] min-h-[600px] overflow-hidden"
+        className="relative rounded-xl max-w-[97.5%] mx-auto h-[45vh] min-h-[500px] overflow-hidden"
         id="hero-section"
       >
-        {/* Background Video — slides from top */}
         <div ref={mediaRef} className="absolute inset-0">
           <video
             src="/video/hero-video.mp4"
@@ -80,48 +74,53 @@ export default function HeroSection({ isPreloaderDone = true }: { isPreloaderDon
           />
         </div>
 
-        {/* Gradient overlay for text readability */}
-        <div className="hero-gradient absolute inset-0 z-[2]" />
-
-        {/* White blurry fade at top — strong like abvtek.com */}
-        {/* <div
-          ref={whiteWashRef}
-          className="absolute top-0 left-0 right-0 z-[3] pointer-events-none hero-top-fade"
-        /> */}
-
         {/* Mouse trail effect (desktop only) */}
-        <MouseTrail containerRef={heroRef} />
+        {/* <MouseTrail containerRef={heroRef} /> */}
+      </section>
 
-        {/* Content — slides from bottom */}
-        <div
-          ref={contentRef}
-          className="absolute inset-0 z-20 flex flex-col justify-end px-6 md:px-10 lg:px-12 pb-6 md:pb-10 lg:pb-12"
-        >
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 lg:gap-8">
-            {/* Headline */}
+      <div ref={contentRef} className="pt-10 px-3 md:px-8 md:pt-14 mt-8">
+        {/* Index + Headline (left) / Project Details table (right) */}
+        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-8 lg:gap-16">
+          <div className="lg:max-w-[58%]">
             <h1
               ref={headlineRef}
-              className="text-white font-bold uppercase leading-[0.92] tracking-[-0.02em]"
-              style={{
-                fontSize: "clamp(2rem, 3.7vw, 5rem)",
-                maxWidth: "75%",
-              }}
+              className="text-black font-bold uppercase leading-[0.92] tracking-[-0.02em]"
+              style={{ fontSize: "clamp(2rem, 3.7vw, 5rem)" }}
             >
               WHERE PROPORTION MEETS CLARITY FROM MINIATURE TO REALITY
             </h1>
+          </div>
 
-            {/* Subtitle */}
-            <p
-              ref={subtitleRef}
-              className="text-white/90 text-xs md:text-sm uppercase tracking-[0.04em] leading-relaxed max-w-[300px] shrink-0 lg:text-right lg:self-end lg:pb-1"
-            >
-              At Golden Ratio we blend Creativity, Engineering and
-              <br className="hidden lg:block" /> Detailing to design the spaces
-              of tomorrow.
-            </p>
+          <div ref={detailsRef} className="lg:w-[300px] shrink-0 lg:pt-2">
+            <dl className="text-md md:text-lg text-black/80">
+              <div className="flex justify-between py-2 border-t border-black/10">
+                <dt className="text-black/50">Category</dt>
+                <dd className="text-right max-w-[65%]">Architectural Visualization</dd>
+              </div>
+              <div className="flex justify-between py-2 border-t border-black/10">
+                <dt className="text-black/50">Services</dt>
+                <dd className="text-right max-w-[65%]">
+                  Creativity, Engineering &amp; Detailing
+                </dd>
+              </div>
+              <div className="flex justify-between py-2 border-t border-b border-black/10">
+                <dt className="text-black/50">Year</dt>
+                <dd className="text-right">2025</dd>
+              </div>
+            </dl>
           </div>
         </div>
-      </section>
+
+        {/* Description — full width, below headline/details row */}
+        <p
+          ref={descriptionRef}
+          className="mt-8 lg:mt-10 max-w-2xl text-black/70 text-md md:text-lg leading-relaxed"
+        >
+          At Golden Ratio we blend Creativity, Engineering and Detailing to
+          design the spaces of tomorrow — from miniature model to built
+          reality, every proportion is considered with clarity and intent.
+        </p>
+      </div>
     </div>
   );
 }

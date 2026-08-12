@@ -13,6 +13,8 @@ import Dashboard from './pages/Dashboard';
 import ContactList from './pages/Contacts/ContactList';
 import ProjectList from './pages/Projects/ProjectList';
 import ProjectForm from './pages/Projects/ProjectForm';
+import ProductList from './pages/Products/ProductList';
+import ProductForm from './pages/Products/ProductForm';
 import Settings from './pages/Settings';
 
 function App() {
@@ -20,8 +22,8 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
         {/* Global Toast Notifications */}
-        <Toaster 
-          position="top-right" 
+        <Toaster
+          position="top-right"
           toastOptions={{
             style: {
               background: '#f5f2ec',
@@ -32,12 +34,12 @@ function App() {
             success: {
               iconTheme: { primary: '#2a7a6e', secondary: '#f5f2ec' },
             },
-          }} 
+          }}
         />
-        
+
         <Routes>
           <Route path="/login" element={<Login />} />
-          
+
           {/* Protected Admin Routes */}
           <Route path="/" element={
             <ProtectedRoute>
@@ -45,15 +47,20 @@ function App() {
             </ProtectedRoute>
           }>
             <Route index element={<Dashboard />} />
-            
+
             {/* Contacts */}
             <Route path="contacts" element={<ContactList />} />
-            
+
             {/* Projects */}
             <Route path="projects" element={<ProjectList />} />
             <Route path="projects/new" element={<ProjectForm />} />
             <Route path="projects/:id/edit" element={<ProjectForm />} />
-            
+
+            {/* Products */}
+            <Route path="products" element={<ProductList />} />
+            <Route path="products/new" element={<ProductForm />} />
+            <Route path="products/:id/edit" element={<ProductForm />} />
+
             {/* Settings */}
             <Route path="settings" element={<Settings />} />
           </Route>
