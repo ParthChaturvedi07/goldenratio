@@ -117,7 +117,7 @@ export default function ProjectsPage() {
           </div>
           <h1 className="text-[4rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] font-black uppercase tracking-tighter leading-[0.85] text-black break-words mb-8">
             All{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2a7a6e] to-[#1a5a50]">
+            <span className="text-black/40">
               Projects
             </span>
           </h1>

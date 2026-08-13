@@ -222,16 +222,16 @@ body {
 
 /* ─── Custom scrollbar ───────────────────────────────────── */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a0a0a;
+  background: #f5f2ec;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #333;
-  border-radius: 3px;
+  background: #656565;
+  border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
