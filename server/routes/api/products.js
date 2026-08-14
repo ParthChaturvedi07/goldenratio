@@ -24,6 +24,17 @@ router.get('/', async (req, res) => {
     res.status(500).json({ success: false, error: 'Failed to fetch products' });
   }
 });
+// GET /api/products/categories — Get unique categories
+// ⚠ Must be BEFORE /:slug to avoid being caught as a slug param
+router.get('/categories', async (req, res) => {
+  try {
+    const categories = await Product.distinct('category', { isActive: true });
+    res.json({ success: true, data: ['All', ...categories] });
+  } catch (err) {
+    console.error('Fetch product categories error:', err);
+    res.status(500).json({ success: false, error: 'Failed to fetch categories' });
+  }
+});
 
 // GET /api/products/:slug — Get single active product by slug
 router.get('/:slug', async (req, res) => {

@@ -136,8 +136,8 @@ export default function ProjectsPage() {
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
                 className={`shrink-0 snap-start px-6 py-3 rounded-full text-xs font-semibold uppercase tracking-[0.15em] transition-all duration-500 cursor-pointer border ${activeCategory === cat
-                    ? "bg-black text-white border-black shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
-                    : "bg-transparent text-black/60 border-black/10 hover:bg-black/5 hover:text-black hover:border-black/30"
+                  ? "bg-black text-white border-black shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
+                  : "bg-transparent text-black/60 border-black/10 hover:bg-black/5 hover:text-black hover:border-black/30"
                   }`}
               >
                 {cat}
@@ -191,7 +191,7 @@ export default function ProjectsPage() {
                     alt={project.title}
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-[1.03]"
                   />
-                  
+
                   {/* Hover Overlay with Button */}
                   <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 flex items-center justify-center backdrop-blur-[2px]">
                     <div className="bg-white text-black px-8 py-4 flex items-center gap-3 rounded-full font-bold text-xs uppercase tracking-widest translate-y-8 group-hover:translate-y-0 transition-all duration-700 hover:scale-105 shadow-2xl">

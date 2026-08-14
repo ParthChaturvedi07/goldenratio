@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import gsap from "gsap";
 
@@ -25,6 +24,7 @@ const menuLinks: MenuLink[] = [
   { label: "WHY US", sectionId: "why-us-section" },
   { label: "OUR PROCESS", sectionId: "process-section" },
   { label: "PROJECTS", href: "/projects" },
+  { label: "PRODUCTS", href: "/products" },
   { label: "TESTIMONIALS", sectionId: "clients-testimonials-section" },
   { label: "CONTACT US", sectionId: "contact-section" },
 ];
@@ -40,7 +40,6 @@ export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const backdropRef = useRef<HTMLDivElement | null>(null);
-  const imagePanelRef = useRef<HTMLDivElement | null>(null);
   const navPanelRef = useRef<HTMLDivElement | null>(null);
   const timelineRef = useRef<gsap.core.Timeline | null>(null);
   const hasInitialised = useRef(false);
@@ -104,16 +103,6 @@ export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
       );
     }
 
-    // ── Image panel: slides DOWN from above + fades in ──
-    if (imagePanelRef.current) {
-      tl.fromTo(
-        imagePanelRef.current,
-        { yPercent: -100, opacity: 0 },
-        { yPercent: 0, opacity: 1, duration: 0.9 },
-        0.05
-      );
-    }
-
     // ── Nav panel: slides UP from below + fades in ──
     if (navPanelRef.current) {
       tl.fromTo(
@@ -165,7 +154,7 @@ export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
       <div
         ref={containerRef}
         id="menu-drawer"
-        className="fixed inset-0 z-40 flex"
+        className="fixed inset-0 z-40 flex lg:hidden"
         style={{ visibility: "hidden", pointerEvents: "none" }}
       >
         {/* Backdrop */}
@@ -175,27 +164,10 @@ export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
           style={{ opacity: 0 }}
         />
 
-        {/* Left side — Background image (slides from top) */}
-        <div
-          ref={imagePanelRef}
-          className="hidden lg:block relative w-[60%] xl:w-[65%] overflow-hidden"
-          style={{ opacity: 0 }}
-        >
-          <Image
-            src="/images/IMG_20210915_191342.jpg"
-            alt="Architectural background"
-            fill
-            className="object-cover"
-            sizes="65vw"
-            priority
-          />
-          <div className="absolute inset-0 bg-black/20" />
-        </div>
-
-        {/* Right side — Navigation panel (slides from bottom) */}
+        {/* Navigation panel (slides from bottom) — full width */}
         <div
           ref={navPanelRef}
-          className="w-full lg:w-[40%] xl:w-[35%] bg-[#f0ece4] flex flex-col justify-end px-8 md:px-12 lg:px-16 pb-16 pt-28 overflow-y-auto"
+          className="w-full bg-[#f0ece4] flex flex-col justify-end px-8 md:px-12 pb-16 pt-28 overflow-y-auto"
           style={{ opacity: 0 }}
         >
           {/* Navigation label */}
@@ -264,3 +236,4 @@ export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
     </>
   );
 }
+

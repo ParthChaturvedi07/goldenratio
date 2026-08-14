@@ -159,11 +159,11 @@ export default function ProjectDetailsPage({
 
         {/* ── Split Layout: Left Content & Right Gallery ────────── */}
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-20">
-          
+
           {/* Left Column (Sticky Details) */}
           <div className="lg:w-1/3">
             <div className="sticky top-32 flex flex-col gap-12">
-              
+
               {/* Concept & Objectives */}
               {project.concept && (
                 <div>
@@ -286,7 +286,7 @@ export default function ProjectDetailsPage({
                       alt={nextProj.title}
                       className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
-                    
+
                     {/* Hover Overlay with Button */}
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
                       <div className="bg-white text-black px-8 py-3 flex items-center gap-2 rounded-full font-medium tracking-wide translate-y-4 group-hover:translate-y-0 transition-all duration-500 hover:scale-105">

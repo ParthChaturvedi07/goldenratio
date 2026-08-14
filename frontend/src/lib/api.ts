@@ -68,3 +68,42 @@ export async function fetchProject(slug: string): Promise<Project> {
 export async function fetchCategories(): Promise<string[]> {
   return apiFetch<string[]>("/api/projects/categories");
 }
+
+// ── Products ──────────────────────────────────────────────
+
+export interface Product {
+  _id: string;
+  title: string;
+  slug: string;
+  category: string;
+  description: string;
+  price: number;
+  discountPrice?: number | null;
+  currency: string;
+  sku?: string;
+  stock?: number;
+  specifications?: { label: string; value: string }[];
+  tags?: string[];
+  image: string;
+  gallery?: { src: string; publicId?: string; caption?: string }[];
+  order: number;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+/** Fetch all active products, optionally filtered by category. */
+export async function fetchProducts(category?: string): Promise<Product[]> {
+  const query = category && category !== "All" ? `?category=${encodeURIComponent(category)}` : "";
+  return apiFetch<Product[]>(`/api/products${query}`);
+}
+
+/** Fetch a single product by its slug. */
+export async function fetchProduct(slug: string): Promise<Product> {
+  return apiFetch<Product>(`/api/products/${encodeURIComponent(slug)}`);
+}
+
+/** Fetch the list of unique product categories (includes "All" at index 0). */
+export async function fetchProductCategories(): Promise<string[]> {
+  return apiFetch<string[]>("/api/products/categories");
+}

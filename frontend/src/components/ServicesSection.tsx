@@ -19,23 +19,27 @@ const services = [
     },
     {
         id: "02",
-        title: "Allied Services",
+        title: "Momento",
         description: (
             <>
-                3D Visualization & Walkthroughs | BOQ & Material Selection | Model Photography & Videography | Safe Packaging & Pan-India Delivery
-            </>
-        ),
-        image: "/images/IMG_0721.JPG",
-    },
-    {
-        id: "03",
-        title: "Interior Design Services",
-        description: (
-            <>
-                Residential Interiors | Corporate Offices | Retail & Showroom Design | Restaurants & Cafes | Modular Kitchen | False Ceiling & Lighting Design | 2D Layouts & 3D Renders | Turnkey Execution
+                <strong>Corporate Mementos:</strong> Awards | Recognition Trophies | Achievement Models | Executive Gifts<br />
+                <strong>Architectural Mementos:</strong> Building Replicas | Project Models | Landmark Replicas | Custom Scale Models<br />
+                <strong>Custom Mementos:</strong> Personalized Models | Logo Displays | Commemorative Pieces | Premium Gifting
             </>
         ),
         image: "/images/IMG_0615.jpg",
+    },
+    {
+        id: "03",
+        title: "Allied Services",
+        description: (
+            <>
+                <strong>Visualization Services:</strong> 3D Visualization | Architectural Renders | Walkthroughs | Presentation Models<br />
+                <strong>Model Services:</strong> Model Photography | Model Videography | Scale Model Finishing | Custom Modifications<br />
+                <strong>Logistics & Support:</strong> BOQ & Material Selection | Safe Packaging | Pan-India Delivery | Installation Support
+            </>
+        ),
+        image: "/images/IMG_0721.JPG",
     }
 ];
 
@@ -179,7 +183,7 @@ export default function ServicesSection() {
                             <p className="text-black/50 text-[10px] md:text-[11px] tracking-[0.25em] uppercase font-medium">Our Expertise</p>
                         </div>
                         <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-[4rem] font-bold tracking-tight text-black leading-[1.05] whitespace-nowrap">
-                            WHAT WE OFFER
+                           OUR SERVICES
                         </h2>
                     </div>
 

@@ -166,7 +166,7 @@ export default function Footer() {
                   href="#"
                   className="hover:text-white cursor-default transition-colors duration-300"
                 >
-                  Interior Design
+                  Momento Making
                 </Link>
               </li>
               <li>

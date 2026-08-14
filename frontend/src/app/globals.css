@@ -211,6 +211,24 @@ body {
   opacity: 0.5;
 }
 
+/* ─── Desktop nav link underline ─────────────────────────── */
+.desktop-nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  right: 50%;
+  height: 1.5px;
+  background: currentColor;
+  transition: left 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+              right 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.desktop-nav-link:hover::after {
+  left: 12px;
+  right: 12px;
+}
+
 /* ─── Hero gradient overlay ──────────────────────────────── */
 .hero-gradient {
   background: linear-gradient(to top,

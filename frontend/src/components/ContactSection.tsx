@@ -23,12 +23,12 @@ import {
 gsap.registerPlugin(ScrollTrigger);
 
 const servicesList = [
-  { id: "architecture", label: "Architecture", icon: Building2 },
-  { id: "interior", label: "Interior Design", icon: Compass },
   { id: "models", label: "Scale Model Making", icon: Ruler },
-  { id: "mep", label: "MEP Engineering", icon: Zap },
-  { id: "construction", label: "Construction", icon: Hammer },
-  { id: "tech", label: "Smart Integration", icon: Sparkles },
+  {id: "momento", label: "Momento Making", icon: Sparkles},
+  { id: "allied", label: "Allied Services", icon: Compass },
+  // { id: "mep", label: "MEP Engineering", icon: Zap },
+  // { id: "construction", label: "Construction", icon: Hammer },
+  // { id: "tech", label: "Smart Integration", icon: Sparkles },
 ];
 
 const budgetRanges = [
@@ -53,7 +53,7 @@ export default function ContactSection() {
     message: "",
   });
   const [selectedServices, setSelectedServices] = useState<string[]>([
-    "Architecture",
+    "Scale Model Making",
   ]);
   const [selectedBudget, setSelectedBudget] = useState<string>("₹35L – ₹75L");
   const [isSubmitting, setIsSubmitting] = useState(false);

@@ -1,8 +1,10 @@
 "use client";
 
 import React, { useRef, useEffect } from "react";
+import Link from "next/link";
 import gsap from "gsap";
 import MouseTrail from "./MouseTrail";
+import AnimatedLink from "./ui/AnimatedLink";
 
 export default function HeroSection({ isPreloaderDone = true }: { isPreloaderDone?: boolean }) {
   const heroRef = useRef<HTMLElement | null>(null);
@@ -56,11 +58,11 @@ export default function HeroSection({ isPreloaderDone = true }: { isPreloaderDon
   }, [isPreloaderDone]);
 
   return (
-    <div className="bg-[#f5f2ec] h-full px-6 pt-16 pb-14">
+    <div className="bg-[#f5f2ec] h-full pt-16 pb-14">
       {/* Video — curved hero, no overlaid text */}
       <section
         ref={heroRef}
-        className="relative rounded-xl max-w-[97.5%] mx-auto h-[45vh] min-h-[500px] overflow-hidden"
+        className="relative h-[45vh] min-h-[450px] overflow-hidden"
         id="hero-section"
       >
         <div ref={mediaRef} className="absolute inset-0">
@@ -78,48 +80,64 @@ export default function HeroSection({ isPreloaderDone = true }: { isPreloaderDon
         {/* <MouseTrail containerRef={heroRef} /> */}
       </section>
 
-      <div ref={contentRef} className="pt-10 px-3 md:px-8 md:pt-14 mt-8">
+      <div ref={contentRef} className="pt-8 px-3 md:px-8 md:pt-10">
         {/* Index + Headline (left) / Project Details table (right) */}
         <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-8 lg:gap-16">
           <div className="lg:max-w-[58%]">
             <h1
               ref={headlineRef}
               className="text-black font-bold uppercase leading-[0.92] tracking-[-0.02em]"
-              style={{ fontSize: "clamp(2rem, 3.7vw, 5rem)" }}
+              style={{ fontSize: "clamp(2.5rem, 3.7vw, 5rem)" }}
             >
-              WHERE PROPORTION MEETS CLARITY FROM MINIATURE TO REALITY
+              {/* Where Proportion Meets Clarity <br /> */}
+              WE BUILD THE FUTURE IN MINIATURE
             </h1>
           </div>
 
-          <div ref={detailsRef} className="lg:w-[300px] shrink-0 lg:pt-2">
-            <dl className="text-md md:text-lg text-black/80">
-              <div className="flex justify-between py-2 border-t border-black/10">
-                <dt className="text-black/50">Category</dt>
-                <dd className="text-right max-w-[65%]">Architectural Visualization</dd>
-              </div>
-              <div className="flex justify-between py-2 border-t border-black/10">
-                <dt className="text-black/50">Services</dt>
-                <dd className="text-right max-w-[65%]">
-                  Creativity, Engineering &amp; Detailing
-                </dd>
-              </div>
-              <div className="flex justify-between py-2 border-t border-b border-black/10">
-                <dt className="text-black/50">Year</dt>
-                <dd className="text-right">2025</dd>
-              </div>
-            </dl>
+          <div ref={descriptionRef} className="lg:w-[350px] shrink-0 lg:pt-2">
+            <p className="text-black/70 text-md md:text-lg leading-relaxed">
+              At Golden Ratio we blend Creativity, Engineering and Detailing to
+              design the spaces of tomorrow — from miniature model to built
+              reality, every proportion is considered with clarity and intent.
+            </p>
           </div>
         </div>
 
-        {/* Description — full width, below headline/details row */}
-        <p
-          ref={descriptionRef}
-          className="mt-8 lg:mt-10 max-w-2xl text-black/70 text-md md:text-lg leading-relaxed"
-        >
-          At Golden Ratio we blend Creativity, Engineering and Detailing to
-          design the spaces of tomorrow — from miniature model to built
-          reality, every proportion is considered with clarity and intent.
-        </p>
+        {/* CTAs — full width, below headline/description row */}
+        <div ref={detailsRef} className="mt-8 md:mt-0 flex flex-wrap gap-4">
+          <Link
+            href="/projects"
+            className="px-8 py-4 bg-black text-white rounded-full font-bold uppercase tracking-widest text-xs transition-transform hover:scale-105"
+          >
+            Our Projects
+          </Link>
+          <AnimatedLink
+            href="/products"
+            className="
+                group
+                relative
+                overflow-hidden
+                flex
+                items-center
+                justify-center
+                gap-2
+                text-black
+                hover:text-white
+                px-8 py-4 bg-transparent border border-black text-black rounded-full font-bold uppercase tracking-widest text-xs transition-all hover:bg-black/5 hover:scale-105
+                "
+          >
+            Our Products
+            <svg
+              className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-0.5"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+            >
+              <path d="M4 12L12 4M12 4H5M12 4V11" />
+            </svg>
+          </AnimatedLink>
+        </div>
       </div>
     </div>
   );
