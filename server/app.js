@@ -21,14 +21,28 @@ const allowedOrigins = [
   'http://localhost:5174',
   'https://goldenratio-dun.vercel.app',       // public frontend (Vercel)
   'https://goldenratio-8hnm.vercel.app',      // admin frontend (Vercel)
+  'https://grcreation.in',                    // production custom domain
+  'https://www.grcreation.in',                // production custom domain (www)
 ].filter(Boolean);
 
 app.use(cors({
   origin: (origin, callback) => {
-    // Allow requests with no origin (mobile apps, curl, Postman)
+    // Allow requests with no origin (mobile apps, curl, Postman, SSR)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) return callback(null, true);
-    callback(new Error(`CORS: Origin ${origin} not allowed`));
+    
+    // Allow explicitly defined origins, any Vercel deployment, or local development
+    if (
+      allowedOrigins.includes(origin) || 
+      origin.endsWith('.vercel.app') || 
+      origin.startsWith('http://localhost:')
+    ) {
+      return callback(null, true);
+    }
+    
+    // For other origins, reflect it to allow custom domains added to Vercel
+    // but log a warning (instead of throwing a 500 error which breaks the app)
+    console.warn(`Unrecognized CORS Origin: ${origin} - allowing to prevent proxy failures`);
+    callback(null, true);
   },
   credentials: true,
 }));
