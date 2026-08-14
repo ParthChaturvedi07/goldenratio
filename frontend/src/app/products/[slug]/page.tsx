@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Tag } from "lucide-react";
+import { ArrowLeft, Tag, ChevronLeft, ChevronRight } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Footer from "@/components/Footer";
@@ -32,6 +32,7 @@ export default function ProductDetailsPage({
     const [moreProducts, setMoreProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
+    const [selectedImage, setSelectedImage] = useState<string>("");
 
     const heroTitleRef = useRef<HTMLHeadingElement>(null);
     const galleryRef = useRef<HTMLDivElement>(null);
@@ -50,6 +51,7 @@ export default function ProductDetailsPage({
                 if (cancelled) return;
 
                 setProduct(prod);
+                setSelectedImage(prod.image);
                 // Get 2 random "more products" excluding the current one
                 const others = allProducts.filter((p) => p.slug !== prod.slug);
                 setMoreProducts(others.slice(0, 2));
@@ -147,6 +149,11 @@ export default function ProductDetailsPage({
     const discountPercent = hasDiscount
         ? Math.round(((product.price - product.discountPrice!) / product.price) * 100)
         : 0;
+        
+    const allImages = [
+        { src: product.image, caption: "Main Image" },
+        ...(product.gallery || []),
+    ];
 
     return (
         <main className="min-h-screen bg-[#f5f2ec] text-black pt-24">
@@ -161,157 +168,156 @@ export default function ProductDetailsPage({
                 </Link>
             </div>
 
-            <div className="max-w-[1600px] mx-auto px-6 md:px-10 lg:px-16 xl:px-20 pb-20">
-                {/* ── Giant Hero Title ─────────────────────────────────── */}
-                <div className="py-20 md:py-32">
-                    <h1
-                        ref={heroTitleRef}
-                        className="text-[4rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] font-black uppercase tracking-tighter leading-[0.85] text-black break-words"
-                    >
-                        {product.title}
-                    </h1>
-                </div>
+            <div className="max-w-[1600px] mx-auto px-6 md:px-10 lg:px-16 xl:px-20 py-12 md:py-20 lg:py-24">
+                {/* ── Standard E-commerce Layout: Left (Images) & Right (Details) ────────── */}
+                <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
+                    
+                    {/* Left Column (Images) */}
+                    <div className="lg:w-[55%] flex flex-col gap-6" ref={galleryRef}>
+                        {/* Main Image */}
+                        <div className="w-full aspect-square md:aspect-[4/3] bg-black/5 rounded overflow-hidden relative group">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                                src={getMediaUrl(selectedImage || product.image)}
+                                alt={product.title}
+                                className="w-full h-full object-cover transition-opacity duration-500 gallery-item"
+                            />
+                            {/* Navigation Arrows */}
+                            {allImages.length > 1 && (
+                                <>
+                                    <button
+                                        onClick={() => {
+                                            const idx = allImages.findIndex(img => img.src === selectedImage);
+                                            const prevIdx = idx > 0 ? idx - 1 : allImages.length - 1;
+                                            setSelectedImage(allImages[prevIdx].src);
+                                        }}
+                                        className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-white/50 hover:bg-white backdrop-blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300"
+                                    >
+                                        <ChevronLeft className="w-5 h-5 text-black" />
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            const idx = allImages.findIndex(img => img.src === selectedImage);
+                                            const nextIdx = idx < allImages.length - 1 ? idx + 1 : 0;
+                                            setSelectedImage(allImages[nextIdx].src);
+                                        }}
+                                        className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-white/50 hover:bg-white backdrop-blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300"
+                                    >
+                                        <ChevronRight className="w-5 h-5 text-black" />
+                                    </button>
+                                </>
+                            )}
+                        </div>
+                        
+                        {/* Thumbnails */}
+                        {allImages.length > 1 && (
+                            <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide gallery-item">
+                                {allImages.map((img, idx) => (
+                                    <button
+                                        key={idx}
+                                        onClick={() => setSelectedImage(img.src)}
+                                        className={`relative w-20 md:w-24 aspect-square shrink-0 transition-all duration-300 border-2 ${
+                                            selectedImage === img.src
+                                                ? "border-black"
+                                                : "border-transparent opacity-70 hover:opacity-100"
+                                        }`}
+                                    >
+                                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                                        <img
+                                            src={getMediaUrl(img.src)}
+                                            alt={`Thumbnail ${idx}`}
+                                            className="w-full h-full object-cover"
+                                        />
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+                    </div>
 
-                {/* ── Split Layout: Left Content & Right Gallery ────────── */}
-                <div className="flex flex-col lg:flex-row gap-12 lg:gap-20">
-
-                    {/* Left Column (Sticky Details) */}
-                    <div className="lg:w-1/3">
-                        <div className="sticky top-32 flex flex-col gap-10">
-
-                            {/* Category */}
+                    {/* Right Column (Details) */}
+                    <div className="lg:w-[45%] flex flex-col gap-6 lg:gap-8">
+                        {/* Title & Price */}
+                        <div className="flex flex-col gap-4">
+                            <h1
+                                ref={heroTitleRef}
+                                className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-black"
+                            >
+                                {product.title}
+                            </h1>
+                            
+                            {/* Inline Price */}
                             <div className="flex items-center gap-3">
-                                <span className="w-8 h-[1px] bg-[#2a7a6e]" />
-                                <p className="text-[#2a7a6e] text-[10px] md:text-[11px] font-semibold tracking-[0.2em] uppercase">
-                                    {product.category}
-                                </p>
-                            </div>
-
-                            {/* Description */}
-                            <div>
-                                <h3 className="text-xl md:text-2xl font-bold mb-4">
-                                    About This Product
-                                </h3>
-                                <p className="text-black/70 text-base md:text-lg leading-relaxed">
-                                    {product.description}
-                                </p>
-                            </div>
-
-                            {/* Price Card */}
-                            <div className="bg-[#ede9e1] rounded-2xl p-6 border border-black/10 shadow-[4px_4px_16px_rgba(0,0,0,0.04),-4px_-4px_16px_rgba(255,255,255,0.7)]">
-                                <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-black/50 mb-3">
-                                    Pricing
-                                </p>
-                                <div className="flex items-baseline gap-3">
-                                    <span className="text-3xl md:text-4xl font-black text-black">
-                                        {formatPrice(
-                                            hasDiscount ? product.discountPrice! : product.price,
-                                            product.currency
-                                        )}
-                                    </span>
-                                    {hasDiscount && (
-                                        <>
-                                            <span className="text-lg text-black/40 line-through">
-                                                {formatPrice(product.price, product.currency)}
-                                            </span>
-                                            <span className="text-xs font-bold text-[#2a7a6e] bg-[#2a7a6e]/10 px-2 py-1 rounded-full">
-                                                {discountPercent}% OFF
-                                            </span>
-                                        </>
+                                <span className="text-2xl md:text-3xl font-bold text-black">
+                                    {formatPrice(
+                                        hasDiscount ? product.discountPrice! : product.price,
+                                        product.currency
                                     )}
-                                </div>
-                                {product.sku && (
-                                    <p className="text-xs text-black/40 mt-3 tracking-wider">
-                                        SKU: {product.sku}
-                                    </p>
-                                )}
-                                {product.stock != null && (
-                                    <p className={`text-xs mt-2 font-medium ${product.stock > 0 ? "text-[#2a7a6e]" : "text-red-500"}`}>
-                                        {product.stock > 0 ? `${product.stock} in stock` : "Out of stock"}
-                                    </p>
+                                </span>
+                                {hasDiscount && (
+                                    <>
+                                        <span className="text-lg font-medium text-black/40 line-through">
+                                            {formatPrice(product.price, product.currency)}
+                                        </span>
+                                        <span className="text-xs font-bold text-black">
+                                            {discountPercent}% OFF
+                                        </span>
+                                    </>
                                 )}
                             </div>
 
-                            {/* Specifications */}
-                            {product.specifications && product.specifications.length > 0 && (
-                                <div>
-                                    <h3 className="text-xl md:text-2xl font-bold mb-4">
-                                        Specifications
-                                    </h3>
+                            {/* Stock Indicator */}
+                            {product.stock != null && (
+                                <div className="flex items-center gap-2 mt-1">
+                                    <div className={`w-2 h-2 rounded-full ${product.stock > 0 ? "bg-[#e53e3e]" : "bg-black/40"}`} />
+                                    <p className="text-sm font-semibold text-black">
+                                        {product.stock > 0 ? `High demand: Only ${product.stock} left in stock.` : "Out of stock."}
+                                    </p>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Description */}
+                        <div>
+                            <p className="text-black/80 text-sm md:text-base leading-relaxed">
+                                {product.description}
+                            </p>
+                        </div>
+
+                        {/* Specifications */}
+                        {product.specifications && product.specifications.length > 0 && (
+                            <div className="mt-2">
+                                <div className="border border-black/10 rounded-xl overflow-hidden">
                                     <dl className="text-sm md:text-base text-black/80">
                                         {product.specifications.map((spec, idx) => (
                                             <div
                                                 key={idx}
-                                                className={`flex justify-between py-3 ${idx === 0 ? "border-t" : ""
-                                                    } border-b border-black/10`}
+                                                className={`flex justify-between py-3 px-4 ${idx === 0 ? "" : "border-t border-black/10"
+                                                    }`}
                                             >
-                                                <dt className="text-black/50 font-medium">{spec.label}</dt>
+                                                <dt className="text-black/60 font-medium">{spec.label}</dt>
                                                 <dd className="text-right max-w-[60%] font-medium">{spec.value}</dd>
                                             </div>
                                         ))}
                                     </dl>
                                 </div>
-                            )}
+                            </div>
+                        )}
 
-                            {/* Tags */}
-                            {product.tags && product.tags.length > 0 && (
-                                <div>
-                                    <div className="flex items-center gap-2 mb-3">
-                                        <Tag className="w-4 h-4 text-black/40" />
-                                        <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-black/50">
-                                            Tags
-                                        </p>
-                                    </div>
-                                    <div className="flex flex-wrap gap-2">
-                                        {product.tags.map((tag, idx) => (
-                                            <span
-                                                key={idx}
-                                                className="text-xs px-3 py-1.5 rounded-full bg-black/5 text-black/60 border border-black/10 font-medium"
-                                            >
-                                                {tag}
-                                            </span>
-                                        ))}
-                                    </div>
+                        {/* Tags */}
+                        {product.tags && product.tags.length > 0 && (
+                            <div className="mt-2">
+                                <div className="flex flex-wrap gap-2">
+                                    {product.tags.map((tag, idx) => (
+                                        <span
+                                            key={idx}
+                                            className="text-xs px-4 py-2 rounded-full border border-black/10 text-black/70 font-medium"
+                                        >
+                                            {tag}
+                                        </span>
+                                    ))}
                                 </div>
-                            )}
-                        </div>
-                    </div>
-
-                    {/* Right Column (Gallery) */}
-                    <div className="lg:w-2/3" ref={galleryRef}>
-                        <div className="flex flex-col gap-12 md:gap-20">
-                            {/* Gallery Images */}
-                            {product.gallery && product.gallery.length > 0 ? (
-                                product.gallery.map((img, idx) => (
-                                    <div key={idx} className="gallery-item flex flex-col gap-4">
-                                        <div className="w-full relative overflow-hidden rounded-xl bg-black/5">
-                                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                                            <img
-                                                src={getMediaUrl(img.src)}
-                                                alt={`${product.title} - ${idx}`}
-                                                className="w-full h-auto object-cover"
-                                            />
-                                        </div>
-                                        {img.caption && (
-                                            <p className="text-black/60 text-sm md:text-base font-light italic">
-                                                {img.caption}
-                                            </p>
-                                        )}
-                                    </div>
-                                ))
-                            ) : (
-                                <div className="gallery-item flex flex-col gap-4">
-                                    <div className="w-full relative overflow-hidden rounded-xl bg-black/5">
-                                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                                        <img
-                                            src={getMediaUrl(product.image)}
-                                            alt={product.title}
-                                            className="w-full h-auto object-cover"
-                                        />
-                                    </div>
-                                </div>
-                            )}
-                        </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

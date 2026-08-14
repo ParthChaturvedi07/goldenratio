@@ -46,7 +46,6 @@ const Dashboard = () => {
     { label: 'Total Inquiries', value: stats?.contacts?.total || 0, icon: <Users size={24} />, color: 'text-blue-500' },
     { label: 'Total Projects', value: stats?.projectsCount || 0, icon: <FolderOpen size={24} />, color: 'text-brand' },
     { label: 'New Unread', value: stats?.contacts?.data?.filter(c => c.status === 'new').length || 0, icon: <MailOpen size={24} />, color: 'text-red-500' },
-    { label: 'Engagement', value: '+12%', icon: <TrendingUp size={24} />, color: 'text-green-500' },
   ];
 
   return (

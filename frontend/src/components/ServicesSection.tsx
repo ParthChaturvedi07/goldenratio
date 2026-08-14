@@ -150,7 +150,7 @@ export default function ServicesSection() {
                 <div className="w-full lg:w-1/2 h-[50vh] lg:h-full flex flex-col items-center justify-center relative border-b lg:border-b-0 lg:border-r border-black/10 p-6">
 
                     {/* Images Container */}
-                    <div className="relative bg-blue-200 h-[70vh] w-full max-w-[300px] sm:max-w-[500px] aspect-[4/5] rounded-xl overflow-hidden shadow-2xl bg-black/5">
+                    <div className="relative bg-blue-200 h-[70vh] w-full max-w-[400px] sm:max-w-[500px] aspect-[4/5] rounded-lg overflow-hidden shadow-2xl bg-black/5">
                         {services.map((service, index) => (
                             <img
                                 key={`img-${service.id}`}
@@ -188,22 +188,22 @@ export default function ServicesSection() {
                     </div>
 
                     {/* Changing Services Info */}
-                    <div className="relative w-full h-56 lg:h-72">
+                    <div className="relative w-full h-[300px] lg:h-[340px] rounded-2xl overflow-hidden shadow-2xl">
                         {services.map((service, index) => (
                             <div
                                 key={`text-${service.id}`}
                                 ref={(el) => {
                                     textsRef.current[index] = el;
                                 }}
-                                className="absolute inset-0 flex flex-col justify-center pointer-events-none"
+                                className="absolute bg-[#111111] border border-white/5 inset-0 flex flex-col justify-center pointer-events-none px-4 py-12 md:py6"
                             >
-                                <span className="text-black/50 font-mono mb-4 text-sm tracking-widest">
+                                <span className="text-white/40 font-mono mt-3 lg:mt-8 mb-3 lg:mb-4 text-xs lg:text-sm tracking-[0.2em] uppercase">
                                     /{service.id}
                                 </span>
-                                <h3 className="text-3xl md:text-4xl lg:text-5xl font-medium mb-4">
+                                <h3 className="text-3xl md:text-4xl lg:text-5xl font-medium mb-4 text-white">
                                     {service.title}
                                 </h3>
-                                <div className="text-black/70 max-w-[500px] leading-relaxed text-sm md:text-base space-y-2">
+                                <div className="text-white/70 max-w-[500px] leading-relaxed text-sm md:text-base space-y-2">
                                     {service.description}
                                 </div>
                             </div>
