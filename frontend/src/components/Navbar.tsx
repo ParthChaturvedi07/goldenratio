@@ -13,6 +13,7 @@ interface NavLinkItem {
   label: string;
   sectionId?: string;
   href?: string;
+  isNew?: boolean;
   subLinks?: { label: string; sectionId?: string; href?: string }[];
 }
 
@@ -23,13 +24,14 @@ const navLinks: NavLinkItem[] = [
     sectionId: "services-section",
     subLinks: [
       { label: "Miniature Model Making", sectionId: "services-section" },
+      { label: "Momento Making", sectionId: "services-section" },
       { label: "Allied Services", sectionId: "services-section" },
     ],
   },
   { label: "Why Us", sectionId: "why-us-section" },
   { label: "Our Process", sectionId: "process-section" },
   { label: "Projects", href: "/projects" },
-  { label: "Products", href: "/products" },
+  { label: "STORE", href: "/products", isNew: true },
   { label: "Testimonials", sectionId: "clients-testimonials-section" },
   { label: "Contact Us", sectionId: "contact-section" },
 ];
@@ -125,9 +127,14 @@ export default function Navbar() {
               >
                 <button
                   onClick={() => handleNavClick(link)}
-                  className="desktop-nav-link text-black/80 hover:text-black text-[13px] xl:text-sm font-medium uppercase tracking-[0.08em] px-3 xl:px-4 py-2 bg-transparent border-none cursor-pointer transition-colors duration-300 relative"
+                  className="desktop-nav-link text-black/80 hover:text-black text-[13px] xl:text-sm font-medium uppercase tracking-[0.08em] px-3 xl:px-4 py-2 bg-transparent border-none cursor-pointer transition-colors duration-300 relative flex items-center"
                 >
                   {link.label}
+                  {link.isNew && (
+                    <span className="absolute -top-1 -right-2 bg-black text-white text-[6px] leading-none font-bold px-1.5 py-1 rounded-sm">
+                      NEW
+                    </span>
+                  )}
                   {link.subLinks && (
                     <svg
                       className="inline-block ml-1 w-3 h-3 transition-transform duration-300"

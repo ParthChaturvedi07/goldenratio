@@ -205,7 +205,7 @@ export default function Footer() {
               <div className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-white/50 shrink-0 mt-0.5" />
                 <span className="leading-relaxed">
-                 26 Ambedkar Nagar Suraj Nagar Bhopal 462044
+                  26 Ambedkar Nagar Suraj Nagar Bhopal 462044
                 </span>
               </div>
               <div className="flex items-center gap-3">
@@ -285,20 +285,9 @@ export default function Footer() {
             </div> */}
 
             {/* Giant Architectural Typographic Watermark */}
-            <h1 className="text-[12vw] sm:text-[12vw] md:text-[12.8vw] font-black uppercase tracking-tighter text-white/15 leading-none text-center whitespace-nowrap w-full">
+            <h1 className="text-[clamp(3rem,12vw,12rem)] font-black uppercase tracking-tighter text-white/15 leading-[0.85] text-center whitespace-nowrap w-full">
               GOLDENRATIO
             </h1>
-
-            {/* Right Logo Icon */}
-            <div className="shrink-0 hidden sm:block">
-              <Image
-                src="/images/GoldenRatio_Creation.png"
-                alt="Golden Ratio Emblem"
-                width={120}
-                height={120}
-                className="w-16 sm:w-24 md:w-32 lg:w-40 h-auto object-contain brightness-0 invert opacity-40"
-              />
-            </div>
           </div>
         </div>
 

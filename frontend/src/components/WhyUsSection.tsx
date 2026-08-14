@@ -360,7 +360,7 @@ export default function WhyUsSection() {
           <p className="md:hidden text-black/40 text-[10px] font-mono tracking-[0.2em] uppercase mb-8 opacity-70">
             [ Tap headings to reveal ]
           </p>
-          <div className="flex flex-col items-center gap-2 md:gap-3 lg:gap-4">
+          <div className="flex flex-col items-center gap-4 md:gap-6">
             {WHY_US_ITEMS.map((item, i) => (
               <div
                 key={item.heading}

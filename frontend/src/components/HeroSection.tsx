@@ -20,9 +20,18 @@ export default function HeroSection({ isPreloaderDone = true }: { isPreloaderDon
       // Initial states
       if (mediaRef.current) gsap.set(mediaRef.current, { yPercent: -8, opacity: 0, scale: 1.08 });
       if (indexRef.current) gsap.set(indexRef.current, { opacity: 0, y: 12 });
-      if (headlineRef.current) gsap.set(headlineRef.current, { y: 60, opacity: 0 });
+      
+      const words = headlineRef.current?.querySelectorAll(".headline-word");
+      if (words && words.length > 0) {
+        gsap.set(words, { yPercent: 100, opacity: 0 });
+      }
+      
       if (detailsRef.current) gsap.set(detailsRef.current, { y: 20, opacity: 0 });
-      if (descriptionRef.current) gsap.set(descriptionRef.current, { y: 20, opacity: 0 });
+      
+      const descWords = descriptionRef.current?.querySelectorAll(".desc-word");
+      if (descWords && descWords.length > 0) {
+        gsap.set(descWords, { yPercent: 100, opacity: 0 });
+      }
 
       if (!isPreloaderDone) return;
 
@@ -38,9 +47,14 @@ export default function HeroSection({ isPreloaderDone = true }: { isPreloaderDon
         tl.to(indexRef.current, { y: 0, opacity: 1, duration: 0.6 }, 0.9);
       }
 
-      // ── Headline slides UP from below + fades in ──
-      if (headlineRef.current) {
-        tl.to(headlineRef.current, { y: 0, opacity: 1, duration: 1.1 }, 1.0);
+      // ── Headline words slide UP from below mask ──
+      const animatingWords = headlineRef.current?.querySelectorAll(".headline-word");
+      if (animatingWords && animatingWords.length > 0) {
+        tl.to(
+          animatingWords,
+          { yPercent: 0, opacity: 1, duration: 1, stagger: 0.08, ease: "power4.out" },
+          1.0
+        );
       }
 
       // ── Details table fades in ──
@@ -48,9 +62,14 @@ export default function HeroSection({ isPreloaderDone = true }: { isPreloaderDon
         tl.to(detailsRef.current, { y: 0, opacity: 1, duration: 0.9 }, 1.15);
       }
 
-      // ── Description slides UP from below + fades in ──
-      if (descriptionRef.current) {
-        tl.to(descriptionRef.current, { y: 0, opacity: 1, duration: 0.9 }, 1.3);
+      // ── Description words slide UP from below mask (parallel) ──
+      const descAnimatingWords = descriptionRef.current?.querySelectorAll(".desc-word");
+      if (descAnimatingWords && descAnimatingWords.length > 0) {
+        tl.to(
+          descAnimatingWords,
+          { yPercent: 0, opacity: 1, duration: 1, stagger: 0.03, ease: "power4.out" },
+          1.0
+        );
       }
     }, heroRef);
 
@@ -80,25 +99,40 @@ export default function HeroSection({ isPreloaderDone = true }: { isPreloaderDon
         {/* <MouseTrail containerRef={heroRef} /> */}
       </section>
 
-      <div ref={contentRef} className="pt-8 px-3 md:px-8 md:pt-10">
+      <div ref={contentRef} className="pt-8 px-6 md:px-12 md:pt-10">
         {/* Index + Headline (left) / Project Details table (right) */}
         <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-8 lg:gap-16">
           <div className="lg:max-w-[58%]">
             <h1
               ref={headlineRef}
-              className="text-black font-bold uppercase leading-[0.92] tracking-[-0.02em]"
+              className="text-black font-bold uppercase leading-[0.92] tracking-[-0.02em] flex flex-wrap"
               style={{ fontSize: "clamp(2.5rem, 3.7vw, 5rem)" }}
             >
-              {/* Where Proportion Meets Clarity <br /> */}
-              WE BUILD THE FUTURE IN MINIATURE
+              {"WE BUILD THE FUTURE IN MINIATURE".split(" ").map((word, i) => (
+                <span
+                  key={i}
+                  className="overflow-hidden inline-block pb-[0.1em] mr-[0.25em]"
+                >
+                  <span className="headline-word inline-block origin-bottom">
+                    {word}
+                  </span>
+                </span>
+              ))}
             </h1>
           </div>
 
           <div ref={descriptionRef} className="lg:w-[350px] shrink-0 lg:pt-2">
-            <p className="text-black/70 text-md md:text-lg leading-relaxed">
-              At Golden Ratio we blend Creativity, Engineering and Detailing to
-              design the spaces of tomorrow — from miniature model to built
-              reality, every proportion is considered with clarity and intent.
+            <p className="text-black/70 text-md md:text-lg leading-relaxed flex flex-wrap">
+              {"At Golden Ratio we blend Creativity, Engineering and Detailing to design the spaces of tomorrow — from miniature model to built reality, every proportion is considered with clarity and intent.".split(" ").map((word, i) => (
+                <span
+                  key={i}
+                  className="overflow-hidden inline-block pb-[0.1em] mr-[0.25em]"
+                >
+                  <span className="desc-word inline-block origin-bottom">
+                    {word}
+                  </span>
+                </span>
+              ))}
             </p>
           </div>
         </div>

@@ -24,7 +24,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const servicesList = [
   { id: "models", label: "Scale Model Making", icon: Ruler },
-  {id: "momento", label: "Momento Making", icon: Sparkles},
+  { id: "momento", label: "Momento Making", icon: Sparkles },
   { id: "allied", label: "Allied Services", icon: Compass },
   // { id: "mep", label: "MEP Engineering", icon: Zap },
   // { id: "construction", label: "Construction", icon: Hammer },
@@ -284,8 +284,8 @@ export default function ContactSection() {
                           key={service.id}
                           onClick={() => toggleService(service.label)}
                           className={`flex items-center gap-2 px-4 py-2.5 rounded-full text-xs font-medium uppercase tracking-wider transition-all duration-300 cursor-pointer ${isSelected
-                              ? "bg-black text-white shadow-md border-black"
-                              : "bg-[#f5f2ec] text-black/80 hover:bg-black/5 border border-black/10"
+                            ? "bg-black text-white shadow-md border-black"
+                            : "bg-[#f5f2ec] text-black/80 hover:bg-black/5 border border-black/10"
                             }`}
                         >
                           <Icon className={`w-3.5 h-3.5 ${isSelected ? "text-white" : "text-black/50"}`} />
@@ -310,8 +310,8 @@ export default function ContactSection() {
                           key={budget}
                           onClick={() => setSelectedBudget(budget)}
                           className={`py-3 px-3 text-center rounded-xl text-xs font-semibold uppercase tracking-wider transition-all duration-300 cursor-pointer ${isSelected
-                              ? "bg-black text-white shadow-md border-black"
-                              : "bg-[#f5f2ec] text-black/70 border border-black/10 hover:bg-black/5"
+                            ? "bg-black text-white shadow-md border-black"
+                            : "bg-[#f5f2ec] text-black/70 border border-black/10 hover:bg-black/5"
                             }`}
                         >
                           {budget}
@@ -483,7 +483,7 @@ export default function ContactSection() {
                 href="https://wa.me/919826000000?text=Hi%20Golden%20Ratio%20Team%2C%20I%20would%20like%20to%20discuss%20a%20new%20project."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full py-3.5 px-6 rounded-full bg-black text-white text-xs font-semibold uppercase tracking-[0.15em] flex items-center justify-center gap-2 hover:bg-black/80 transition-all duration-300 shadow-md cursor-pointer"
+                className="w-full py-3.5 px-6 rounded-full bg-[#25D366] text-white text-xs font-semibold uppercase tracking-[0.15em] flex items-center justify-center gap-2 hover:bg-[#1ebe5d] transition-all duration-300 shadow-md cursor-pointer"
               >
                 <span>Chat on WhatsApp</span>
                 <ArrowUpRight className="w-4 h-4" />

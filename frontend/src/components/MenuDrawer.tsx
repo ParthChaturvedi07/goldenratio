@@ -8,6 +8,7 @@ interface MenuLink {
   label: string;
   sectionId?: string; // scroll to section on same page
   href?: string;      // navigate to a separate page
+  isNew?: boolean;
   subLinks?: { label: string; sectionId?: string; href?: string }[];
 }
 
@@ -24,7 +25,7 @@ const menuLinks: MenuLink[] = [
   { label: "WHY US", sectionId: "why-us-section" },
   { label: "OUR PROCESS", sectionId: "process-section" },
   { label: "PROJECTS", href: "/projects" },
-  { label: "PRODUCTS", href: "/products" },
+  { label: "STORE", href: "/products", isNew: true },
   { label: "TESTIMONIALS", sectionId: "clients-testimonials-section" },
   { label: "CONTACT US", sectionId: "contact-section" },
 ];
@@ -182,9 +183,14 @@ export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
                 <div className="flex items-center justify-between">
                   <button
                     onClick={() => handleNavClick(link)}
-                    className="menu-link text-black text-sm md:text-base font-semibold uppercase tracking-[0.12em] py-4 block bg-transparent border-none cursor-pointer text-left"
+                    className="menu-link text-black text-sm md:text-base font-semibold uppercase tracking-[0.12em] py-4 flex items-center gap-2 bg-transparent border-none cursor-pointer text-left"
                   >
                     {link.label}
+                    {link.isNew && (
+                      <span className="bg-black text-white text-[9px] leading-none font-bold px-1.5 py-1 rounded-sm">
+                        NEW
+                      </span>
+                    )}
                   </button>
                   {link.subLinks && (
                     <button

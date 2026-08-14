@@ -14,6 +14,7 @@ import ClouCloneSection from "@/components/ClouCloneSection";
 import ServicesSection from "@/components/ServicesSection";
 import ProjectsSection from "@/components/ProjectsSection";
 import Preloader from "@/components/Preloader";
+import ScrollIndicatorMobile from "@/components/ScrollIndicatorMobile";
 
 export default function Home() {
   const [preloaderDone, setPreloaderDone] =
@@ -58,6 +59,8 @@ export default function Home() {
         <AboutSection />
         <ClientLogoTicker />
       </div>
+
+      <ScrollIndicatorMobile />
 
       <div>
         <WhyUsSection />
