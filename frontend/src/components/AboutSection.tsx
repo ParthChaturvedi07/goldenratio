@@ -123,9 +123,9 @@ export default function AboutSection() {
               >
                 We Help Clients Visualize Their
                 <br />
-                <span className="inline-block ml-4 md:ml-6">DREAM SPACES</span>
+                <span className="inline-block">DREAM SPACES</span>
                 <br />
-                <span className="inline-block ml-1">Before Building Them.</span>
+                <span className="inline-block">Before Building Them.</span>
               </h2>
             </div>
 

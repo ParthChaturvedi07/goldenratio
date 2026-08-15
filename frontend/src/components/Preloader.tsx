@@ -4,18 +4,13 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 
 const PRELOADER_IMAGES = [
-  "/images/service-architecture.png",
-  "/images/trail-1.png",
-  "/images/service-interior.png",
-  "/images/trail-2.png",
-  "/images/service-construction.png",
-  "/images/trail-3.png",
+  "/images/1bef8902-e0b0-409a-9571-d90359822153.png",
   "/images/IMG_0615.jpg",
-  "/images/trail-4.png",
-  "/images/about-img.png",
   "/images/IMG_0738.JPG",
   "/images/IMG_0727.JPG",
   "/images/IMG_0732.JPG",
+  "/images/IMG_20221110_172236.jpg",
+  "/images/IMG20251029190139.jpg"
 ];
 
 interface PreloaderProps {

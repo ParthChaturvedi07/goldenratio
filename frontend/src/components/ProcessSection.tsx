@@ -15,6 +15,7 @@ const processData = [
     title: "Consultation & Site Visit",
     description:
       "Understand needs, measure space, collect drawings",
+    image: "/images/process-1.jpeg",
   },
   {
     id: 2,
@@ -22,6 +23,7 @@ const processData = [
     title: "Design & 3D Concept",
     description:
       "Mood boards, 2D layouts, photorealistic 3D renders",
+    image: "/images/process-2.jpeg",
   },
   {
     id: 3,
@@ -29,6 +31,7 @@ const processData = [
     title: "Model / Execution Approval",
     description:
       "Scale model or material samples for final sign-off",
+    image: "/images/process-3.jpeg",
   },
   {
     id: 4,
@@ -36,6 +39,7 @@ const processData = [
     title: "Execution / Model Making",
     description:
       "Turnkey interior work OR detailed model fabrication",
+    image: "/images/process-4.jpeg",
   },
   {
     id: 5,
@@ -43,6 +47,7 @@ const processData = [
     title: "Handover & Support",
     description:
       "Project delivery with post-service support",
+    image: "/images/process-5.jpeg",
   },
 ];
 
@@ -240,7 +245,7 @@ export default function ProcessSection() {
         }}
       />
 
-      <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16 xl:px-20 py-6 md:py-10 lg:py-16 flex flex-col gap-14 md:gap-20">
+      <div className="relative z-10 w-full mx-auto px-6 md:px-10 lg:px-16 xl:px-20 py-6 md:py-10 lg:py-16 flex flex-col gap-14 md:gap-20">
         {/* ── Section Header ── */}
         <div ref={headingRef} style={{ opacity: 0 }}>
           <p className="text-black/40 text-[10px] md:text-[11px] tracking-[0.25em] uppercase mb-4 font-medium">
@@ -276,6 +281,11 @@ export default function ProcessSection() {
                       }}
                     />
                   </div>
+                </div>
+
+                {/* Card Image */}
+                <div className="process-card-image">
+                  <img src={card.image} alt={card.title} />
                 </div>
 
                 {/* Card Content */}

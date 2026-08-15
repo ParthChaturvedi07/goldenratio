@@ -527,7 +527,7 @@ body {
 .process-carousel-list {
   position: relative;
   width: 100%;
-  height: 420px;
+  height: 520px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -537,13 +537,13 @@ body {
 .process-card {
   position: absolute;
   width: 440px;
-  min-height: 270px;
+  min-height: 380px;
   padding: 38px 40px;
   border-radius: 24px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 36px;
+  gap: 24px;
   cursor: pointer;
   user-select: none;
   transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1);
@@ -674,6 +674,34 @@ body {
   gap: 14px;
 }
 
+/* Card image */
+.process-card-image {
+  width: 100%;
+  height: 130px;
+  border-radius: 14px;
+  overflow: hidden;
+  flex-shrink: 0;
+  opacity: 0.4;
+  filter: grayscale(0.6);
+  transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.process-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.process-card.act .process-card-image {
+  opacity: 1;
+  filter: grayscale(0);
+}
+
+.process-card.act:hover .process-card-image img {
+  transform: scale(1.05);
+}
+
 .process-card-title {
   font-size: clamp(1.4rem, 2.8vw, 2rem);
   font-weight: 700;
@@ -752,15 +780,20 @@ body {
 /* ── Responsive ── */
 @media (max-width: 640px) {
   .process-carousel-list {
-    height: 340px;
+    height: 460px;
   }
 
   .process-card {
     width: 310px;
-    min-height: 220px;
+    min-height: 340px;
     padding: 28px 28px;
-    gap: 28px;
+    gap: 20px;
     border-radius: 20px;
+  }
+
+  .process-card-image {
+    height: 100px;
+    border-radius: 12px;
   }
 
   .process-card.next {
@@ -793,13 +826,17 @@ body {
 
 @media (min-width: 768px) {
   .process-carousel-list {
-    height: 440px;
+    height: 560px;
   }
 
   .process-card {
     width: 480px;
-    min-height: 290px;
+    min-height: 420px;
     padding: 42px 46px;
+  }
+
+  .process-card-image {
+    height: 150px;
   }
 
   .process-card-desc {
@@ -815,15 +852,20 @@ body {
 
 @media (min-width: 1280px) {
   .process-carousel-list {
-    height: 480px;
+    height: 600px;
   }
 
   .process-card {
     width: 540px;
-    min-height: 320px;
+    min-height: 460px;
     padding: 48px 52px;
-    gap: 40px;
+    gap: 28px;
     border-radius: 28px;
+  }
+
+  .process-card-image {
+    height: 170px;
+    border-radius: 16px;
   }
 
   .process-card-number {

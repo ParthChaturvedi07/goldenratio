@@ -27,7 +27,7 @@ const services = [
                 <strong>Custom Mementos:</strong> Personalized Models | Logo Displays | Commemorative Pieces | Premium Gifting
             </>
         ),
-        image: "/images/IMG_0615.jpg",
+        image: "/images/memento.png",
     },
     {
         id: "03",
@@ -177,33 +177,33 @@ export default function ServicesSection() {
                 <div className="w-full lg:w-1/2 h-[50vh] lg:h-full relative flex flex-col justify-center p-6 md:p-12 lg:p-24 lg:pl-20">
 
                     {/* Top Header Section */}
-                    <div className="max-w-[500px] mb-12 lg:mb-20">
-                        <div className="flex items-center gap-4 mb-4 lg:mb-6">
+                    <div className="max-w-[500px] mb-4 sm:mb-6 md:mb-8 lg:mb-20">
+                        <div className="flex items-center gap-4 mb-2 sm:mb-4 lg:mb-6">
                             <div className="w-10 md:w-12 h-[1px] bg-black/20"></div>
                             <p className="text-black/50 text-[10px] md:text-[11px] tracking-[0.25em] uppercase font-medium">Our Expertise</p>
                         </div>
-                        <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-[4rem] font-bold tracking-tight text-black leading-[1.05] whitespace-nowrap">
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[4rem] font-bold tracking-tight text-black leading-[1.05] whitespace-nowrap">
                            OUR SERVICES
                         </h2>
                     </div>
 
                     {/* Changing Services Info */}
-                    <div className="relative w-full h-[300px] lg:h-[340px] rounded-2xl overflow-hidden shadow-2xl">
+                    <div className="relative w-full h-[220px] sm:h-[260px] md:h-[300px] lg:h-[340px]">
                         {services.map((service, index) => (
                             <div
                                 key={`text-${service.id}`}
                                 ref={(el) => {
                                     textsRef.current[index] = el;
                                 }}
-                                className="absolute bg-[#111111] border border-white/5 inset-0 flex flex-col justify-center pointer-events-none px-4 py-12 md:py6"
+                                className="absolute rounded-2xl overflow-hidden shadow-2xl bg-[#111111] border border-white/5 inset-0 flex flex-col justify-center pointer-events-none px-4 sm:px-5 md:px-6 py-6 sm:py-8 md:py-10"
                             >
-                                <span className="text-white/40 font-mono mt-3 lg:mt-8 mb-3 lg:mb-4 text-xs lg:text-sm tracking-[0.2em] uppercase">
+                                <span className="text-white/40 font-mono mt-1 sm:mt-2 lg:mt-8 mb-2 sm:mb-3 lg:mb-4 text-[10px] sm:text-xs lg:text-sm tracking-[0.2em] uppercase">
                                     /{service.id}
                                 </span>
-                                <h3 className="text-3xl md:text-4xl lg:text-5xl font-medium mb-4 text-white">
+                                <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium mb-2 sm:mb-3 md:mb-4 text-white">
                                     {service.title}
                                 </h3>
-                                <div className="text-white/70 max-w-[500px] leading-relaxed text-sm md:text-base space-y-2">
+                                <div className="text-white/70 max-w-[500px] leading-relaxed text-xs sm:text-sm md:text-base space-y-2">
                                     {service.description}
                                 </div>
                             </div>

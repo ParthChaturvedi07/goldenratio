@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -34,6 +34,83 @@ export interface ClientsSectionProps {
   primaryActionLabel: string;
   secondaryActionLabel: string;
   className?: string;
+}
+
+/* ── Animated Stat Counter ───────────────────────────────── */
+function AnimatedStat({ stat }: { stat: Stat }) {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [displayValue, setDisplayValue] = useState("0");
+  const hasAnimated = useRef(false);
+
+  // Parse numeric value and suffix from the stat string
+  const parseStatValue = useCallback((value: string) => {
+    const match = value.match(/^([\d.]+)(.*)$/);
+    if (!match) return { num: 0, suffix: value, decimals: 0 };
+    const num = parseFloat(match[1]);
+    const suffix = match[2];
+    const decimals = match[1].includes(".") ? match[1].split(".")[1].length : 0;
+    return { num, suffix, decimals };
+  }, []);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const { num: target, suffix, decimals } = parseStatValue(stat.value);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasAnimated.current) {
+            hasAnimated.current = true;
+
+            const duration = 2000; // 2 seconds
+            const startTime = performance.now();
+
+            const animate = (currentTime: number) => {
+              const elapsed = currentTime - startTime;
+              const progress = Math.min(elapsed / duration, 1);
+
+              // Ease-out cubic for a satisfying deceleration
+              const eased = 1 - Math.pow(1 - progress, 3);
+              const current = eased * target;
+
+              setDisplayValue(current.toFixed(decimals) + suffix);
+
+              if (progress < 1) {
+                requestAnimationFrame(animate);
+              }
+            };
+
+            requestAnimationFrame(animate);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [stat.value, parseStatValue]);
+
+  return (
+    <div
+      ref={ref}
+      className="p-4 md:p-5 rounded-2xl text-center transition-all duration-300"
+      style={{
+        background: "#ede9e1",
+        boxShadow:
+          "5px 5px 12px rgba(0, 0, 0, 0.06), -5px -5px 12px rgba(255, 255, 255, 0.75)",
+      }}
+    >
+      <p className="text-2xl md:text-3xl font-bold text-[#1a1a1a] tracking-tight">
+        {displayValue}
+      </p>
+      <p className="text-[10px] md:text-[11px] text-black/45 tracking-[0.08em] uppercase font-light mt-1">
+        {stat.label}
+      </p>
+    </div>
+  );
 }
 
 export const ClientsSection = ({
@@ -169,22 +246,7 @@ export const ClientsSection = ({
           {/* Stats Cards Grid (Neomorphic style) */}
           <div className="grid grid-cols-3 gap-3 md:gap-4 mt-2">
             {stats.map((stat) => (
-              <div
-                key={stat.label}
-                className="p-4 md:p-5 rounded-2xl text-center transition-all duration-300"
-                style={{
-                  background: "#ede9e1",
-                  boxShadow:
-                    "5px 5px 12px rgba(0, 0, 0, 0.06), -5px -5px 12px rgba(255, 255, 255, 0.75)",
-                }}
-              >
-                <p className="text-2xl md:text-3xl font-bold text-[#1a1a1a] tracking-tight">
-                  {stat.value}
-                </p>
-                <p className="text-[10px] md:text-[11px] text-black/45 tracking-[0.08em] uppercase font-light mt-1">
-                  {stat.label}
-                </p>
-              </div>
+              <AnimatedStat key={stat.label} stat={stat} />
             ))}
           </div>
 

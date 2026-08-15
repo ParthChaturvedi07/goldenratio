@@ -77,7 +77,7 @@ export default function HeroSection({ isPreloaderDone = true }: { isPreloaderDon
   }, [isPreloaderDone]);
 
   return (
-    <div className="bg-[#f5f2ec] h-full pt-16 pb-14">
+    <div className="bg-[#f5f2ec] h-full pt-16 pb-4">
       {/* Video — curved hero, no overlaid text */}
       <section
         ref={heroRef}
