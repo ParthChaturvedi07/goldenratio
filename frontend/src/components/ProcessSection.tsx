@@ -225,7 +225,7 @@ export default function ProcessSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full overflow-hidden"
+      className="relative w-full overflow-y-hidden"
       id="process-section"
       style={{ minHeight: "100vh", backgroundColor: "#f5f2ec" }}
     >
@@ -245,9 +245,9 @@ export default function ProcessSection() {
         }}
       />
 
-      <div className="relative z-10 w-full mx-auto px-6 md:px-10 lg:px-16 xl:px-20 py-6 md:py-10 lg:py-16 flex flex-col gap-14 md:gap-20">
+      <div className="relative z-10 w-full mx-auto py-6 md:py-10 lg:py-16 flex flex-col gap-14 md:gap-20">
         {/* ── Section Header ── */}
-        <div ref={headingRef} style={{ opacity: 0 }}>
+        <div ref={headingRef} className="px-6 md:px-10 lg:px-16 xl:px-20" style={{ opacity: 0 }}>
           <p className="text-black/40 text-[10px] md:text-[11px] tracking-[0.25em] uppercase mb-4 font-medium">
             How We Work
           </p>
@@ -270,32 +270,35 @@ export default function ProcessSection() {
                 className={`process-card ${cards[index]}`}
                 onClick={() => handleCardClick(index)}
               >
-                {/* Card Top: Number + Progress */}
-                <div className="process-card-top">
-                  <span className="process-card-number">{card.number}</span>
-                  <div className="process-progress-bar">
-                    <div
-                      className="process-progress-fill"
-                      ref={(el) => {
-                        progressRefs.current[index] = el;
-                      }}
-                    />
-                  </div>
-                </div>
-
-                {/* Card Image */}
-                <div className="process-card-image">
+                {/* Full-bleed background image */}
+                <div className="process-card-bg">
                   <img src={card.image} alt={card.title} />
                 </div>
 
-                {/* Card Content */}
-                <div className="process-card-content">
-                  <h3 className="process-card-title">{card.title}</h3>
-                  <p className="process-card-desc">{card.description}</p>
-                </div>
+                {/* Dark gradient overlay */}
+                <div className="process-card-overlay" />
 
-                {/* Decorative corner accent */}
-                <div className="process-card-corner" />
+                {/* Glassmorphic content panel */}
+                <div className="process-card-glass">
+                  {/* Number + Progress */}
+                  <div className="process-card-top">
+                    <span className="process-card-number">{card.number}</span>
+                    <div className="process-progress-bar">
+                      <div
+                        className="process-progress-fill"
+                        ref={(el) => {
+                          progressRefs.current[index] = el;
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Title & Description */}
+                  <div className="process-card-content">
+                    <h3 className="process-card-title">{card.title}</h3>
+                    <p className="process-card-desc">{card.description}</p>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
@@ -304,7 +307,7 @@ export default function ProcessSection() {
         {/* ── Footer CTA ── */}
         <div
           ref={footerRef}
-          className="process-footer"
+          className="process-footer px-6 md:px-10 lg:px-16 xl:px-20"
           style={{ opacity: 0 }}
         >
           <p className="process-footer-text">

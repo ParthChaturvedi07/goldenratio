@@ -8,6 +8,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Footer from "@/components/Footer";
 import ProjectInquirySection from "@/components/ui/ProjectInquirySection";
+import AnimatedLink from "@/components/ui/AnimatedLink";
 import { fetchProduct, fetchProducts, type Product, getMediaUrl } from "@/lib/api";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -318,6 +319,46 @@ export default function ProductDetailsPage({
                                 </div>
                             </div>
                         )}
+
+                        {/* Contact Now Button */}
+                        <div className="mt-8">
+                            <AnimatedLink
+                                href="#contact-section"
+                                className="
+                                    group
+                                    relative
+                                    overflow-hidden
+                                    inline-flex
+                                    items-center
+                                    justify-center
+                                    gap-2.5
+                                    px-8
+                                    py-4
+                                    text-xs
+                                    tracking-[0.15em]
+                                    uppercase
+                                    font-semibold
+                                    text-black
+                                    hover:text-white
+                                    border
+                                    border-black/15
+                                    rounded-full
+                                    transition-colors
+                                    duration-500
+                                "
+                            >
+                                <span>Contact Now</span>
+                                <svg
+                                    className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-y-0.5"
+                                    viewBox="0 0 16 16"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="1.5"
+                                >
+                                    <path d="M8 3V13M8 13L3 8M8 13L13 8" />
+                                </svg>
+                            </AnimatedLink>
+                        </div>
                     </div>
                 </div>
             </div>
