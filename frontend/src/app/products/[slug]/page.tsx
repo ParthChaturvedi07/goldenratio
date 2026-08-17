@@ -324,6 +324,7 @@ export default function ProductDetailsPage({
                         <div className="mt-8">
                             <AnimatedLink
                                 href="#contact-section"
+                                variant="inverted"
                                 className="
                                     group
                                     relative
@@ -338,8 +339,9 @@ export default function ProductDetailsPage({
                                     tracking-[0.15em]
                                     uppercase
                                     font-semibold
-                                    text-black
-                                    hover:text-white
+                                    bg-black
+                                    text-white
+                                    hover:text-black
                                     border
                                     border-black/15
                                     rounded-full

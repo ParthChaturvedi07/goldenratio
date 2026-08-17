@@ -13,12 +13,14 @@ interface AnimatedLinkProps {
   href: string;
   children: React.ReactNode;
   className?: string;
+  variant?: "default" | "inverted";
 }
 
 export default function AnimatedLink({
   href,
   children,
   className,
+  variant = "default",
 }: AnimatedLinkProps) {
   const ref = useRef<HTMLAnchorElement>(null);
 
@@ -48,6 +50,8 @@ export default function AnimatedLink({
     setSize(radius);
   };
 
+  const circleBg = variant === "inverted" ? "bg-white" : "bg-black";
+
   return (
     <motion.div whileTap={{ scale: 0.98 }}>
       <Link
@@ -62,7 +66,7 @@ export default function AnimatedLink({
         className={`relative overflow-hidden ${className}`}
       >
         <motion.span
-          className="absolute rounded-full bg-black pointer-events-none"
+          className={`absolute rounded-full ${circleBg} pointer-events-none`}
           style={{
             left: origin.x,
             top: origin.y,

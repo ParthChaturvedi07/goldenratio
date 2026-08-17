@@ -12,7 +12,7 @@ const statsData: Stat[] = [
 
 const testimonialsData: Testimonial[] = [
   {
-    name: "Will Smith",
+    name: "Ajeet",
     title: "Harper Education",
     quote:
       "Collaborating on this project was seamless. The vision was clearly understood, and the designs genuinely reflect my brand identity.",

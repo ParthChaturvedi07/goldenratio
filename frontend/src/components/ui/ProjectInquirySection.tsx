@@ -100,7 +100,7 @@ export default function ProjectInquirySection() {
           <div className="flex items-center gap-4 mb-6 md:mb-8 justify-start">
             <span className="w-10 md:w-12 h-[1px] bg-black/40" />
             <p className="text-[10px] md:text-[11px] tracking-[0.25em] uppercase text-black/60 font-bold">
-              Enquire About This Project
+              Enquire About This Product
             </p>
           </div>
           <h1 className="text-[3rem] sm:text-[4.5rem] md:text-[5.5rem] lg:text-[6.5rem] font-black uppercase tracking-tighter leading-[0.9] text-black break-words mb-8">

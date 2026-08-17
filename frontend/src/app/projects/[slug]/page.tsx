@@ -7,7 +7,7 @@ import { ArrowLeft } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Footer from "@/components/Footer";
-import ProjectInquirySection from "@/components/ui/ProjectInquirySection";
+// import ProjectInquirySection from "@/components/ui/ProjectInquirySection";
 import { fetchProject, fetchProjects, type Project, getMediaUrl } from "@/lib/api";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -258,7 +258,7 @@ export default function ProjectDetailsPage({
       </div>
 
       {/* ── Project Inquiry / Contact Section ─────────────────── */}
-      <ProjectInquirySection />
+      {/* <ProjectInquirySection /> */}
 
       {/* ── Next Cases (More Projects) ────────────────────────── */}
       {nextProjects.length > 0 && (
