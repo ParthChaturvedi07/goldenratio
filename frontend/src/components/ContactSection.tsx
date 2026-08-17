@@ -32,10 +32,10 @@ const servicesList = [
 ];
 
 const budgetRanges = [
+  "₹1L – ₹5L",
+  "₹5L – ₹15L",
   "₹15L – ₹35L",
-  "₹35L – ₹75L",
-  "₹75L – ₹1.5Cr",
-  "₹1.5Cr+",
+  "Custom",
 ];
 
 export default function ContactSection() {
@@ -383,9 +383,9 @@ export default function ContactSection() {
                     <p className="text-white/90 leading-relaxed">
                       Golden Ratio Design & Build Studio,
                       <br />
-                      26 Ambedkar Nagar Suraj Nagar
+                      26 Ambedkar Nagar Suraj Nagar 
                       <br />
-                      Bhopal, Madhya Pradesh 462044, India
+                      Bhadbadha Road, Bhopal, Madhya Pradesh 462044, India
                     </p>
                   </div>
                 </div>
@@ -454,7 +454,7 @@ export default function ContactSection() {
               {/* Action Link */}
               <div className="mt-10 pt-6 border-t border-white/10 flex items-center justify-between">
                 <a
-                  href="https://maps.google.com/?q=Arera+Colony+Bhopal"
+                  href="https://www.google.com/maps/place/23%C2%B012'37.7%22N+77%C2%B021'57.8%22E/@23.2104633,77.3634916,17z/data=!3m1!4b1!4m4!3m3!8m2!3d23.2104633!4d77.3660665?hl=en&entry=ttu&g_ep=EgoyMDI2MDgxMi4wIKXMDSoASAFQAw%3D%3D"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.15em] text-white/60 hover:text-white transition-colors group"
