@@ -61,6 +61,11 @@ function CylinderGallery() {
   useFrame((state, delta) => {
     if (!groupRef.current) return;
 
+    // Decay the scroll velocity back to 0 over time.
+    // If the user stops scrolling, onUpdate stops firing, leaving the velocity stuck.
+    // This damp ensures it smoothly returns to base speed.
+    scrollProxy.velocity = THREE.MathUtils.damp(scrollProxy.velocity, 0, 4, delta);
+
     // 1. Continuous rotation + Scroll velocity boost
     const speed = 0.15 + Math.abs(scrollProxy.velocity) * 1.5;
     totalRotY.current -= delta * speed; // Rotate right to left (negative Y)
@@ -69,9 +74,9 @@ function CylinderGallery() {
     const targetMouseRotX = baseRotateX + state.pointer.y * 0.15;
     const targetMouseRotY = totalRotY.current + state.pointer.x * 0.15;
 
-    // 3. Smoothly interpolate to the targets
-    groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, targetMouseRotX, 0.1);
-    groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, targetMouseRotY, 0.1);
+    // 3. Smoothly interpolate to the targets (frame-rate independent)
+    groupRef.current.rotation.x = THREE.MathUtils.damp(groupRef.current.rotation.x, targetMouseRotX, 4, delta);
+    groupRef.current.rotation.y = THREE.MathUtils.damp(groupRef.current.rotation.y, targetMouseRotY, 4, delta);
   });
 
   return (

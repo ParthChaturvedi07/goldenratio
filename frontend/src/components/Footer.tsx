@@ -154,12 +154,12 @@ export default function Footer() {
               Design & Build
             </h3>
             <ul className="flex flex-col gap-3 text-xs md:text-sm uppercase tracking-wider font-light text-white/70">
-              <li>
+               <li>
                 <Link
                   href="#"
                   className="hover:text-white cursor-default transition-colors duration-300"
                 >
-                  Architecture
+                  Scale Model Making
                 </Link>
               </li>
               <li>
@@ -175,23 +175,7 @@ export default function Footer() {
                   href="#"
                   className="hover:text-white cursor-default transition-colors duration-300"
                 >
-                  Scale Model Making
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="hover:text-white cursor-default transition-colors duration-300"
-                >
-                  MEP Engineering
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="hover:text-white cursor-default transition-colors duration-300"
-                >
-                  Turnkey Construction
+                  Allied Services
                 </Link>
               </li>
             </ul>
