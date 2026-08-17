@@ -69,6 +69,21 @@ export default function ContactSection() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!/^[a-zA-Z\s]{2,50}$/.test(formData.fullName.trim())) {
+      return alert("Please enter a valid name (letters and spaces only, 2-50 characters).");
+    }
+    if (!formData.email.toLowerCase().endsWith("@gmail.com")) {
+      return alert("Please use a valid @gmail.com email address.");
+    }
+    if (formData.phone && !/^\d{10}$/.test(formData.phone.replace(/\D/g, ''))) {
+      return alert("Please enter a valid 10-digit phone number.");
+    }
+    const wordCount = formData.message.trim() ? formData.message.trim().split(/\s+/).length : 0;
+    if (wordCount > 300) {
+      return alert("Message cannot exceed 300 words.");
+    }
+
     setIsSubmitting(true);
 
     try {
