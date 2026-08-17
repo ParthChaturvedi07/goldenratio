@@ -101,7 +101,7 @@ export default function ProjectsPageClient() {
               Our Portfolio
             </p>
           </div>
-          <h1 className="text-[4rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] font-black uppercase tracking-[-0.02em] leading-[0.85] text-black break-words mb-8">
+          <h1 className="text-[3rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] font-black uppercase tracking-[-0.02em] leading-[0.85] text-black break-words mb-8">
             All{" "}
             <span className="text-black/40">
               Projects
