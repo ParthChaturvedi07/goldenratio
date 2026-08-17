@@ -3,6 +3,7 @@
 import React, { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { scrollTriggerCoordinator } from "@/lib/scrollTriggerCoordinator";
 
 const services = [
     {
@@ -50,89 +51,181 @@ export default function ServicesSection() {
     const imagesRef = useRef<(HTMLImageElement | null)[]>([]);
     const textsRef = useRef<(HTMLDivElement | null)[]>([]);
 
+    // useEffect(() => {
+    //     if (!wrapperRef.current || !sectionRef.current) return;
+
+    //     const ctx = gsap.context(() => {
+    //         let currentIndex = 0;
+
+    //         const goToStep = (nextIndex: number) => {
+    //             if (nextIndex === currentIndex) return;
+
+    //             // Text out
+    //             gsap.to(textsRef.current[currentIndex], { y: -50, opacity: 0, duration: 0.6, ease: "power2.inOut", overwrite: "auto" });
+
+    //             if (nextIndex > currentIndex) {
+    //                 // Scrolling down: Bring next image(s) in
+    //                 for (let i = currentIndex + 1; i <= nextIndex; i++) {
+    //                     gsap.fromTo(imagesRef.current[i],
+    //                         { clipPath: "inset(50% round 12px)", zIndex: i + 1 },
+    //                         { clipPath: "inset(0% round 12px)", duration: 1, ease: "power3.out", overwrite: "auto" }
+    //                     );
+    //                 }
+    //             } else {
+    //                 // Scrolling up: Shrink current image(s) out
+    //                 for (let i = currentIndex; i > nextIndex; i--) {
+    //                     gsap.to(imagesRef.current[i], {
+    //                         clipPath: "inset(50% round 12px)",
+    //                         duration: 1,
+    //                         ease: "power3.out",
+    //                         overwrite: "auto"
+    //                     });
+    //                 }
+    //             }
+
+    //             // Text in
+    //             gsap.fromTo(textsRef.current[nextIndex],
+    //                 { y: 50, opacity: 0 },
+    //                 { y: 0, opacity: 1, duration: 0.6, delay: 0.2, ease: "power2.out", overwrite: "auto" }
+    //             );
+
+    //             currentIndex = nextIndex;
+    //         };
+
+    //         // Initial states
+    //         gsap.set(imagesRef.current[0], { clipPath: "inset(0% round 12px)", zIndex: 1 });
+    //         gsap.set(textsRef.current[0], { opacity: 1, y: 0 });
+    //         for (let i = 1; i < services.length; i++) {
+    //             gsap.set(imagesRef.current[i], { clipPath: "inset(50% round 12px)", zIndex: i + 1 });
+    //             gsap.set(textsRef.current[i], { opacity: 0, y: 50 });
+    //         }
+
+    //         gsap.set(progressBarRef.current, { transformOrigin: "left center", scaleX: 0 });
+
+    //         // Progress bar timeline (scrubbed)
+    //         ScrollTrigger.create({
+    //             trigger: wrapperRef.current,
+    //             start: "top top",
+    //             end: "bottom bottom",
+    //             scrub: 1,
+    //             onUpdate: (self) => {
+    //                 if (progressBarRef.current) {
+    //                     gsap.set(progressBarRef.current, { scaleX: self.progress });
+    //                 }
+    //             }
+    //         });
+
+    //         // Discrete triggers for images and text
+    //         services.forEach((_, i) => {
+    //             if (i === 0) return;
+    //             ScrollTrigger.create({
+    //                 trigger: `#dummy-${i}`,
+    //                 start: "top 50%", // Trigger when dummy hits middle of screen
+    //                 onEnter: () => goToStep(i),
+    //                 onLeaveBack: () => goToStep(i - 1),
+    //             });
+    //         });
+
+    //     }, wrapperRef);
+
+    //     // Give time for layout, then refresh ScrollTrigger
+    //     setTimeout(() => {
+    //         ScrollTrigger.refresh();
+    //     }, 200);
+
+    //     return () => ctx.revert();
+    // }, []);
+
     useEffect(() => {
         if (!wrapperRef.current || !sectionRef.current) return;
 
-        const ctx = gsap.context(() => {
-            let currentIndex = 0;
+        const SECTION_ID = "services-section";
+        scrollTriggerCoordinator.register(SECTION_ID);
 
-            const goToStep = (nextIndex: number) => {
-                if (nextIndex === currentIndex) return;
+        let ctx: gsap.Context | undefined;
+        let raf1 = 0;
+        let raf2 = 0;
 
-                // Text out
-                gsap.to(textsRef.current[currentIndex], { y: -50, opacity: 0, duration: 0.6, ease: "power2.inOut", overwrite: "auto" });
+        raf1 = requestAnimationFrame(() => {
+            raf2 = requestAnimationFrame(() => {
+                ctx = gsap.context(() => {
+                    let currentIndex = 0;
 
-                if (nextIndex > currentIndex) {
-                    // Scrolling down: Bring next image(s) in
-                    for (let i = currentIndex + 1; i <= nextIndex; i++) {
-                        gsap.fromTo(imagesRef.current[i],
-                            { clipPath: "inset(50% round 12px)", zIndex: i + 1 },
-                            { clipPath: "inset(0% round 12px)", duration: 1, ease: "power3.out", overwrite: "auto" }
-                        );
-                    }
-                } else {
-                    // Scrolling up: Shrink current image(s) out
-                    for (let i = currentIndex; i > nextIndex; i--) {
-                        gsap.to(imagesRef.current[i], {
-                            clipPath: "inset(50% round 12px)",
-                            duration: 1,
-                            ease: "power3.out",
-                            overwrite: "auto"
+                    const goToStep = (nextIndex: number) => {
+                        if (nextIndex === currentIndex) return;
+
+                        gsap.to(textsRef.current[currentIndex], {
+                            y: -50, opacity: 0, duration: 0.6, ease: "power2.inOut", overwrite: "auto",
                         });
+
+                        if (nextIndex > currentIndex) {
+                            for (let i = currentIndex + 1; i <= nextIndex; i++) {
+                                gsap.fromTo(
+                                    imagesRef.current[i],
+                                    { clipPath: "inset(50% round 12px)", zIndex: i + 1 },
+                                    { clipPath: "inset(0% round 12px)", duration: 1, ease: "power3.out", overwrite: "auto" }
+                                );
+                            }
+                        } else {
+                            for (let i = currentIndex; i > nextIndex; i--) {
+                                gsap.to(imagesRef.current[i], {
+                                    clipPath: "inset(50% round 12px)", duration: 1, ease: "power3.out", overwrite: "auto",
+                                });
+                            }
+                        }
+
+                        gsap.fromTo(
+                            textsRef.current[nextIndex],
+                            { y: 50, opacity: 0 },
+                            { y: 0, opacity: 1, duration: 0.6, delay: 0.2, ease: "power2.out", overwrite: "auto" }
+                        );
+
+                        currentIndex = nextIndex;
+                    };
+
+                    gsap.set(imagesRef.current[0], { clipPath: "inset(0% round 12px)", zIndex: 1 });
+                    gsap.set(textsRef.current[0], { opacity: 1, y: 0 });
+                    for (let i = 1; i < services.length; i++) {
+                        gsap.set(imagesRef.current[i], { clipPath: "inset(50% round 12px)", zIndex: i + 1 });
+                        gsap.set(textsRef.current[i], { opacity: 0, y: 50 });
                     }
-                }
 
-                // Text in
-                gsap.fromTo(textsRef.current[nextIndex],
-                    { y: 50, opacity: 0 },
-                    { y: 0, opacity: 1, duration: 0.6, delay: 0.2, ease: "power2.out", overwrite: "auto" }
-                );
+                    gsap.set(progressBarRef.current, { transformOrigin: "left center", scaleX: 0 });
 
-                currentIndex = nextIndex;
-            };
+                    ScrollTrigger.create({
+                        trigger: wrapperRef.current,
+                        start: "top top",
+                        end: "bottom bottom",
+                        scrub: 1,
+                        onUpdate: (self) => {
+                            if (progressBarRef.current) {
+                                gsap.set(progressBarRef.current, { scaleX: self.progress });
+                            }
+                        },
+                    });
 
-            // Initial states
-            gsap.set(imagesRef.current[0], { clipPath: "inset(0% round 12px)", zIndex: 1 });
-            gsap.set(textsRef.current[0], { opacity: 1, y: 0 });
-            for (let i = 1; i < services.length; i++) {
-                gsap.set(imagesRef.current[i], { clipPath: "inset(50% round 12px)", zIndex: i + 1 });
-                gsap.set(textsRef.current[i], { opacity: 0, y: 50 });
-            }
+                    services.forEach((_, i) => {
+                        if (i === 0) return;
+                        ScrollTrigger.create({
+                            trigger: `#dummy-${i}`,
+                            start: "top 50%",
+                            onEnter: () => goToStep(i),
+                            onLeaveBack: () => goToStep(i - 1),
+                        });
+                    });
+                }, wrapperRef);
 
-            gsap.set(progressBarRef.current, { transformOrigin: "left center", scaleX: 0 });
-
-            // Progress bar timeline (scrubbed)
-            ScrollTrigger.create({
-                trigger: wrapperRef.current,
-                start: "top top",
-                end: "bottom bottom",
-                scrub: 1,
-                onUpdate: (self) => {
-                    if (progressBarRef.current) {
-                        gsap.set(progressBarRef.current, { scaleX: self.progress });
-                    }
-                }
+                ScrollTrigger.refresh();
+                scrollTriggerCoordinator.ready(SECTION_ID);
             });
+        });
 
-            // Discrete triggers for images and text
-            services.forEach((_, i) => {
-                if (i === 0) return;
-                ScrollTrigger.create({
-                    trigger: `#dummy-${i}`,
-                    start: "top 50%", // Trigger when dummy hits middle of screen
-                    onEnter: () => goToStep(i),
-                    onLeaveBack: () => goToStep(i - 1),
-                });
-            });
-
-        }, wrapperRef);
-
-        // Give time for layout, then refresh ScrollTrigger
-        setTimeout(() => {
-            ScrollTrigger.refresh();
-        }, 200);
-
-        return () => ctx.revert();
+        return () => {
+            cancelAnimationFrame(raf1);
+            cancelAnimationFrame(raf2);
+            scrollTriggerCoordinator.ready(SECTION_ID);
+            if (ctx) ctx.revert();
+        };
     }, []);
 
     return (
@@ -183,7 +276,7 @@ export default function ServicesSection() {
                             <p className="text-black/50 text-[10px] md:text-[11px] tracking-[0.25em] uppercase font-medium">Our Expertise</p>
                         </div>
                         <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[4rem] font-bold tracking-tight text-black leading-[1.05] whitespace-nowrap">
-                           OUR SERVICES
+                            OUR SERVICES
                         </h2>
                     </div>
 

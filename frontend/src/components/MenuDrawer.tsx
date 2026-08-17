@@ -63,11 +63,11 @@ export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
           // Small delay to allow menu close animation to start
           setTimeout(() => {
             const target = document.querySelector(`#${link.sectionId}`);
-            if (!target) return;
-            target.scrollIntoView({ behavior: "smooth" });
+            if (target) target.scrollIntoView({ behavior: "smooth" });
           }, 400);
         } else {
-          router.push(`/#${link.sectionId}`);
+          sessionStorage.setItem("scrollToSection", link.sectionId);
+          router.push("/");
         }
       }
     },

@@ -33,7 +33,7 @@ html {
   min-width: 100%;
   margin: 0;
   padding: 0;
-  scroll-behavior: smooth;
+  /* scroll-behavior: smooth; */
   scroll-padding-top: 80px; /* Offset for fixed navbar */
   overflow-x: hidden;
 }

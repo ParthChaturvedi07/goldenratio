@@ -4,6 +4,7 @@ import React, { useRef, useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { scrollTriggerCoordinator } from "@/lib/scrollTriggerCoordinator";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -118,67 +119,124 @@ export default function WhyUsSection() {
   const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   /* ── GSAP scroll-driven animation ── */
+  // useEffect(() => {
+  //   let ctx: gsap.Context;
+
+  //   const timeoutId = setTimeout(() => {
+  //     ctx = gsap.context(() => {
+  //       const tl = gsap.timeline({
+  //         scrollTrigger: {
+  //           trigger: sectionRef.current,
+  //           start: "top top",
+  //           end: "+=200%",
+  //           pin: true,
+  //           scrub: 1,
+  //           anticipatePin: 1,
+  //         },
+  //       });
+
+  //       /* ── Phase 1: Split "WHY" left, "US" right & fade them ── */
+  //       tl.to(
+  //         whyRef.current,
+  //         {
+  //           xPercent: -110,
+  //           opacity: 0.08,
+  //           duration: 1,
+  //           ease: "power2.inOut",
+  //         },
+  //         0
+  //       );
+
+  //       tl.to(
+  //         usTextRef.current,
+  //         {
+  //           xPercent: 110,
+  //           opacity: 0.08,
+  //           duration: 1,
+  //           ease: "power2.inOut",
+  //         },
+  //         0
+  //       );
+
+  //       /* ── Phase 2: Stagger headings up from below ── */
+  //       if (headingsWrapRef.current) {
+  //         const items =
+  //           headingsWrapRef.current.querySelectorAll(".why-us-row");
+  //         tl.fromTo(
+  //           items,
+  //           { y: 700, opacity: 0 },
+  //           {
+  //             y: 0,
+  //             opacity: 1,
+  //             stagger: 0.02,
+  //             duration: 0.55,
+  //             ease: "power2.inOut",
+  //           },
+  //           0.2
+  //         );
+  //       }
+  //     }, sectionRef);
+  //   }, 150);
+
+  //   return () => {
+  //     clearTimeout(timeoutId);
+  //     if (ctx) ctx.revert();
+  //   };
+  // }, []);
+
   useEffect(() => {
-    let ctx: gsap.Context;
+    const SECTION_ID = "why-us-section";
+    scrollTriggerCoordinator.register(SECTION_ID);
 
-    const timeoutId = setTimeout(() => {
-      ctx = gsap.context(() => {
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top top",
-            end: "+=200%",
-            pin: true,
-            scrub: 1,
-            anticipatePin: 1,
-          },
-        });
+    let ctx: gsap.Context | undefined;
+    let raf1 = 0;
+    let raf2 = 0;
 
-        /* ── Phase 1: Split "WHY" left, "US" right & fade them ── */
-        tl.to(
-          whyRef.current,
-          {
-            xPercent: -110,
-            opacity: 0.08,
-            duration: 1,
-            ease: "power2.inOut",
-          },
-          0
-        );
-
-        tl.to(
-          usTextRef.current,
-          {
-            xPercent: 110,
-            opacity: 0.08,
-            duration: 1,
-            ease: "power2.inOut",
-          },
-          0
-        );
-
-        /* ── Phase 2: Stagger headings up from below ── */
-        if (headingsWrapRef.current) {
-          const items =
-            headingsWrapRef.current.querySelectorAll(".why-us-row");
-          tl.fromTo(
-            items,
-            { y: 700, opacity: 0 },
-            {
-              y: 0,
-              opacity: 1,
-              stagger: 0.02,
-              duration: 0.55,
-              ease: "power2.inOut",
+    raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => {
+        ctx = gsap.context(() => {
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top top",
+              end: "+=200%",
+              pin: true,
+              scrub: 1,
+              anticipatePin: 1,
             },
-            0.2
+          });
+
+          tl.to(
+            whyRef.current,
+            { xPercent: -110, opacity: 0.08, duration: 1, ease: "power2.inOut" },
+            0
           );
-        }
-      }, sectionRef);
-    }, 150);
+
+          tl.to(
+            usTextRef.current,
+            { xPercent: 110, opacity: 0.08, duration: 1, ease: "power2.inOut" },
+            0
+          );
+
+          if (headingsWrapRef.current) {
+            const items = headingsWrapRef.current.querySelectorAll(".why-us-row");
+            tl.fromTo(
+              items,
+              { y: 700, opacity: 0 },
+              { y: 0, opacity: 1, stagger: 0.02, duration: 0.55, ease: "power2.inOut" },
+              0.2
+            );
+          }
+        }, sectionRef);
+
+        scrollTriggerCoordinator.ready(SECTION_ID);
+      });
+    });
 
     return () => {
-      clearTimeout(timeoutId);
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+      scrollTriggerCoordinator.ready(SECTION_ID); // release even if unmounted mid-setup
       if (ctx) ctx.revert();
     };
   }, []);

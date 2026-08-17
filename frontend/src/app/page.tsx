@@ -16,9 +16,42 @@ import ProjectsSection from "@/components/ProjectsSection";
 import Preloader from "@/components/Preloader";
 import ScrollIndicatorMobile from "@/components/ScrollIndicatorMobile";
 
+import { scrollTriggerCoordinator } from "@/lib/scrollTriggerCoordinator";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 export default function Home() {
   const [preloaderDone, setPreloaderDone] =
     useState(false);
+
+  useEffect(() => {
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    window.scrollTo(0, 0);
+
+    const unsubscribe = scrollTriggerCoordinator.onReady(() => {
+      ScrollTrigger.refresh();
+
+      let target = sessionStorage.getItem("scrollToSection");
+      if (target) {
+        sessionStorage.removeItem("scrollToSection");
+      } else if (window.location.hash) {
+        target = window.location.hash.substring(1);
+      }
+
+      if (target) {
+        // one more frame so the refreshed pin-spacers are laid out
+        requestAnimationFrame(() => {
+          const el = document.querySelector(`#${target}`);
+          if (el) el.scrollIntoView({ behavior: "smooth" });
+        });
+      }
+    });
+
+    return () => {
+      unsubscribe();
+      scrollTriggerCoordinator.reset();
+    };
+  }, []);
+
 
   useEffect(() => {
     const alreadySeen =
@@ -34,17 +67,6 @@ export default function Home() {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
-      
-      // Handle hash scrolling if navigating from another page
-      if (window.location.hash) {
-        setTimeout(() => {
-          const id = window.location.hash.substring(1);
-          const target = document.getElementById(id);
-          if (target) {
-            target.scrollIntoView({ behavior: "smooth" });
-          }
-        }, 150); // small delay to ensure DOM and animations are ready
-      }
     }
 
     return () => {

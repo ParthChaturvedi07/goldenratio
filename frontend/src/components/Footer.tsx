@@ -29,7 +29,8 @@ export default function Footer() {
         target.scrollIntoView({ behavior: "smooth" });
       }
     } else {
-      router.push(`/${id}`);
+      sessionStorage.setItem("scrollToSection", id.replace("#", ""));
+      router.push("/");
     }
   };
 
