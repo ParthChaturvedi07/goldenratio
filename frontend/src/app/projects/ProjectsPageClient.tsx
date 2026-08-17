@@ -8,6 +8,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Footer from "@/components/Footer";
 import { fetchProjects, fetchCategories, type Project, getMediaUrl } from "@/lib/api";
+import Navbar from "@/components/Navbar";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -89,25 +90,10 @@ export default function ProjectsPageClient() {
   return (
     <main className="min-h-screen bg-[#f5f2ec] text-black">
       {/* ── Top Bar ─────────────────────────────────────────── */}
-      <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-10 lg:px-16 py-6 bg-[#f5f2ec]/90 backdrop-blur-md border-b border-black/5">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.15em] hover:text-[#2a7a6e] transition-colors duration-300 group"
-        >
-          <ArrowLeft className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1" />
-          Back to Home
-        </Link>
-        <Image
-          src="/images/GoldenRatio_Creation.png"
-          alt="Golden Ratio Creation"
-          width={120}
-          height={40}
-          className="h-8 w-auto object-contain"
-        />
-      </div>
+      <Navbar/>
 
       {/* ── Hero Section ───────────────────────────────────── */}
-      <div ref={heroRef} className="pt-32 pb-16 px-6 md:px-10 lg:px-16 xl:px-20">
+      <div ref={heroRef} className="pt-20 pb-16 px-6 md:px-10 lg:px-16 xl:px-20">
         <div className="max-w-[1600px] mx-auto pt-10">
           <div className="flex items-center gap-4 mb-6 md:mb-8">
             <div className="w-10 md:w-12 h-[1px] bg-[#2a7a6e]"></div>
@@ -115,20 +101,20 @@ export default function ProjectsPageClient() {
               Our Portfolio
             </p>
           </div>
-          <h1 className="text-[4rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] font-black uppercase tracking-tighter leading-[0.85] text-black break-words mb-8">
+          <h1 className="text-[4rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] font-black uppercase tracking-[-0.02em] leading-[0.85] text-black break-words mb-8">
             All{" "}
             <span className="text-black/40">
               Projects
             </span>
           </h1>
-          <p className="text-black/60 text-lg md:text-2xl font-light leading-relaxed max-w-3xl">
+          <p className="text-black/60 text-md md:text-xl font-light leading-relaxed max-w-3xl">
             Explore the full breadth of our work — from miniature scale models to expansive architectural masterplans, each project tells a story of precision, innovation, and design excellence.
           </p>
         </div>
       </div>
 
       {/* ── Filter Bar ─────────────────────────────────────── */}
-      <div className="sticky top-[80px] z-40 bg-[#f5f2ec]/90 backdrop-blur-lg border-y border-black/5">
+      <div className="top-[60px] z-40 bg-[#f5f2ec]/90 backdrop-blur-lg border-y border-black/5">
         <div className="max-w-[1600px] mx-auto py-4 md:py-5">
           <div className="flex items-center gap-4 overflow-x-auto scrollbar-hide px-6 md:px-10 lg:px-16 xl:px-20 snap-x snap-mandatory">
             {categories.map((cat) => (
@@ -152,7 +138,7 @@ export default function ProjectsPageClient() {
       {/* ── Project Grid ───────────────────────────────────── */}
       <div
         ref={gridRef}
-        className="max-w-[1600px] mx-auto px-6 md:px-10 lg:px-16 xl:px-20 py-20 md:py-28"
+        className="max-w-[1600px] mx-auto px-6 md:px-10 lg:px-16 xl:px-20 py-10 md:py-16"
       >
         {/* Loading Skeleton */}
         {loading && (

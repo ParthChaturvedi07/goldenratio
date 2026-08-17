@@ -1,6 +1,7 @@
 "use client";
 
-import React from "react";
+import { usePathname, useRouter } from "next/navigation";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -13,8 +14,23 @@ import {
 } from "lucide-react";
 
 export default function Footer() {
+  const [isStaffMenuOpen, setIsStaffMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleScroll = (id: string) => {
+    if (pathname === "/") {
+      const target = document.querySelector(id);
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth" });
+      }
+    } else {
+      router.push(`/${id}`);
+    }
   };
 
   return (
@@ -32,7 +48,7 @@ export default function Footer() {
                 INITIATE A PROJECT
               </p>
             </div>
-            <h2 className="text-[3rem] sm:text-[4.5rem] md:text-[6rem] lg:text-[7.5rem] font-black uppercase tracking-tighter text-white leading-[0.85] max-w-[1000px] mb-8">
+            <h2 className="text-[3rem] sm:text-[4.5rem] md:text-[6rem] lg:text-[7.5rem] font-black uppercase tracking-[-0.02em] text-white leading-[0.85] max-w-[1000px] mb-8">
               Have a Vision? <br />
               <span className="text-white/30">
                 Let&apos;s Build It.
@@ -42,12 +58,7 @@ export default function Footer() {
 
           <div className="shrink-0">
             <button
-              onClick={() => {
-                const target = document.querySelector("#contact-section");
-                if (target) {
-                  target.scrollIntoView({ behavior: "smooth" });
-                }
-              }}
+              onClick={() => handleScroll("#contact-section")}
               className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white text-black text-xs font-bold uppercase tracking-[0.18em] hover:bg-white/80 transition-all duration-500 shadow-xl group cursor-pointer"
             >
               <span>Start Conversation</span>
@@ -90,7 +101,11 @@ export default function Footer() {
               <li>
                 <button
                   onClick={() => {
-                    window.scrollTo({ top: 0, behavior: "smooth" });
+                    if (pathname === "/") {
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    } else {
+                      router.push("/");
+                    }
                   }}
                   className="hover:text-white transition-colors duration-300 bg-transparent border-none cursor-pointer text-white/70 text-xs md:text-sm uppercase tracking-wider font-light"
                 >
@@ -99,12 +114,7 @@ export default function Footer() {
               </li>
               <li>
                 <button
-                  onClick={() => {
-                    const target = document.querySelector("#about-section");
-                    if (target) {
-                      target.scrollIntoView({ behavior: "smooth" });
-                    }
-                  }}
+                  onClick={() => handleScroll("#about-section")}
                   className="hover:text-white transition-colors duration-300 bg-transparent border-none cursor-pointer text-white/70 text-xs md:text-sm uppercase tracking-wider font-light"
                 >
                   About Us
@@ -112,12 +122,7 @@ export default function Footer() {
               </li>
               <li>
                 <button
-                  onClick={() => {
-                    const target = document.querySelector("#services-section");
-                    if (target) {
-                      target.scrollIntoView({ behavior: "smooth" });
-                    }
-                  }}
+                  onClick={() => handleScroll("#services-section")}
                   className="hover:text-white transition-colors duration-300 bg-transparent border-none cursor-pointer text-white/70 text-xs md:text-sm uppercase tracking-wider font-light"
                 >
                   Services
@@ -133,12 +138,7 @@ export default function Footer() {
               </li>
               <li>
                 <button
-                  onClick={() => {
-                    const target = document.querySelector("#contact-section");
-                    if (target) {
-                      target.scrollIntoView({ behavior: "smooth" });
-                    }
-                  }}
+                  onClick={() => handleScroll("#contact-section")}
                   className="hover:text-white transition-colors duration-300 bg-transparent border-none cursor-pointer text-white/70 text-xs md:text-sm uppercase tracking-wider font-light text-white font-medium"
                 >
                   Contact Us
@@ -285,7 +285,7 @@ export default function Footer() {
             </div> */}
 
             {/* Giant Architectural Typographic Watermark */}
-            <h1 className="text-[clamp(3rem,12vw,12rem)] font-black uppercase tracking-tighter text-white/15 leading-[0.85] text-center whitespace-nowrap w-full">
+            <h1 className="text-[clamp(2.8rem,11vw,11rem)] font-black uppercase text-white/15 leading-[0.85] text-center whitespace-nowrap w-full">
               GOLDENRATIO
             </h1>
           </div>
@@ -305,6 +305,36 @@ export default function Footer() {
               <ArrowUp className="w-3.5 h-3.5" />
             </button>
           </div>
+        </div>
+
+        {/* ── STAFF BUTTON & POPUP ── */}
+        <div className="opacity-40 hover:opacity-60 transition-all duration-300 absolute bottom-28 md:bottom-28 right-6 md:right-10 lg:right-16 xl:right-20 z-50 flex flex-col items-end gap-3">
+          {isStaffMenuOpen && (
+            <div className="flex flex-col gap-2 p-3 bg-black/90 backdrop-blur-md border border-white/20 rounded-lg shadow-2xl animate-in fade-in slide-in-from-bottom-2 duration-300 min-w-[140px]">
+              <a
+                href="https://goldenratio-8hnm.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2 text-[10px] md:text-xs text-white/60 hover:text-white border border-white/10 hover:border-white/30 rounded transition-all text-center uppercase tracking-[0.15em]"
+              >
+                Admin
+              </a>
+              <a
+                href="https://hpanel.hostinger.com/emails"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2 text-[10px] md:text-xs text-white/60 hover:text-white border border-white/10 hover:border-white/30 rounded transition-all text-center uppercase tracking-[0.15em]"
+              >
+                Mailboxes
+              </a>
+            </div>
+          )}
+          <button
+            onClick={() => setIsStaffMenuOpen(!isStaffMenuOpen)}
+            className="px-3 py-1.5 text-[10px] md:text-xs text-white/40 hover:text-white/90 border border-white/20 hover:border-white/40 rounded-full transition-all uppercase tracking-[0.15em] bg-black/50 backdrop-blur-sm"
+          >
+            Staff
+          </button>
         </div>
       </div>
     </footer>

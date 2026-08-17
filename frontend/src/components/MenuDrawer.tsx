@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import gsap from "gsap";
 
 interface MenuLink {
@@ -38,6 +38,7 @@ interface MenuDrawerProps {
 export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
   const [expandedItem, setExpandedItem] = useState<string | null>(null);
   const router = useRouter();
+  const pathname = usePathname();
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const backdropRef = useRef<HTMLDivElement | null>(null);
@@ -58,15 +59,19 @@ export default function MenuDrawer({ isOpen, onClose }: MenuDrawerProps) {
       } else if (link.sectionId) {
         // Scroll to section
         onClose?.();
-        // Small delay to allow menu close animation to start
-        setTimeout(() => {
-          const target = document.querySelector(`#${link.sectionId}`);
-          if (!target) return;
-          target.scrollIntoView({ behavior: "smooth" });
-        }, 400);
+        if (pathname === "/") {
+          // Small delay to allow menu close animation to start
+          setTimeout(() => {
+            const target = document.querySelector(`#${link.sectionId}`);
+            if (!target) return;
+            target.scrollIntoView({ behavior: "smooth" });
+          }, 400);
+        } else {
+          router.push(`/#${link.sectionId}`);
+        }
       }
     },
-    [onClose, router]
+    [onClose, router, pathname]
   );
 
   // Build the GSAP timeline once, then play / reverse based on isOpen

@@ -34,6 +34,17 @@ export default function Home() {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
+      
+      // Handle hash scrolling if navigating from another page
+      if (window.location.hash) {
+        setTimeout(() => {
+          const id = window.location.hash.substring(1);
+          const target = document.getElementById(id);
+          if (target) {
+            target.scrollIntoView({ behavior: "smooth" });
+          }
+        }, 150); // small delay to ensure DOM and animations are ready
+      }
     }
 
     return () => {

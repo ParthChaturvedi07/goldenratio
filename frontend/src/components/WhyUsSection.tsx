@@ -119,61 +119,68 @@ export default function WhyUsSection() {
 
   /* ── GSAP scroll-driven animation ── */
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "+=200%",
-          pin: true,
-          scrub: 1,
-          anticipatePin: 1,
-        },
-      });
+    let ctx: gsap.Context;
 
-      /* ── Phase 1: Split "WHY" left, "US" right & fade them ── */
-      tl.to(
-        whyRef.current,
-        {
-          xPercent: -110,
-          opacity: 0.08,
-          duration: 1,
-          ease: "power2.inOut",
-        },
-        0
-      );
+    const timeoutId = setTimeout(() => {
+      ctx = gsap.context(() => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: "+=200%",
+            pin: true,
+            scrub: 1,
+            anticipatePin: 1,
+          },
+        });
 
-      tl.to(
-        usTextRef.current,
-        {
-          xPercent: 110,
-          opacity: 0.08,
-          duration: 1,
-          ease: "power2.inOut",
-        },
-        0
-      );
-
-      /* ── Phase 2: Stagger headings up from below ── */
-      if (headingsWrapRef.current) {
-        const items =
-          headingsWrapRef.current.querySelectorAll(".why-us-row");
-        tl.fromTo(
-          items,
-          { y: 700, opacity: 0 },
+        /* ── Phase 1: Split "WHY" left, "US" right & fade them ── */
+        tl.to(
+          whyRef.current,
           {
-            y: 0,
-            opacity: 1,
-            stagger: 0.02,
-            duration: 0.55,
+            xPercent: -110,
+            opacity: 0.08,
+            duration: 1,
             ease: "power2.inOut",
           },
-          0.2
+          0
         );
-      }
-    }, sectionRef);
 
-    return () => ctx.revert();
+        tl.to(
+          usTextRef.current,
+          {
+            xPercent: 110,
+            opacity: 0.08,
+            duration: 1,
+            ease: "power2.inOut",
+          },
+          0
+        );
+
+        /* ── Phase 2: Stagger headings up from below ── */
+        if (headingsWrapRef.current) {
+          const items =
+            headingsWrapRef.current.querySelectorAll(".why-us-row");
+          tl.fromTo(
+            items,
+            { y: 700, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              stagger: 0.02,
+              duration: 0.55,
+              ease: "power2.inOut",
+            },
+            0.2
+          );
+        }
+      }, sectionRef);
+    }, 150);
+
+    return () => {
+      clearTimeout(timeoutId);
+      if (ctx) ctx.revert();
+    };
   }, []);
 
   /* ── Animate images in/out ── */

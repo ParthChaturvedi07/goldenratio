@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useCallback, useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import Logo from "./Logo";
 import HamburgerButton from "./HamburgerButton";
 import MenuDrawer from "./MenuDrawer";
@@ -45,6 +45,7 @@ export default function Navbar() {
   const lastScrollY = useRef(0);
   const dropdownTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const router = useRouter();
+  const pathname = usePathname();
 
   const toggleMenu = useCallback(() => {
     setIsMenuOpen((prev) => !prev);
@@ -55,14 +56,18 @@ export default function Navbar() {
       if (link.href) {
         router.push(link.href);
       } else if (link.sectionId) {
-        const target = document.querySelector(`#${link.sectionId}`);
-        if (target) {
-          target.scrollIntoView({ behavior: "smooth" });
+        if (pathname === "/") {
+          const target = document.querySelector(`#${link.sectionId}`);
+          if (target) {
+            target.scrollIntoView({ behavior: "smooth" });
+          }
+        } else {
+          router.push(`/#${link.sectionId}`);
         }
       }
       setHoveredDropdown(null);
     },
-    [router]
+    [router, pathname]
   );
 
   const handleDropdownEnter = useCallback((label: string) => {

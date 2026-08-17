@@ -130,69 +130,76 @@ export const ClientsSection = ({
   useEffect(() => {
     if (!sectionRef.current) return;
 
-    const ctx = gsap.context(() => {
-      // ── Main Pinned Scroll Timeline ──
-      const totalCards = testimonials.length;
-      const endScroll = `+=${Math.max(totalCards * 70, 180)}%`;
+    let ctx: gsap.Context;
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: endScroll,
-          pin: true,
-          scrub: 0.8,
-          anticipatePin: 1,
-        },
-      });
+    const timeoutId = setTimeout(() => {
+      ctx = gsap.context(() => {
+        // ── Main Pinned Scroll Timeline ──
+        const totalCards = testimonials.length;
+        const endScroll = `+=${Math.max(totalCards * 70, 180)}%`;
 
-      // ── Stacking Animation for Cards ──
-      // Card 0 starts visible. Each subsequent card (1, 2, 3...) slides UP
-      // from offscreen and stacks on top of previous cards with a top offset.
-      testimonials.forEach((_, i) => {
-        if (i === 0) return;
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: endScroll,
+            pin: true,
+            scrub: 0.8,
+            anticipatePin: 1,
+          },
+        });
 
-        const currentCard = cardsRef.current[i];
-        if (!currentCard) return;
+        // ── Stacking Animation for Cards ──
+        // Card 0 starts visible. Each subsequent card (1, 2, 3...) slides UP
+        // from offscreen and stacks on top of previous cards with a top offset.
+        testimonials.forEach((_, i) => {
+          if (i === 0) return;
 
-        // Animate previous cards down/scaled slightly as new card arrives
-        for (let prev = 0; prev < i; prev++) {
-          const prevCard = cardsRef.current[prev];
-          if (prevCard) {
-            tl.to(
-              prevCard,
-              {
-                scale: 1 - (i - prev) * 0.03,
-                opacity: 0.85 + prev * 0.05,
-                duration: 1,
-                ease: "power2.out",
-              },
-              i - 1
-            );
+          const currentCard = cardsRef.current[i];
+          if (!currentCard) return;
+
+          // Animate previous cards down/scaled slightly as new card arrives
+          for (let prev = 0; prev < i; prev++) {
+            const prevCard = cardsRef.current[prev];
+            if (prevCard) {
+              tl.to(
+                prevCard,
+                {
+                  scale: 1 - (i - prev) * 0.03,
+                  opacity: 0.85 + prev * 0.05,
+                  duration: 1,
+                  ease: "power2.out",
+                },
+                i - 1
+              );
+            }
           }
-        }
 
-        // Animate the incoming card onto the stack
-        tl.fromTo(
-          currentCard,
-          {
-            y: 450,
-            opacity: 0,
-            scale: 0.92,
-          },
-          {
-            y: 0,
-            opacity: 1,
-            scale: 1,
-            duration: 1,
-            ease: "power2.out",
-          },
-          i - 1
-        );
-      });
-    }, sectionRef);
+          // Animate the incoming card onto the stack
+          tl.fromTo(
+            currentCard,
+            {
+              y: 450,
+              opacity: 0,
+              scale: 0.92,
+            },
+            {
+              y: 0,
+              opacity: 1,
+              scale: 1,
+              duration: 1,
+              ease: "power2.out",
+            },
+            i - 1
+          );
+        });
+      }, sectionRef);
+    }, 150);
 
-    return () => ctx.revert();
+    return () => {
+      clearTimeout(timeoutId);
+      if (ctx) ctx.revert();
+    };
   }, [testimonials]);
 
   return (
