@@ -50,7 +50,7 @@ export default function AnimatedLink({
     setSize(radius);
   };
 
-  const circleBg = variant === "inverted" ? "bg-white" : "bg-black";
+  const circleBg = variant === "inverted" ? "bg-[#f5f2ec]" : "bg-black";
 
   return (
     <motion.div whileTap={{ scale: 0.98 }}>

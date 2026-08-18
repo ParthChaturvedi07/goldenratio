@@ -241,7 +241,7 @@ export default function ContactSection() {
                     <input
                       type="text"
                       required
-                      placeholder="e.g. Vikramaditya Sharma"
+                      placeholder="e.g. Rahul Singh"
                       value={formData.fullName}
                       onChange={(e) =>
                         setFormData({ ...formData, fullName: e.target.value })
@@ -257,7 +257,7 @@ export default function ContactSection() {
                     <input
                       type="email"
                       required
-                      placeholder="e.g. vikram@domain.com"
+                      placeholder="e.g. rahul@gmail.com"
                       value={formData.email}
                       onChange={(e) =>
                         setFormData({ ...formData, email: e.target.value })
@@ -273,7 +273,7 @@ export default function ContactSection() {
                   </label>
                   <input
                     type="tel"
-                    placeholder="+91 98765 43210"
+                    placeholder="+91 9876543210"
                     value={formData.phone}
                     onChange={(e) =>
                       setFormData({ ...formData, phone: e.target.value })
