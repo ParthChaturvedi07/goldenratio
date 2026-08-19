@@ -327,7 +327,10 @@ export default function ProductDetailClient({
                                     group
                                     relative
                                     overflow-hidden
-                                    inline-flex
+                                    flex
+                                    md:inline-flex
+                                    w-full
+                                    md:w-auto
                                     items-center
                                     justify-center
                                     gap-2.5
