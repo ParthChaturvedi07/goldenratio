@@ -179,7 +179,7 @@ export default function ContactSection() {
               BHOPAL STUDIO & GLOBAL INQUIRIES
             </p>
           </div>
-          <h1 className="text-[4rem] sm:text-[6rem] md:text-[8rem] lg:text-[9rem] font-black uppercase tracking-[-0.02em] leading-[0.85] text-black break-words max-w-[1200px] mb-8">
+          <h1 className="text-[3.5rem] sm:text-[5.5rem] md:text-[8rem] lg:text-[9rem] font-black uppercase tracking-[-0.02em] leading-[0.85] text-black break-words max-w-[1200px] mb-8">
             Let&apos;s Build <br />
             <span className="text-black/40">Together</span>
           </h1>

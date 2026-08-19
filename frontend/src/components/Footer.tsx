@@ -305,7 +305,7 @@ export default function Footer() {
                 Admin
               </a>
               <a
-                href="https://hpanel.hostinger.com/emails"
+                href="https://mail.hostinger.com/auth/login"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-4 py-2 text-[10px] md:text-xs text-white/60 hover:text-white border border-white/10 hover:border-white/30 rounded transition-all text-center uppercase tracking-[0.15em]"

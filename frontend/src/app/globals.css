@@ -393,7 +393,6 @@ body {
 .client-ticker-wrap {
   position: relative;
   width: 100%;
-  overflow: hidden;
 }
 
 .client-ticker-track {

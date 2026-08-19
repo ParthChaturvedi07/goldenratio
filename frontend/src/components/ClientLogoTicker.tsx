@@ -3,100 +3,23 @@
 import React, { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
 
 /* ────────────────────────────────────────────────────────────
-   Inline SVG logos – monochromatic marks for a premium feel.
-   Replace these with actual client logos when available.
+   Client logos from public directory
    ──────────────────────────────────────────────────────────── */
-const CLIENT_LOGOS: { name: string; svg: React.ReactNode }[] = [
-  {
-    name: "Prestige Estates",
-    svg: (
-      <svg viewBox="0 0 180 48" fill="currentColor" className="client-logo-svg">
-        <path d="M8 38V10h8.5c2.5 0 4.5.7 5.9 2 1.4 1.3 2.1 3.1 2.1 5.2 0 2.2-.7 3.9-2.1 5.2-1.4 1.3-3.4 2-5.9 2H12.5v13.6H8zM12.5 21h4c1.4 0 2.5-.4 3.3-1.1.8-.8 1.2-1.8 1.2-3.1 0-1.3-.4-2.3-1.2-3.1-.8-.8-1.9-1.1-3.3-1.1h-4V21z" />
-        <text x="30" y="32" fontSize="15" fontWeight="600" letterSpacing="0.12em" fill="currentColor" fontFamily="sans-serif">PRESTIGE</text>
-        <text x="30" y="44" fontSize="7" letterSpacing="0.3em" fill="currentColor" fontFamily="sans-serif" opacity="0.6">ESTATES</text>
-      </svg>
-    ),
-  },
-  {
-    name: "Meridian Group",
-    svg: (
-      <svg viewBox="0 0 180 48" fill="currentColor" className="client-logo-svg">
-        <polygon points="8,38 14,10 20,28 26,10 32,38" strokeWidth="0" />
-        <text x="38" y="30" fontSize="14" fontWeight="500" letterSpacing="0.08em" fill="currentColor" fontFamily="sans-serif">MERIDIAN</text>
-        <line x1="38" y1="34" x2="110" y2="34" stroke="currentColor" strokeWidth="0.5" opacity="0.4" />
-        <text x="38" y="42" fontSize="7" letterSpacing="0.25em" fill="currentColor" fontFamily="sans-serif" opacity="0.55">GROUP</text>
-      </svg>
-    ),
-  },
-  {
-    name: "Aura Developers",
-    svg: (
-      <svg viewBox="0 0 180 48" fill="currentColor" className="client-logo-svg">
-        <circle cx="16" cy="24" r="12" fill="none" stroke="currentColor" strokeWidth="1.5" />
-        <circle cx="16" cy="24" r="6" fill="currentColor" opacity="0.25" />
-        <text x="34" y="28" fontSize="15" fontWeight="600" letterSpacing="0.1em" fill="currentColor" fontFamily="sans-serif">AURA</text>
-        <text x="34" y="40" fontSize="6.5" letterSpacing="0.3em" fill="currentColor" fontFamily="sans-serif" opacity="0.5">DEVELOPERS</text>
-      </svg>
-    ),
-  },
-  {
-    name: "Horizon Architects",
-    svg: (
-      <svg viewBox="0 0 200 48" fill="currentColor" className="client-logo-svg">
-        <rect x="6" y="16" width="24" height="2" fill="currentColor" />
-        <rect x="6" y="23" width="18" height="2" fill="currentColor" opacity="0.6" />
-        <rect x="6" y="30" width="24" height="2" fill="currentColor" />
-        <text x="38" y="28" fontSize="13" fontWeight="500" letterSpacing="0.1em" fill="currentColor" fontFamily="sans-serif">HORIZON</text>
-        <text x="38" y="39" fontSize="6.5" letterSpacing="0.28em" fill="currentColor" fontFamily="sans-serif" opacity="0.5">ARCHITECTS</text>
-      </svg>
-    ),
-  },
-  {
-    name: "Nexus Realty",
-    svg: (
-      <svg viewBox="0 0 180 48" fill="currentColor" className="client-logo-svg">
-        <path d="M8 38V10h4l12 20V10h4v28h-4L12 18v20H8z" />
-        <text x="34" y="30" fontSize="14" fontWeight="500" letterSpacing="0.1em" fill="currentColor" fontFamily="sans-serif">NEXUS</text>
-        <text x="34" y="41" fontSize="6.5" letterSpacing="0.3em" fill="currentColor" fontFamily="sans-serif" opacity="0.5">REALTY</text>
-      </svg>
-    ),
-  },
-  {
-    name: "Vertex Studios",
-    svg: (
-      <svg viewBox="0 0 180 48" fill="currentColor" className="client-logo-svg">
-        <polygon points="16,8 28,40 4,40" fill="none" stroke="currentColor" strokeWidth="1.5" />
-        <polygon points="16,18 22,34 10,34" fill="currentColor" opacity="0.15" />
-        <text x="36" y="28" fontSize="14" fontWeight="600" letterSpacing="0.08em" fill="currentColor" fontFamily="sans-serif">VERTEX</text>
-        <text x="36" y="40" fontSize="6.5" letterSpacing="0.28em" fill="currentColor" fontFamily="sans-serif" opacity="0.5">STUDIOS</text>
-      </svg>
-    ),
-  },
-  {
-    name: "Atlas Infra",
-    svg: (
-      <svg viewBox="0 0 180 48" fill="currentColor" className="client-logo-svg">
-        <path d="M4 38L16 10l12 28h-5l-3-7H12l-3 7H4zm10.5-11h7L18 18l-3.5 9z" />
-        <text x="36" y="28" fontSize="14" fontWeight="500" letterSpacing="0.1em" fill="currentColor" fontFamily="sans-serif">ATLAS</text>
-        <text x="36" y="40" fontSize="7" letterSpacing="0.25em" fill="currentColor" fontFamily="sans-serif" opacity="0.5">INFRA</text>
-      </svg>
-    ),
-  },
-  {
-    name: "Elevate Design Co",
-    svg: (
-      <svg viewBox="0 0 200 48" fill="currentColor" className="client-logo-svg">
-        <rect x="6" y="10" width="22" height="28" rx="3" fill="none" stroke="currentColor" strokeWidth="1.5" />
-        <rect x="10" y="14" width="14" height="10" rx="1" fill="currentColor" opacity="0.15" />
-        <text x="36" y="27" fontSize="12" fontWeight="600" letterSpacing="0.06em" fill="currentColor" fontFamily="sans-serif">ELEVATE</text>
-        <text x="36" y="39" fontSize="6" letterSpacing="0.3em" fill="currentColor" fontFamily="sans-serif" opacity="0.5">DESIGN CO.</text>
-      </svg>
-    ),
-  },
+const CLIENT_LOGOS: { name: string; src: string }[] = [
+  { name: "Client 1", src: "/images/clients/logo01.png" },
+  { name: "Client 2", src: "/images/clients/logo02.png" },
+  { name: "Client 3", src: "/images/clients/logo03.png" },
+  { name: "Client 4", src: "/images/clients/logo04.png" },
+  { name: "Client 5", src: "/images/clients/logo05.png" },
+  { name: "Client 6", src: "/images/clients/logo06.png" },
+  { name: "Client 7", src: "/images/clients/logo07.png" },
+  { name: "Client 8", src: "/images/clients/logo08.png" },
+  { name: "Client 9", src: "/images/clients/logo09.png" },
 ];
 
 export default function ClientLogoTicker() {
@@ -195,8 +118,16 @@ export default function ClientLogoTicker() {
 
           <div className="client-ticker-track" aria-hidden="true">
             {repeatedLogos.map((logo, i) => (
-              <div key={`${logo.name}-${i}`} className="client-ticker-item">
-                {logo.svg}
+              <div key={`${logo.name}-${i}`} className="client-ticker-item flex items-center justify-center px-4">
+                <div className="relative w-[120px] h-[60px] md:w-[150px] md:h-[80px]">
+                  <Image
+                    src={logo.src}
+                    alt={logo.name}
+                    fill
+                    className="object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
+                    sizes="(max-width: 768px) 120px, 150px"
+                  />
+                </div>
               </div>
             ))}
           </div>
