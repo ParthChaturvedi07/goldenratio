@@ -1,253 +1,334 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { scrollTriggerCoordinator } from "@/lib/scrollTriggerCoordinator";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const services = [
     {
         id: "01",
-        title: "Miniature Model Making",
+        title: "MINIATURE MODEL MAKING",
         description: (
             <>
-                <strong>Industrial Models:</strong> Factory Layouts | Manufacturing Plants | Warehouses | Production Line &amp; Machinery Flow<br />
-                <strong>Architectural Models:</strong> Townships | Commercial Complexes | SEZ | IT Parks | Institutional Buildings<br />
-                <strong>Interior Models:</strong> Office Layout Models | Showroom Setups | Retail Store Models
+                <p><strong>Industrial Models*:</strong> Factory Layouts | Manufacturing Plants | Warehouses | Production Line &amp; Machinery Flow</p>
+                <p><strong>*Architectural Models:</strong> Townships | Commercial Complexes | SEZ | IT Parks | Institutional Buildings</p>
+                <p><strong>Interior Models*:</strong> Office Layout Models | Showroom Setups | Retail Store Models</p>
             </>
         ),
-        image: "/images/IMG_20210915_191342.jpg",
+        video: "/video/MINIMODELMAKE.mp4",
+        poster: "/images/IMG_20210915_191342.jpg",
     },
     {
         id: "02",
-        title: "Momento",
+        title: "MOMENTO",
         description: (
             <>
-                <strong>Corporate Mementos:</strong> Awards | Recognition Trophies | Achievement Models | Executive Gifts<br />
-                <strong>Architectural Mementos:</strong> Building Replicas | Project Models | Landmark Replicas | Custom Scale Models<br />
-                <strong>Custom Mementos:</strong> Personalized Models | Logo Displays | Commemorative Pieces | Premium Gifting
+                <p><strong>Corporate Mementos*:</strong> Awards | Recognition Trophies | Achievement Models | Executive Gifts</p>
+                <p><strong>*Architectural Mementos:</strong> Building Replicas | Project Models | Landmark Replicas | Custom Scale Models</p>
+                <p><strong>Custom Mementos*:</strong> Personalized Models | Logo Displays | Commemorative Pieces | Premium Gifting</p>
             </>
         ),
-        image: "/images/memento.png",
+        video: "/video/MEMENTO.mp4",
+        poster: "/images/memento.png",
     },
     {
         id: "03",
-        title: "Allied Services",
+        title: "ALLIED SERVICES",
         description: (
             <>
-                <strong>Visualization Services:</strong> 3D Visualization | Architectural Renders | Walkthroughs | Presentation Models<br />
-                <strong>Model Services:</strong> Model Photography | Model Videography | Scale Model Finishing | Custom Modifications<br />
-                <strong>Logistics &amp; Support:</strong> BOQ &amp; Material Selection | Safe Packaging | Pan-India Delivery | Installation Support
+                <p><strong>Industrial Models*:</strong> Factory Layouts | Manufacturing Plants | Warehouses | Production Line &amp; Machinery Flow</p>
+                <p><strong>*Architectural Models:</strong> Townships | Commercial Complexes | SEZ | IT Parks | Institutional Buildings</p>
+                <p><strong>Interior Models*:</strong> Office Layout Models | Showroom Setups | Retail Store Models</p>
             </>
         ),
-        image: "/images/IMG_0721.JPG",
-    }
+        video: "/video/ALLIED.mp4",
+        poster: "/images/IMG_0721.JPG",
+    },
 ];
 
 export default function ServicesSection() {
-    const wrapperRef = useRef<HTMLDivElement>(null);
+    const [activeIndex, setActiveIndex] = useState(0);
+    const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
     const sectionRef = useRef<HTMLElement>(null);
-    const progressBarRef = useRef<HTMLDivElement>(null);
-    const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
-    const textsRef = useRef<(HTMLDivElement | null)[]>([]);
+    const headerRef = useRef<HTMLDivElement>(null);
+    const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+    const handleMouseEnter = (index: number) => {
+        setActiveIndex(index);
+        videoRefs.current.forEach((vid, i) => {
+            if (vid) {
+                if (i === index) {
+                    vid.play().catch(() => {});
+                } else {
+                    vid.pause();
+                    vid.currentTime = 0;
+                }
+            }
+        });
+    };
 
     useEffect(() => {
-        if (!wrapperRef.current || !sectionRef.current) return;
+        const cards = cardRefs.current.filter(Boolean);
 
-        const SECTION_ID = "services-section";
-        scrollTriggerCoordinator.register(SECTION_ID);
+        // Set initial hidden state BEFORE paint so there's no flash
+        gsap.set(headerRef.current, { y: 44, opacity: 0 });
+        gsap.set(cards, { y: 72, opacity: 0 });
 
-        let ctx: gsap.Context | undefined;
-        let raf1 = 0;
-        let raf2 = 0;
+        const ctx = gsap.context(() => {
+            // Header slides up
+            gsap.to(headerRef.current, {
+                y: 0,
+                opacity: 1,
+                duration: 0.9,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: headerRef.current,
+                    start: "top 88%",
+                    once: true,
+                },
+            });
 
-        raf1 = requestAnimationFrame(() => {
-            raf2 = requestAnimationFrame(() => {
-                ctx = gsap.context(() => {
-                    let currentIndex = 0;
-
-                    const goToStep = (nextIndex: number) => {
-                        if (nextIndex === currentIndex) return;
-
-                        // Fade out current text
-                        gsap.to(textsRef.current[currentIndex], {
-                            y: -50, opacity: 0, duration: 0.6, ease: "power2.inOut", overwrite: "auto",
-                        });
-
-                        if (nextIndex > currentIndex) {
-                            // Scrolling down: reveal next card(s)
-                            for (let i = currentIndex + 1; i <= nextIndex; i++) {
-                                gsap.fromTo(
-                                    cardsRef.current[i],
-                                    { clipPath: "inset(50% round 24px)", zIndex: i + 1 },
-                                    { clipPath: "inset(0% round 24px)", duration: 1, ease: "power3.out", overwrite: "auto" }
-                                );
-                            }
-                        } else {
-                            // Scrolling up: shrink current card(s) out
-                            for (let i = currentIndex; i > nextIndex; i--) {
-                                gsap.to(cardsRef.current[i], {
-                                    clipPath: "inset(50% round 24px)", duration: 1, ease: "power3.out", overwrite: "auto",
-                                });
-                            }
-                        }
-
-                        // Fade in next text
-                        gsap.fromTo(
-                            textsRef.current[nextIndex],
-                            { y: 50, opacity: 0 },
-                            { y: 0, opacity: 1, duration: 0.6, delay: 0.2, ease: "power2.out", overwrite: "auto" }
-                        );
-
-                        currentIndex = nextIndex;
-                    };
-
-                    // Initial states
-                    gsap.set(cardsRef.current[0], { clipPath: "inset(0% round 24px)", zIndex: 1 });
-                    gsap.set(textsRef.current[0], { opacity: 1, y: 0 });
-                    for (let i = 1; i < services.length; i++) {
-                        gsap.set(cardsRef.current[i], { clipPath: "inset(50% round 24px)", zIndex: i + 1 });
-                        gsap.set(textsRef.current[i], { opacity: 0, y: 50 });
-                    }
-
-                    gsap.set(progressBarRef.current, { transformOrigin: "left center", scaleX: 0 });
-
-                    // Progress bar (scrubbed)
-                    ScrollTrigger.create({
-                        trigger: wrapperRef.current,
-                        start: "top top",
-                        end: "bottom bottom",
-                        scrub: 1,
-                        onUpdate: (self) => {
-                            if (progressBarRef.current) {
-                                gsap.set(progressBarRef.current, { scaleX: self.progress });
-                            }
-                        },
-                    });
-
-                    // Discrete triggers for card transitions
-                    services.forEach((_, i) => {
-                        if (i === 0) return;
-                        ScrollTrigger.create({
-                            trigger: `#dummy-${i}`,
-                            start: "top 50%",
-                            onEnter: () => goToStep(i),
-                            onLeaveBack: () => goToStep(i - 1),
-                        });
-                    });
-                }, wrapperRef);
-
-                ScrollTrigger.refresh();
-                scrollTriggerCoordinator.ready(SECTION_ID);
+            // Cards staggered reveal
+            gsap.to(cards, {
+                y: 0,
+                opacity: 1,
+                duration: 0.9,
+                ease: "power3.out",
+                stagger: 0.18,
+                scrollTrigger: {
+                    trigger: sectionRef.current,
+                    start: "top 75%",
+                    once: true,
+                },
             });
         });
 
         return () => {
-            cancelAnimationFrame(raf1);
-            cancelAnimationFrame(raf2);
-            scrollTriggerCoordinator.ready(SECTION_ID);
-            if (ctx) ctx.revert();
+            ctx.revert();
+            // Restore visibility on cleanup so HMR doesn't leave elements hidden
+            gsap.set(headerRef.current, { clearProps: "all" });
+            gsap.set(cards, { clearProps: "all" });
         };
     }, []);
 
     return (
-        <div ref={wrapperRef} id="services-section" className="relative h-[300vh]">
-            {/* Dummy triggers for scroll steps */}
-            <div id="dummy-1" className="absolute top-[100vh] h-[100vh] w-full pointer-events-none" />
-            <div id="dummy-2" className="absolute top-[200vh] h-[100vh] w-full pointer-events-none" />
-
-            <section
-                ref={sectionRef}
-                className="sticky top-0 z-10 bg-[#f5f2ec] text-black h-screen flex flex-col items-center justify-center overflow-hidden pt-10"
-            >
-                {/* Section Header */}
-                <div className="w-[90vw] max-w-[1200px] mb-6 md:mb-8 z-30">
-                    <div className="flex items-center gap-4 mb-2 sm:mb-3">
-                        <div className="w-10 md:w-12 h-[1px] bg-black/20"></div>
-                        <p className="text-black/50 text-[10px] md:text-[11px] tracking-[0.25em] uppercase font-medium">Our Expertise</p>
-                    </div>
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[4rem] font-bold tracking-tight text-black leading-[1.05]">
-                        OUR SERVICES
-                    </h2>
+        <section ref={sectionRef} id="services-section" className="services-section-root">
+            {/* Header */}
+            <div ref={headerRef} className="services-header">
+                <div className="services-eyebrow">
+                    <div className="services-eyebrow-line" />
+                    <span className="services-eyebrow-text">Our Expertise</span>
                 </div>
+                <h2 className="services-heading">OUR SERVICES</h2>
+            </div>
 
-                {/* Unified Card Container */}
-                <div className="relative w-[90vw] max-w-[1200px] h-[65vh] max-h-[700px] rounded-[24px] overflow-hidden shadow-2xl mb-16">
-                    {/* Stacked service cards — each is a full card with image bg + text overlay */}
-                    {services.map((service, index) => (
+            {/* Cards Grid */}
+            <div className="services-grid">
+                {services.map((service, index) => {
+                    const isActive = activeIndex === index;
+                    return (
                         <div
-                            key={`card-${service.id}`}
-                            ref={(el) => {
-                                cardsRef.current[index] = el;
-                            }}
-                            className="absolute inset-0"
+                            key={service.id}
+                            ref={(el) => { cardRefs.current[index] = el; }}
+                            className={`service-card${isActive ? " service-card--active" : ""}`}
+                            onMouseEnter={() => handleMouseEnter(index)}
                         >
-                            {/* Full-bleed background image */}
-                            <img
-                                src={service.image}
-                                alt={service.title}
-                                className="absolute inset-0 w-full h-full object-cover"
-                            />
-
-                            {/* Gradient overlay — stronger for text legibility */}
-                            <div
-                                className="absolute inset-0"
-                                style={{
-                                    background: "linear-gradient(to top, rgba(17,17,17,0.95) 0%, rgba(17,17,17,0.8) 30%, rgba(17,17,17,0.4) 60%, transparent 100%)",
-                                }}
-                            />
-
-                            {/* Text content overlay — positioned at bottom */}
-                            <div
-                                ref={(el) => {
-                                    textsRef.current[index] = el;
-                                }}
-                                className="absolute inset-x-0 bottom-0 pointer-events-none"
-                            >
-                                <div className="p-6 sm:p-8 md:p-10 lg:p-14 xl:p-16 w-full max-w-4xl">
-                                    {/* Service number */}
-                                    <span className="text-white/60 font-mono text-[10px] sm:text-xs lg:text-sm tracking-[0.2em] uppercase block mb-3 lg:mb-4">
-                                        /{service.id}
-                                    </span>
-
-                                    {/* Service title */}
-                                    <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-semibold mb-4 md:mb-5 lg:mb-6 text-white leading-[1.05] tracking-tight">
-                                        {service.title}
-                                    </h3>
-
-                                    {/* Thin separator */}
-                                    <div className="w-16 md:w-20 h-[1px] bg-white/20 mb-4 md:mb-5 lg:mb-6" />
-
-                                    {/* Service description */}
-                                    <div className="text-white/80 max-w-[600px] leading-relaxed text-sm sm:text-base md:text-lg space-y-1 font-light">
-                                        {service.description}
+                            {/* Video */}
+                            <div className="service-card-video-wrapper">
+                                <video
+                                    ref={(el) => { videoRefs.current[index] = el; }}
+                                    src={service.video}
+                                    poster={service.poster}
+                                    muted
+                                    loop
+                                    playsInline
+                                    className="service-card-video"
+                                />
+                                {!isActive && (
+                                    <div className="service-card-play-overlay">
+                                        <div className="service-card-play-btn">
+                                            <svg viewBox="0 0 24 24" fill="white" width="22" height="22">
+                                                <path d="M8 5v14l11-7z" />
+                                            </svg>
+                                        </div>
                                     </div>
-                                </div>
+                                )}
+                            </div>
+
+                            {/* Text */}
+                            <div className="service-card-content">
+                                <h3 className="service-card-title">{service.title}</h3>
+                                <div className="service-card-desc">{service.description}</div>
                             </div>
                         </div>
-                    ))}
-                </div>
+                    );
+                })}
+            </div>
 
-                {/* Progress Bar — below the card */}
-                <div className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 w-[min(300px,60vw)] h-[2px] bg-black/10 rounded-full overflow-hidden z-20">
-                    <div
-                        ref={progressBarRef}
-                        className="absolute top-0 left-0 h-full bg-black w-full"
-                    />
-                </div>
-
-                {/* Step indicators — small dots */}
-                <div className="absolute bottom-4 md:bottom-6 right-8 md:right-12 lg:right-16 xl:right-20 flex items-center gap-3 z-20 hidden md:flex">
-                    {services.map((service) => (
-                        <span
-                            key={`dot-${service.id}`}
-                            className="text-black/30 font-mono text-[10px] tracking-[0.15em] uppercase"
-                        >
-                            {service.id}
-                        </span>
-                    ))}
-                </div>
-            </section>
-        </div>
+            <style>{`
+                .services-section-root {
+                    background: #f5f2ec;
+                    padding: 80px 40px 100px;
+                    width: 100%;
+                    box-sizing: border-box;
+                }
+                .services-header {
+                    max-width: 1200px;
+                    margin: 0 auto 48px;
+                }
+                .services-eyebrow {
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    margin-bottom: 10px;
+                }
+                .services-eyebrow-line {
+                    width: 40px;
+                    height: 1px;
+                    background: rgba(0,0,0,0.2);
+                }
+                .services-eyebrow-text {
+                    font-size: 11px;
+                    letter-spacing: 0.25em;
+                    text-transform: uppercase;
+                    color: rgba(0,0,0,0.45);
+                    font-weight: 500;
+                }
+                .services-heading {
+                    font-size: clamp(2.2rem, 5vw, 4rem);
+                    font-weight: 800;
+                    letter-spacing: -0.02em;
+                    color: #111;
+                    line-height: 1.05;
+                    margin: 0;
+                }
+                .services-grid {
+                    max-width: 1200px;
+                    margin: 0 auto;
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    gap: 20px;
+                }
+                @media (max-width: 900px) {
+                    .services-section-root { padding: 60px 20px 80px; }
+                    .services-grid { grid-template-columns: 1fr; gap: 24px; }
+                }
+                @media (min-width: 901px) and (max-width: 1100px) {
+                    .services-grid { grid-template-columns: repeat(2, 1fr); }
+                }
+                .service-card {
+                    background: #f5f2ec;
+                    border-radius: 20px;
+                    overflow: hidden;
+                    border: none;
+                    cursor: pointer;
+                    transition: box-shadow 0.4s ease, transform 0.4s ease;
+                    box-shadow:
+                        8px 8px 20px rgba(0,0,0,0.12),
+                        -6px -6px 16px rgba(255,255,255,0.85);
+                    will-change: transform, box-shadow;
+                }
+                .service-card:hover {
+                    transform: translateY(-5px) scale(1.01);
+                    box-shadow:
+                        14px 14px 32px rgba(0,0,0,0.16),
+                        -9px -9px 22px rgba(255,255,255,0.92);
+                }
+                .service-card--active {
+                    transform: translateY(-5px) scale(1.01);
+                    box-shadow:
+                        14px 14px 32px rgba(0,0,0,0.16),
+                        -9px -9px 22px rgba(255,255,255,0.92);
+                }
+                .service-card-video-wrapper {
+                    position: relative;
+                    width: 100%;
+                    aspect-ratio: 16 / 10;
+                    overflow: hidden;
+                    background: #1a1a1a;
+                    border-radius: 16px 16px 0 0;
+                    /* inset shadow to give depth to video well */
+                    box-shadow: inset 0 4px 12px rgba(0,0,0,0.18);
+                }
+                .service-card-video {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    display: block;
+                }
+                .service-card-play-overlay {
+                    position: absolute;
+                    inset: 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: rgba(0,0,0,0.12);
+                    transition: background 0.25s ease;
+                }
+                .service-card:hover .service-card-play-overlay {
+                    background: rgba(0,0,0,0.04);
+                }
+                .service-card-play-btn {
+                    width: 46px;
+                    height: 46px;
+                    border-radius: 50%;
+                    background: #f5f2ec;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    transition: transform 0.2s ease, box-shadow 0.2s ease;
+                    box-shadow:
+                        4px 4px 10px rgba(0,0,0,0.25),
+                        -3px -3px 8px rgba(255,255,255,0.7);
+                }
+                .service-card-play-btn svg {
+                    fill: #333;
+                    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
+                }
+                .service-card:hover .service-card-play-btn {
+                    transform: scale(1.1);
+                    box-shadow:
+                        6px 6px 14px rgba(0,0,0,0.28),
+                        -4px -4px 10px rgba(255,255,255,0.75);
+                }
+                .service-card-content {
+                    padding: 22px 22px 26px;
+                }
+                .service-card-title {
+                    font-size: 1.6rem;
+                    font-weight: 800;
+                    color: #111 !important;
+                    margin: 0 0 14px;
+                    letter-spacing: -0.01em;
+                    line-height: 1.15;
+                    transition: none !important;
+                }
+                .service-card:hover .service-card-title,
+                .service-card--active .service-card-title {
+                    color: #111 !important;
+                }
+                .service-card-desc {
+                    font-size: 0.88rem;
+                    color: #555 !important;
+                    line-height: 1.7;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 8px;
+                    transition: none !important;
+                }
+                .service-card:hover .service-card-desc,
+                .service-card--active .service-card-desc {
+                    color: #555 !important;
+                }
+                .service-card-desc p { margin: 0; color: #555 !important; }
+                .service-card-desc strong { color: #333 !important; font-weight: 600; }
+                .service-card:hover .service-card-desc strong,
+                .service-card--active .service-card-desc strong {
+                    color: #333 !important;
+                }
+            `}</style>
+        </section>
     );
 }
