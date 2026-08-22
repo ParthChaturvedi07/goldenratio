@@ -138,7 +138,7 @@ export default function HeroSection({ isPreloaderDone = true }: { isPreloaderDon
         </div>
 
         {/* CTAs — full width, below headline/description row */}
-        <div ref={detailsRef} className="mt-8 flex flex-nowrap gap-4">
+        <div ref={detailsRef} className="mt-8 flex flex-wrap gap-4">
           <Link
             href="/projects"
             className="shrink-0 whitespace-nowrap px-8 py-4 bg-black text-white rounded-full font-bold uppercase tracking-widest text-xs transition-transform hover:scale-105"
