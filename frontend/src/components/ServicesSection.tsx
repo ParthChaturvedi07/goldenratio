@@ -247,12 +247,12 @@ export default function ServicesSection() {
                 }
                 .service-card-desc p {
                     margin: 0;
-                    font-size: 0.82rem;
+                    font-size: 0.95rem;
                     color: #444;
-                    line-height: 1.55;
-                    background: #f1f3f5;
+                    // line-height: 1.55;
+                    // background: #f1f3f5;
                     border-radius: 10px;
-                    padding: 9px 13px;
+                    padding: 4px 13px;
                 }
                 .service-card-desc strong { color: #111; font-weight: 600; }
             `}</style>
