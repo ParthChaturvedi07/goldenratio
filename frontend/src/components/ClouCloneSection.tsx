@@ -139,14 +139,14 @@ export default function ClouCloneSection() {
         {/* LEFT COLUMN: Text Content */}
         <div className="contents lg:flex lg:flex-col lg:gap-20 lg:pr-10 z-20 pointer-events-auto">
           <div className="order-1 lg:order-none">
-            <h2 className="text-[3rem] md:text-[4rem] lg:text-[4.5rem] font-medium leading-[1.05] tracking-tight text-black mb-8">
-              mission: to design the best social spaces in the world.
+            <h2 className="text-[3rem] md:text-[4rem] lg:text-[4.5rem] font-semibold leading-[1.05] tracking-tight text-black mb-8">
+              Mission: MAKE THE BIG PICTURE TANGIBLE.
             </h2>
           </div>
           
           <div className="order-3 lg:order-none">
             <p className="text-xl md:text-2xl lg:text-3xl font-normal leading-[1.3] text-black max-w-[500px]">
-              Combining smart creativity with commercial savvy, we take our clients&apos; challenges and transform them into exceptionally innovative design.
+          We turn complex architectural and industrial projects into detailed physical models that make ideas easier to understand, communicate, and bring to life.
             </p>
           </div>
         </div>

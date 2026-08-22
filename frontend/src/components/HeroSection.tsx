@@ -123,7 +123,7 @@ export default function HeroSection({ isPreloaderDone = true }: { isPreloaderDon
 
           <div ref={descriptionRef} className="lg:w-[350px] shrink-0 lg:pt-2">
             <p className="text-black/70 text-md md:text-lg leading-relaxed flex flex-wrap">
-              {"At Golden Ratio we blend Creativity, Engineering and Detailing to design the spaces of tomorrow — from miniature model to built reality, every proportion is considered with clarity and intent.".split(" ").map((word, i) => (
+              {"We turn buildings, factories, and big ideas into detailed miniature models you can see, understand, and experience".split(" ").map((word, i) => (
                 <span
                   key={i}
                   className="overflow-hidden inline-block pb-[0.1em] mr-[0.25em]"
@@ -138,16 +138,18 @@ export default function HeroSection({ isPreloaderDone = true }: { isPreloaderDon
         </div>
 
         {/* CTAs — full width, below headline/description row */}
-        <div ref={detailsRef} className="mt-8 md:mt-0 flex flex-wrap gap-4">
+        <div ref={detailsRef} className="mt-8 flex flex-nowrap gap-4">
           <Link
             href="/projects"
-            className="px-8 py-4 bg-black text-white rounded-full font-bold uppercase tracking-widest text-xs transition-transform hover:scale-105"
+            className="shrink-0 whitespace-nowrap px-8 py-4 bg-black text-white rounded-full font-bold uppercase tracking-widest text-xs transition-transform hover:scale-105"
           >
             Our Projects
           </Link>
           <AnimatedLink
             href="/products"
             className="
+                shrink-0
+                whitespace-nowrap
                 group
                 relative
                 overflow-hidden

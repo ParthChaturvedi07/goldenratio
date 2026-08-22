@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -49,25 +49,17 @@ const services = [
 ];
 
 export default function ServicesSection() {
-    const [activeIndex, setActiveIndex] = useState(0);
     const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
     const sectionRef = useRef<HTMLElement>(null);
     const headerRef = useRef<HTMLDivElement>(null);
     const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-    const handleMouseEnter = (index: number) => {
-        setActiveIndex(index);
-        videoRefs.current.forEach((vid, i) => {
-            if (vid) {
-                if (i === index) {
-                    vid.play().catch(() => {});
-                } else {
-                    vid.pause();
-                    vid.currentTime = 0;
-                }
-            }
+    // Auto-play all videos in parallel on mount
+    useEffect(() => {
+        videoRefs.current.forEach((vid) => {
+            if (vid) vid.play().catch(() => {});
         });
-    };
+    }, []);
 
     useEffect(() => {
         const cards = cardRefs.current.filter(Boolean);
@@ -126,45 +118,32 @@ export default function ServicesSection() {
 
             {/* Cards Grid */}
             <div className="services-grid">
-                {services.map((service, index) => {
-                    const isActive = activeIndex === index;
-                    return (
-                        <div
-                            key={service.id}
-                            ref={(el) => { cardRefs.current[index] = el; }}
-                            className={`service-card${isActive ? " service-card--active" : ""}`}
-                            onMouseEnter={() => handleMouseEnter(index)}
-                        >
-                            {/* Video */}
-                            <div className="service-card-video-wrapper">
-                                <video
-                                    ref={(el) => { videoRefs.current[index] = el; }}
-                                    src={service.video}
-                                    poster={service.poster}
-                                    muted
-                                    loop
-                                    playsInline
-                                    className="service-card-video"
-                                />
-                                {!isActive && (
-                                    <div className="service-card-play-overlay">
-                                        <div className="service-card-play-btn">
-                                            <svg viewBox="0 0 24 24" fill="white" width="22" height="22">
-                                                <path d="M8 5v14l11-7z" />
-                                            </svg>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-
-                            {/* Text */}
-                            <div className="service-card-content">
-                                <h3 className="service-card-title">{service.title}</h3>
-                                <div className="service-card-desc">{service.description}</div>
-                            </div>
+                {services.map((service, index) => (
+                    <div
+                        key={service.id}
+                        ref={(el) => { cardRefs.current[index] = el; }}
+                        className="service-card"
+                    >
+                        {/* Video — always playing, fully contained */}
+                        <div className="service-card-video-wrapper">
+                            <video
+                                ref={(el) => { videoRefs.current[index] = el; }}
+                                src={service.video}
+                                poster={service.poster}
+                                muted
+                                loop
+                                playsInline
+                                className="service-card-video"
+                            />
                         </div>
-                    );
-                })}
+
+                        {/* Text */}
+                        <div className="service-card-content">
+                            <h3 className="service-card-title">{service.title}</h3>
+                            <div className="service-card-desc">{service.description}</div>
+                        </div>
+                    </div>
+                ))}
             </div>
 
             <style>{`
@@ -218,13 +197,14 @@ export default function ServicesSection() {
                 @media (min-width: 901px) and (max-width: 1100px) {
                     .services-grid { grid-template-columns: repeat(2, 1fr); }
                 }
+                /* Card — hover lifts card, resets on mouse leave (pure CSS) */
                 .service-card {
                     background: #f5f2ec;
                     border-radius: 20px;
-                    overflow: hidden;
+                    overflow: visible;
                     border: none;
                     cursor: pointer;
-                    transition: box-shadow 0.4s ease, transform 0.4s ease;
+                    transition: box-shadow 0.35s ease, transform 0.35s ease;
                     box-shadow:
                         8px 8px 20px rgba(0,0,0,0.12),
                         -6px -6px 16px rgba(255,255,255,0.85);
@@ -236,21 +216,17 @@ export default function ServicesSection() {
                         14px 14px 32px rgba(0,0,0,0.16),
                         -9px -9px 22px rgba(255,255,255,0.92);
                 }
-                .service-card--active {
-                    transform: translateY(-5px) scale(1.01);
-                    box-shadow:
-                        14px 14px 32px rgba(0,0,0,0.16),
-                        -9px -9px 22px rgba(255,255,255,0.92);
-                }
+
+                /* Video fully contained inside its wrapper */
                 .service-card-video-wrapper {
                     position: relative;
-                    width: 100%;
+                    width: calc(100% - 16px);
                     aspect-ratio: 16 / 10;
                     overflow: hidden;
                     background: #1a1a1a;
-                    border-radius: 16px 16px 0 0;
-                    /* inset shadow to give depth to video well */
-                    box-shadow: inset 0 4px 12px rgba(0,0,0,0.18);
+                    border-radius: 14px;
+                    margin: 8px 8px 0;
+                    box-shadow: 0 4px 16px rgba(0,0,0,0.22);
                 }
                 .service-card-video {
                     width: 100%;
@@ -258,76 +234,29 @@ export default function ServicesSection() {
                     object-fit: cover;
                     display: block;
                 }
-                .service-card-play-overlay {
-                    position: absolute;
-                    inset: 0;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    background: rgba(0,0,0,0.12);
-                    transition: background 0.25s ease;
-                }
-                .service-card:hover .service-card-play-overlay {
-                    background: rgba(0,0,0,0.04);
-                }
-                .service-card-play-btn {
-                    width: 46px;
-                    height: 46px;
-                    border-radius: 50%;
-                    background: #f5f2ec;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    transition: transform 0.2s ease, box-shadow 0.2s ease;
-                    box-shadow:
-                        4px 4px 10px rgba(0,0,0,0.25),
-                        -3px -3px 8px rgba(255,255,255,0.7);
-                }
-                .service-card-play-btn svg {
-                    fill: #333;
-                    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
-                }
-                .service-card:hover .service-card-play-btn {
-                    transform: scale(1.1);
-                    box-shadow:
-                        6px 6px 14px rgba(0,0,0,0.28),
-                        -4px -4px 10px rgba(255,255,255,0.75);
-                }
+
                 .service-card-content {
                     padding: 22px 22px 26px;
                 }
                 .service-card-title {
                     font-size: 1.6rem;
                     font-weight: 800;
-                    color: #111 !important;
+                    font-style: normal;
+                    color: #111;
                     margin: 0 0 14px;
                     letter-spacing: -0.01em;
                     line-height: 1.15;
-                    transition: none !important;
-                }
-                .service-card:hover .service-card-title,
-                .service-card--active .service-card-title {
-                    color: #111 !important;
                 }
                 .service-card-desc {
                     font-size: 0.88rem;
-                    color: #555 !important;
+                    color: #555;
                     line-height: 1.7;
                     display: flex;
                     flex-direction: column;
                     gap: 8px;
-                    transition: none !important;
                 }
-                .service-card:hover .service-card-desc,
-                .service-card--active .service-card-desc {
-                    color: #555 !important;
-                }
-                .service-card-desc p { margin: 0; color: #555 !important; }
-                .service-card-desc strong { color: #333 !important; font-weight: 600; }
-                .service-card:hover .service-card-desc strong,
-                .service-card--active .service-card-desc strong {
-                    color: #333 !important;
-                }
+                .service-card-desc p { margin: 0; color: #555; }
+                .service-card-desc strong { color: #333; font-weight: 600; }
             `}</style>
         </section>
     );
