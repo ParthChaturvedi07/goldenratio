@@ -12,9 +12,9 @@ const services = [
         title: "MINIATURE MODEL MAKING",
         description: (
             <>
-                <p><strong>Industrial Models*:</strong> Factory Layouts | Manufacturing Plants | Warehouses | Production Line &amp; Machinery Flow</p>
-                <p><strong>*Architectural Models:</strong> Townships | Commercial Complexes | SEZ | IT Parks | Institutional Buildings</p>
-                <p><strong>Interior Models*:</strong> Office Layout Models | Showroom Setups | Retail Store Models</p>
+                <p><strong>Industrial Models:</strong> Factory Layouts | Manufacturing Plants | Warehouses | Production Line &amp; Machinery Flow</p>
+                <p><strong>Architectural Models:</strong> Townships | Commercial Complexes | SEZ | IT Parks | Institutional Buildings</p>
+                <p><strong>Interior Models:</strong> Office Layout Models | Showroom Setups | Retail Store Models</p>
             </>
         ),
         video: "/video/MINIMODELMAKE.mp4",
@@ -25,8 +25,8 @@ const services = [
         title: "MOMENTO",
         description: (
             <>
-                <p><strong>Corporate Mementos*:</strong> Awards | Recognition Trophies | Achievement Models | Executive Gifts</p>
-                <p><strong>*Architectural Mementos:</strong> Building Replicas | Project Models | Landmark Replicas | Custom Scale Models</p>
+                <p><strong>Corporate Mementos:</strong> Awards | Recognition Trophies | Achievement Models | Executive Gifts</p>
+                <p><strong>Architectural Mementos:</strong> Building Replicas | Project Models | Landmark Replicas | Custom Scale Models</p>
                 <p><strong>Custom Mementos*:</strong> Personalized Models | Logo Displays | Commemorative Pieces | Premium Gifting</p>
             </>
         ),
@@ -38,9 +38,10 @@ const services = [
         title: "ALLIED SERVICES",
         description: (
             <>
-                <p><strong>Industrial Models*:</strong> Factory Layouts | Manufacturing Plants | Warehouses | Production Line &amp; Machinery Flow</p>
-                <p><strong>*Architectural Models:</strong> Townships | Commercial Complexes | SEZ | IT Parks | Institutional Buildings</p>
-                <p><strong>Interior Models*:</strong> Office Layout Models | Showroom Setups | Retail Store Models</p>
+                <p><strong>3D Visualization & Walkthroughs:</strong> Interactive Visualizations | 3D Walkthroughs</p>
+                <p><strong>BOQ & Material Selection:</strong> Detailed BOQs | Material Selection</p>
+                <p><strong>Model Photography & Videography:</strong> Professional Photography | High-Quality Videography</p>
+                <p><strong>Safe Packaging & Pan-India Delivery:</strong> Secure Packaging | Pan-India Delivery</p>
             </>
         ),
         video: "/video/ALLIED.mp4",
@@ -197,27 +198,20 @@ export default function ServicesSection() {
                 @media (min-width: 901px) and (max-width: 1100px) {
                     .services-grid { grid-template-columns: repeat(2, 1fr); }
                 }
-                /* Card — hover lifts card, resets on mouse leave (pure CSS) */
+
+                /* Card */
                 .service-card {
-                    background: #f5f2ec;
+                    background: #ffffff;
                     border-radius: 20px;
-                    overflow: visible;
-                    border: none;
+                    overflow: hidden;
+                    border: 2px solid transparent;
                     cursor: pointer;
-                    transition: box-shadow 0.35s ease, transform 0.35s ease;
-                    box-shadow:
-                        8px 8px 20px rgba(0,0,0,0.12),
-                        -6px -6px 16px rgba(255,255,255,0.85);
-                    will-change: transform, box-shadow;
+                    transition: border-color 0.28s ease, box-shadow 0.28s ease;
+                    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
                 }
                 .service-card:hover {
-                    transform: translateY(-5px) scale(1.01);
-                    box-shadow:
-                        14px 14px 32px rgba(0,0,0,0.16),
-                        -9px -9px 22px rgba(255,255,255,0.92);
+                    box-shadow: 0 4px 24px rgba(73, 73, 73, 0.47);
                 }
-
-                /* Video fully contained inside its wrapper */
                 .service-card-video-wrapper {
                     position: relative;
                     width: calc(100% - 16px);
@@ -226,37 +220,41 @@ export default function ServicesSection() {
                     background: #1a1a1a;
                     border-radius: 14px;
                     margin: 8px 8px 0;
-                    box-shadow: 0 4px 16px rgba(0,0,0,0.22);
                 }
                 .service-card-video {
-                    width: 100%;
-                    height: 100%;
+                    width: 115%;
+                    height: 115%;
                     object-fit: cover;
                     display: block;
                 }
-
                 .service-card-content {
-                    padding: 22px 22px 26px;
+                    padding: 22px 20px 24px;
                 }
                 .service-card-title {
-                    font-size: 1.6rem;
+                    font-size: 1.85rem;
                     font-weight: 800;
                     font-style: normal;
                     color: #111;
-                    margin: 0 0 14px;
-                    letter-spacing: -0.01em;
-                    line-height: 1.15;
+                    margin: 0 0 16px;
+                    letter-spacing: -0.02em;
+                    line-height: 1.1;
                 }
+                /* Description chips */
                 .service-card-desc {
-                    font-size: 0.88rem;
-                    color: #555;
-                    line-height: 1.7;
                     display: flex;
                     flex-direction: column;
                     gap: 8px;
                 }
-                .service-card-desc p { margin: 0; color: #555; }
-                .service-card-desc strong { color: #333; font-weight: 600; }
+                .service-card-desc p {
+                    margin: 0;
+                    font-size: 0.82rem;
+                    color: #444;
+                    line-height: 1.55;
+                    background: #f1f3f5;
+                    border-radius: 10px;
+                    padding: 9px 13px;
+                }
+                .service-card-desc strong { color: #111; font-weight: 600; }
             `}</style>
         </section>
     );
