@@ -73,11 +73,14 @@ export default function ContactSection() {
     if (!/^[a-zA-Z\s]{2,50}$/.test(formData.fullName.trim())) {
       return alert("Please enter a valid name (letters and spaces only, 2-50 characters).");
     }
-    if (!formData.email.toLowerCase().endsWith("@gmail.com")) {
-      return alert("Please use a valid @gmail.com email address.");
+    if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      return alert("Please enter a valid email address.");
     }
-    if (formData.phone && !/^\d{10}$/.test(formData.phone.replace(/\D/g, ''))) {
-      return alert("Please enter a valid 10-digit phone number.");
+    if (formData.phone) {
+      const digits = formData.phone.replace(/\D/g, '');
+      if (digits.length < 10 || digits.length > 13) {
+        return alert("Please enter a valid phone number (10 digits, with or without country code).");
+      }
     }
     const wordCount = formData.message.trim() ? formData.message.trim().split(/\s+/).length : 0;
     if (wordCount > 300) {
@@ -252,11 +255,10 @@ export default function ContactSection() {
 
                   <div className="flex flex-col gap-2">
                     <label className="text-[10px] md:text-[11px] font-semibold uppercase tracking-[0.15em] text-black/70">
-                      Email Address *
+                      Email Address 
                     </label>
                     <input
                       type="email"
-                      required
                       placeholder="e.g. rahul@gmail.com"
                       value={formData.email}
                       onChange={(e) =>
@@ -269,11 +271,12 @@ export default function ContactSection() {
 
                 <div className="flex flex-col gap-2">
                   <label className="text-[10px] md:text-[11px] font-semibold uppercase tracking-[0.15em] text-black/70">
-                    Phone Number (Optional)
+                    Phone Number *
                   </label>
                   <input
                     type="tel"
                     placeholder="+91 9876543210"
+                    required
                     value={formData.phone}
                     onChange={(e) =>
                       setFormData({ ...formData, phone: e.target.value })

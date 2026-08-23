@@ -98,8 +98,8 @@ const ContactList = () => {
                       {contact.phone && <span className="text-sm text-text-secondary">{contact.phone}</span>}
                     </div>
                   </td>
-                  <td className="px-6 py-5 align-top max-w-xs">
-                    <p className="text-sm text-text-secondary whitespace-pre-wrap leading-relaxed">{contact.message}</p>
+                  <td className="px-6 py-5 align-top w-[240px] max-w-[240px]">
+                    <p className="text-sm text-text-secondary whitespace-pre-wrap break-words leading-relaxed max-h-[120px] overflow-y-auto pr-1">{contact.message}</p>
                     {contact.services?.length > 0 && (
                       <div className="mt-3 flex flex-wrap gap-2">
                         {contact.services.map((s, i) => (
